@@ -1,0 +1,2562 @@
+schema: '2.0'
+stages:
+  download@2019-09:
+    cmd: python -m elo.data.download --month 2019-09
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2019-09.pgn
+      hash: md5
+      md5: 0cf36f3a81952c25bef8f239fc65a221
+      size: 126653299
+    - path: reports/download/2019-09.json
+      hash: md5
+      md5: 14ef0a625bdfdc455aaf3b8b34535fa8
+      size: 115
+  download@2020-03:
+    cmd: python -m elo.data.download --month 2020-03
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-03.pgn
+      hash: md5
+      md5: c78c7c8e65c0ebf78ff22ad433eff466
+      size: 127512787
+    - path: reports/download/2020-03.json
+      hash: md5
+      md5: 9e3888b2b4e950d13e0f7ecfb67120e2
+      size: 114
+  ingest_validate@2019-09:
+    cmd: python -m elo.data.spark_ingest --month 2019-09
+    deps:
+    - path: data/raw/2019-09.pgn
+      hash: md5
+      md5: 0cf36f3a81952c25bef8f239fc65a221
+      size: 126653299
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2019-09.parquet
+      hash: md5
+      md5: 01a3c0536785cb984469ac0dd7c699ea.dir
+      size: 24315300
+      nfiles: 18
+    - path: reports/validation/2019-09.json
+      hash: md5
+      md5: 7b337ececc56439ebbb8cf991adfff56
+      size: 444
+  ingest_validate@2020-03:
+    cmd: python -m elo.data.spark_ingest --month 2020-03
+    deps:
+    - path: data/raw/2020-03.pgn
+      hash: md5
+      md5: c78c7c8e65c0ebf78ff22ad433eff466
+      size: 127512787
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-03.parquet
+      hash: md5
+      md5: 41de1fe3014ab2342e67afaeb2f28902.dir
+      size: 24095985
+      nfiles: 18
+    - path: reports/validation/2020-03.json
+      hash: md5
+      md5: 2bea05a9504aaf003b6e8842daee9f83
+      size: 446
+  sample@2019-09:
+    cmd: python -m elo.data.spark_sample --month 2019-09
+    deps:
+    - path: data/interim/games/2019-09.parquet
+      hash: md5
+      md5: 01a3c0536785cb984469ac0dd7c699ea.dir
+      size: 24315300
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2019-09.parquet
+      hash: md5
+      md5: 9c76abe1ffe5a9c084419e5eb6e7b289.dir
+      size: 13350307
+      nfiles: 4
+    - path: reports/sample/2019-09.json
+      hash: md5
+      md5: c0329ecb85267a72402631d7d35546d8
+      size: 59
+  sample@2020-03:
+    cmd: python -m elo.data.spark_sample --month 2020-03
+    deps:
+    - path: data/interim/games/2020-03.parquet
+      hash: md5
+      md5: 41de1fe3014ab2342e67afaeb2f28902.dir
+      size: 24095985
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-03.parquet
+      hash: md5
+      md5: 32fe3a8ffc97c478e328e8574f41a318.dir
+      size: 6782466
+      nfiles: 4
+    - path: reports/sample/2020-03.json
+      hash: md5
+      md5: 302fb33cd1fee8a2eda05737ca87258c
+      size: 57
+  analyze@2019-09:
+    cmd: python -m elo.data.ray_analyze --month 2019-09
+    deps:
+    - path: data/interim/sample/2019-09.parquet
+      hash: md5
+      md5: 9c76abe1ffe5a9c084419e5eb6e7b289.dir
+      size: 13350307
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2019-09.parquet
+      hash: md5
+      md5: 0f3148d22219ea94241ac2c26f571de8
+      size: 72754174
+    - path: reports/throughput/analyze_2019-09.json
+      hash: md5
+      md5: 87ff0cff69f09125566410830c1da3bc
+      size: 246
+  download@2019-10:
+    cmd: python -m elo.data.download --month 2019-10
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2019-10.pgn
+      hash: md5
+      md5: 506b9294a6958e79779ee6512b1938ac
+      size: 126627170
+    - path: reports/download/2019-10.json
+      hash: md5
+      md5: 0c0196f7842d8c63c2c93e42f25b815f
+      size: 113
+  ingest_validate@2019-10:
+    cmd: python -m elo.data.spark_ingest --month 2019-10
+    deps:
+    - path: data/raw/2019-10.pgn
+      hash: md5
+      md5: 506b9294a6958e79779ee6512b1938ac
+      size: 126627170
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2019-10.parquet
+      hash: md5
+      md5: f5be40ff5b703dabc84f09113ab65a93.dir
+      size: 24159394
+      nfiles: 18
+    - path: reports/validation/2019-10.json
+      hash: md5
+      md5: 4ca3934a23237a213cdc0dafdc3bbd4f
+      size: 445
+  sample@2019-10:
+    cmd: python -m elo.data.spark_sample --month 2019-10
+    deps:
+    - path: data/interim/games/2019-10.parquet
+      hash: md5
+      md5: f5be40ff5b703dabc84f09113ab65a93.dir
+      size: 24159394
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2019-10.parquet
+      hash: md5
+      md5: 8869c834e5152dcd96fe3111209e160a.dir
+      size: 13396620
+      nfiles: 4
+    - path: reports/sample/2019-10.json
+      hash: md5
+      md5: fb862c97589736dd8300e3ea81176f7f
+      size: 58
+  analyze@2019-10:
+    cmd: python -m elo.data.ray_analyze --month 2019-10
+    deps:
+    - path: data/interim/sample/2019-10.parquet
+      hash: md5
+      md5: 8869c834e5152dcd96fe3111209e160a.dir
+      size: 13396620
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2019-10.parquet
+      hash: md5
+      md5: fd5a08f6ca2f99c1611db8e90237762f
+      size: 72805266
+    - path: reports/throughput/analyze_2019-10.json
+      hash: md5
+      md5: 9e27f79cc74d75710704653025663867
+      size: 247
+  download@2019-11:
+    cmd: python -m elo.data.download --month 2019-11
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2019-11.pgn
+      hash: md5
+      md5: 19f84e123444ce4ff5e80671c71ac9b3
+      size: 126513787
+    - path: reports/download/2019-11.json
+      hash: md5
+      md5: dd72562f8aa5154daa22391443093261
+      size: 114
+  ingest_validate@2019-11:
+    cmd: python -m elo.data.spark_ingest --month 2019-11
+    deps:
+    - path: data/raw/2019-11.pgn
+      hash: md5
+      md5: 19f84e123444ce4ff5e80671c71ac9b3
+      size: 126513787
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2019-11.parquet
+      hash: md5
+      md5: ad651e7895721dab80149d0b39ddab0d.dir
+      size: 23947264
+      nfiles: 18
+    - path: reports/validation/2019-11.json
+      hash: md5
+      md5: ae3d5765b423c126b858e0201a1c2476
+      size: 446
+  sample@2019-11:
+    cmd: python -m elo.data.spark_sample --month 2019-11
+    deps:
+    - path: data/interim/games/2019-11.parquet
+      hash: md5
+      md5: ad651e7895721dab80149d0b39ddab0d.dir
+      size: 23947264
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2019-11.parquet
+      hash: md5
+      md5: 910fc3fec97a297c2a3fc79959b5e199.dir
+      size: 13311856
+      nfiles: 4
+    - path: reports/sample/2019-11.json
+      hash: md5
+      md5: bca2ee3cdd7f731450d645c7bf299bf9
+      size: 58
+  analyze@2019-11:
+    cmd: python -m elo.data.ray_analyze --month 2019-11
+    deps:
+    - path: data/interim/sample/2019-11.parquet
+      hash: md5
+      md5: 910fc3fec97a297c2a3fc79959b5e199.dir
+      size: 13311856
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2019-11.parquet
+      hash: md5
+      md5: cb5c9cd28bca2b9599cb1737dfbdb840
+      size: 72543039
+    - path: reports/throughput/analyze_2019-11.json
+      hash: md5
+      md5: 67fff7d69f28d30034b1c54bf45a498f
+      size: 247
+  download@2019-12:
+    cmd: python -m elo.data.download --month 2019-12
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2019-12.pgn
+      hash: md5
+      md5: c69aa44a3ee253cc635bd24b7c380fef
+      size: 126823441
+    - path: reports/download/2019-12.json
+      hash: md5
+      md5: 0d7e923351820ee6cc2575d36e8f2854
+      size: 114
+  ingest_validate@2019-12:
+    cmd: python -m elo.data.spark_ingest --month 2019-12
+    deps:
+    - path: data/raw/2019-12.pgn
+      hash: md5
+      md5: c69aa44a3ee253cc635bd24b7c380fef
+      size: 126823441
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2019-12.parquet
+      hash: md5
+      md5: 73132ca7da4c0f70535b9a27661badad.dir
+      size: 23910806
+      nfiles: 18
+    - path: reports/validation/2019-12.json
+      hash: md5
+      md5: d1a01d7101b8fb6721c5d2421c3a69b2
+      size: 447
+  sample@2019-12:
+    cmd: python -m elo.data.spark_sample --month 2019-12
+    deps:
+    - path: data/interim/games/2019-12.parquet
+      hash: md5
+      md5: 73132ca7da4c0f70535b9a27661badad.dir
+      size: 23910806
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2019-12.parquet
+      hash: md5
+      md5: e7d8c69a7538a5f000e7068ae1bed50b.dir
+      size: 13378217
+      nfiles: 4
+    - path: reports/sample/2019-12.json
+      hash: md5
+      md5: 2656979ddbadfda107dba71074210aee
+      size: 58
+  analyze@2019-12:
+    cmd: python -m elo.data.ray_analyze --month 2019-12
+    deps:
+    - path: data/interim/sample/2019-12.parquet
+      hash: md5
+      md5: e7d8c69a7538a5f000e7068ae1bed50b.dir
+      size: 13378217
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2019-12.parquet
+      hash: md5
+      md5: b11f7acb677505fd5936c3350f6a3300
+      size: 72918273
+    - path: reports/throughput/analyze_2019-12.json
+      hash: md5
+      md5: 3d41f190daa2e3bf8e36945b79200fc5
+      size: 247
+  download@2020-01:
+    cmd: python -m elo.data.download --month 2020-01
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-01.pgn
+      hash: md5
+      md5: 69377e217f48a048bedbf64389a9b811
+      size: 126037564
+    - path: reports/download/2020-01.json
+      hash: md5
+      md5: 38dac0438c88e1cb66702383e09ad416
+      size: 114
+  ingest_validate@2020-01:
+    cmd: python -m elo.data.spark_ingest --month 2020-01
+    deps:
+    - path: data/raw/2020-01.pgn
+      hash: md5
+      md5: 69377e217f48a048bedbf64389a9b811
+      size: 126037564
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-01.parquet
+      hash: md5
+      md5: 2c589e66512af2f9e43f0b7a8130ecda.dir
+      size: 23232117
+      nfiles: 18
+    - path: reports/validation/2020-01.json
+      hash: md5
+      md5: fc71850cfd94f19db90db2e195311db5
+      size: 446
+  sample@2020-01:
+    cmd: python -m elo.data.spark_sample --month 2020-01
+    deps:
+    - path: data/interim/games/2020-01.parquet
+      hash: md5
+      md5: 2c589e66512af2f9e43f0b7a8130ecda.dir
+      size: 23232117
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-01.parquet
+      hash: md5
+      md5: 4e5ac35722ca714f0017f209e0832237.dir
+      size: 6739563
+      nfiles: 4
+    - path: reports/sample/2020-01.json
+      hash: md5
+      md5: b000c87c35e83f88956917624883c237
+      size: 57
+  analyze@2020-01:
+    cmd: python -m elo.data.ray_analyze --month 2020-01
+    deps:
+    - path: data/interim/sample/2020-01.parquet
+      hash: md5
+      md5: 4e5ac35722ca714f0017f209e0832237.dir
+      size: 6739563
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-01.parquet
+      hash: md5
+      md5: ca6f1dd1b14c4a5363ce55f71ba18778
+      size: 36146872
+    - path: reports/throughput/analyze_2020-01.json
+      hash: md5
+      md5: 646f05fdd4eaa552b0f8863506294461
+      size: 245
+  download@2020-02:
+    cmd: python -m elo.data.download --month 2020-02
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-02.pgn
+      hash: md5
+      md5: 9dc52937aa3355dd40920851925c0ef0
+      size: 126625511
+    - path: reports/download/2020-02.json
+      hash: md5
+      md5: 721750dad19145ed60ca0e2b2686a223
+      size: 114
+  ingest_validate@2020-02:
+    cmd: python -m elo.data.spark_ingest --month 2020-02
+    deps:
+    - path: data/raw/2020-02.pgn
+      hash: md5
+      md5: 9dc52937aa3355dd40920851925c0ef0
+      size: 126625511
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-02.parquet
+      hash: md5
+      md5: d37410d52e20c6e4abc11f9cc85c1c68.dir
+      size: 23918386
+      nfiles: 18
+    - path: reports/validation/2020-02.json
+      hash: md5
+      md5: f33fe30f2fd4dd34a8b8db6bd43348a6
+      size: 446
+  sample@2020-02:
+    cmd: python -m elo.data.spark_sample --month 2020-02
+    deps:
+    - path: data/interim/games/2020-02.parquet
+      hash: md5
+      md5: d37410d52e20c6e4abc11f9cc85c1c68.dir
+      size: 23918386
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-02.parquet
+      hash: md5
+      md5: c7b2b135d7290c9576f9b378e51e3fb8.dir
+      size: 6736684
+      nfiles: 4
+    - path: reports/sample/2020-02.json
+      hash: md5
+      md5: dfde9209ac89cadefa6290aa3b1944bf
+      size: 57
+  analyze@2020-02:
+    cmd: python -m elo.data.ray_analyze --month 2020-02
+    deps:
+    - path: data/interim/sample/2020-02.parquet
+      hash: md5
+      md5: c7b2b135d7290c9576f9b378e51e3fb8.dir
+      size: 6736684
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-02.parquet
+      hash: md5
+      md5: 0c54a85c55387260328d9fe30e14a0aa
+      size: 36420915
+    - path: reports/throughput/analyze_2020-02.json
+      hash: md5
+      md5: 71e61ff52c713f17f95a17f2b92b4aac
+      size: 245
+  analyze@2020-03:
+    cmd: python -m elo.data.ray_analyze --month 2020-03
+    deps:
+    - path: data/interim/sample/2020-03.parquet
+      hash: md5
+      md5: 32fe3a8ffc97c478e328e8574f41a318.dir
+      size: 6782466
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-03.parquet
+      hash: md5
+      md5: 0ec6726b48d659ac9478a5525bcd9998
+      size: 36638394
+    - path: reports/throughput/analyze_2020-03.json
+      hash: md5
+      md5: 1b50450cdc27ed2d4e5e2a40c611d27b
+      size: 244
+  download@2020-04:
+    cmd: python -m elo.data.download --month 2020-04
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-04.pgn
+      hash: md5
+      md5: ee09f82138ef4e1b364036eaf77e68b4
+      size: 130485087
+    - path: reports/download/2020-04.json
+      hash: md5
+      md5: 5f9329182a85d87a28a54392c18fa552
+      size: 115
+  ingest_validate@2020-04:
+    cmd: python -m elo.data.spark_ingest --month 2020-04
+    deps:
+    - path: data/raw/2020-04.pgn
+      hash: md5
+      md5: ee09f82138ef4e1b364036eaf77e68b4
+      size: 130485087
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-04.parquet
+      hash: md5
+      md5: 06b9041c1326a5a635745f35d5906586.dir
+      size: 26708903
+      nfiles: 18
+    - path: reports/validation/2020-04.json
+      hash: md5
+      md5: 6649ecaf2a5166f03e7325945008d2c5
+      size: 445
+  sample@2020-04:
+    cmd: python -m elo.data.spark_sample --month 2020-04
+    deps:
+    - path: data/interim/games/2020-04.parquet
+      hash: md5
+      md5: 06b9041c1326a5a635745f35d5906586.dir
+      size: 26708903
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-04.parquet
+      hash: md5
+      md5: 85d099a2b7b5a54717611704849fa8ac.dir
+      size: 6967742
+      nfiles: 4
+    - path: reports/sample/2020-04.json
+      hash: md5
+      md5: 2a137dd97f7dcb79cfd46653dc1cdc36
+      size: 57
+  analyze@2020-04:
+    cmd: python -m elo.data.ray_analyze --month 2020-04
+    deps:
+    - path: data/interim/sample/2020-04.parquet
+      hash: md5
+      md5: 85d099a2b7b5a54717611704849fa8ac.dir
+      size: 6967742
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-04.parquet
+      hash: md5
+      md5: 9333dcc206de7fe1ade72421c0c6b6e5
+      size: 37266538
+    - path: reports/throughput/analyze_2020-04.json
+      hash: md5
+      md5: 1befe77a1754425bb89ce54d1d25762e
+      size: 245
+  download@2020-05:
+    cmd: python -m elo.data.download --month 2020-05
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-05.pgn
+      hash: md5
+      md5: 1a43254308534c0423ed337adc7b775c
+      size: 130318583
+    - path: reports/download/2020-05.json
+      hash: md5
+      md5: 88616a8b4edeb6fa7d15635e6ab6d5e8
+      size: 114
+  ingest_validate@2020-05:
+    cmd: python -m elo.data.spark_ingest --month 2020-05
+    deps:
+    - path: data/raw/2020-05.pgn
+      hash: md5
+      md5: 1a43254308534c0423ed337adc7b775c
+      size: 130318583
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-05.parquet
+      hash: md5
+      md5: f209e9977d970ed130aa57313116df12.dir
+      size: 26637720
+      nfiles: 18
+    - path: reports/validation/2020-05.json
+      hash: md5
+      md5: 477ca69ca36e5745966f9ce87b338196
+      size: 444
+  sample@2020-05:
+    cmd: python -m elo.data.spark_sample --month 2020-05
+    deps:
+    - path: data/interim/games/2020-05.parquet
+      hash: md5
+      md5: f209e9977d970ed130aa57313116df12.dir
+      size: 26637720
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-05.parquet
+      hash: md5
+      md5: 73cc244463d2ea0373df199e7eb2768c.dir
+      size: 6933739
+      nfiles: 4
+    - path: reports/sample/2020-05.json
+      hash: md5
+      md5: ce989af5319fb1cf64a67736419b6e70
+      size: 57
+  analyze@2020-05:
+    cmd: python -m elo.data.ray_analyze --month 2020-05
+    deps:
+    - path: data/interim/sample/2020-05.parquet
+      hash: md5
+      md5: 73cc244463d2ea0373df199e7eb2768c.dir
+      size: 6933739
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-05.parquet
+      hash: md5
+      md5: 6d04285c0926d0ea622f62e2c0d2c6d5
+      size: 36958810
+    - path: reports/throughput/analyze_2020-05.json
+      hash: md5
+      md5: 9175f17d0c2758d58176f3ad51c393ab
+      size: 245
+  download@2020-06:
+    cmd: python -m elo.data.download --month 2020-06
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-06.pgn
+      hash: md5
+      md5: 4c606df555bb14ab327693c9eff1f16b
+      size: 130321446
+    - path: reports/download/2020-06.json
+      hash: md5
+      md5: ddd6113b8a1728968ed1311f1d6564f3
+      size: 115
+  ingest_validate@2020-06:
+    cmd: python -m elo.data.spark_ingest --month 2020-06
+    deps:
+    - path: data/raw/2020-06.pgn
+      hash: md5
+      md5: 4c606df555bb14ab327693c9eff1f16b
+      size: 130321446
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-06.parquet
+      hash: md5
+      md5: 8d85a556df85a0d32caa6c0635fd94e5.dir
+      size: 26368919
+      nfiles: 18
+    - path: reports/validation/2020-06.json
+      hash: md5
+      md5: 60d50f0350f0e2bd81c1ba4d72f2bab7
+      size: 444
+  sample@2020-06:
+    cmd: python -m elo.data.spark_sample --month 2020-06
+    deps:
+    - path: data/interim/games/2020-06.parquet
+      hash: md5
+      md5: 8d85a556df85a0d32caa6c0635fd94e5.dir
+      size: 26368919
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-06.parquet
+      hash: md5
+      md5: 5eb0356119f404422ce17b922469b30d.dir
+      size: 6933198
+      nfiles: 4
+    - path: reports/sample/2020-06.json
+      hash: md5
+      md5: 2bb16ec02727a6c7ff33a4696593cc9a
+      size: 57
+  analyze@2020-06:
+    cmd: python -m elo.data.ray_analyze --month 2020-06
+    deps:
+    - path: data/interim/sample/2020-06.parquet
+      hash: md5
+      md5: 5eb0356119f404422ce17b922469b30d.dir
+      size: 6933198
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-06.parquet
+      hash: md5
+      md5: c95c16f2f2c19222206a148619f1ecb0
+      size: 37373730
+    - path: reports/throughput/analyze_2020-06.json
+      hash: md5
+      md5: 01be877c718397f95b23e333f4f52ea3
+      size: 245
+  download@2020-07:
+    cmd: python -m elo.data.download --month 2020-07
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-07.pgn
+      hash: md5
+      md5: 815f4beef6c96244ac57cd7628de2e4d
+      size: 129049283
+    - path: reports/download/2020-07.json
+      hash: md5
+      md5: 081cf919249d3bded05e260c12b18a46
+      size: 114
+  ingest_validate@2020-07:
+    cmd: python -m elo.data.spark_ingest --month 2020-07
+    deps:
+    - path: data/raw/2020-07.pgn
+      hash: md5
+      md5: 815f4beef6c96244ac57cd7628de2e4d
+      size: 129049283
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-07.parquet
+      hash: md5
+      md5: 0bba5daa047163d96e6289ab6e79dbe6.dir
+      size: 26141558
+      nfiles: 18
+    - path: reports/validation/2020-07.json
+      hash: md5
+      md5: e934fe4a45846b4c552a82d7f267f649
+      size: 443
+  sample@2020-07:
+    cmd: python -m elo.data.spark_sample --month 2020-07
+    deps:
+    - path: data/interim/games/2020-07.parquet
+      hash: md5
+      md5: 0bba5daa047163d96e6289ab6e79dbe6.dir
+      size: 26141558
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-07.parquet
+      hash: md5
+      md5: 11b46fc363ab49bfef7aea2fd7a0a854.dir
+      size: 6962399
+      nfiles: 4
+    - path: reports/sample/2020-07.json
+      hash: md5
+      md5: b48698fb4e0893bc444a48cb12154e3e
+      size: 57
+  analyze@2020-07:
+    cmd: python -m elo.data.ray_analyze --month 2020-07
+    deps:
+    - path: data/interim/sample/2020-07.parquet
+      hash: md5
+      md5: 11b46fc363ab49bfef7aea2fd7a0a854.dir
+      size: 6962399
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-07.parquet
+      hash: md5
+      md5: 0f4feaae31b9ffc03461d673e97175ce
+      size: 37366494
+    - path: reports/throughput/analyze_2020-07.json
+      hash: md5
+      md5: 9d08e388cf091164c6d2211348cbdad6
+      size: 245
+  download@2020-08:
+    cmd: python -m elo.data.download --month 2020-08
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-08.pgn
+      hash: md5
+      md5: 51ff7cec51407fa33ead8ba2616bc1ff
+      size: 129332265
+    - path: reports/download/2020-08.json
+      hash: md5
+      md5: de1e35f6676416a8ca9c161ba455ffce
+      size: 113
+  ingest_validate@2020-08:
+    cmd: python -m elo.data.spark_ingest --month 2020-08
+    deps:
+    - path: data/raw/2020-08.pgn
+      hash: md5
+      md5: 51ff7cec51407fa33ead8ba2616bc1ff
+      size: 129332265
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-08.parquet
+      hash: md5
+      md5: 49ab9c12474282ec4e2f399ad6498573.dir
+      size: 21733343
+      nfiles: 18
+    - path: reports/validation/2020-08.json
+      hash: md5
+      md5: f2a67412bce035d21e2a0edab674902c
+      size: 446
+  sample@2020-08:
+    cmd: python -m elo.data.spark_sample --month 2020-08
+    deps:
+    - path: data/interim/games/2020-08.parquet
+      hash: md5
+      md5: 49ab9c12474282ec4e2f399ad6498573.dir
+      size: 21733343
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-08.parquet
+      hash: md5
+      md5: 66d87f3e3fef8b2cd081367918e848e3.dir
+      size: 6825171
+      nfiles: 4
+    - path: reports/sample/2020-08.json
+      hash: md5
+      md5: 23d0bfd8bb6c2fd62fa46437cd006840
+      size: 56
+  analyze@2020-08:
+    cmd: python -m elo.data.ray_analyze --month 2020-08
+    deps:
+    - path: data/interim/sample/2020-08.parquet
+      hash: md5
+      md5: 66d87f3e3fef8b2cd081367918e848e3.dir
+      size: 6825171
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-08.parquet
+      hash: md5
+      md5: a91aade057e545fa8f52b6858215a27f
+      size: 36941703
+    - path: reports/throughput/analyze_2020-08.json
+      hash: md5
+      md5: 875f9b132080e5fdeb8febc2830cb96d
+      size: 244
+  download@2020-09:
+    cmd: python -m elo.data.download --month 2020-09
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-09.pgn
+      hash: md5
+      md5: 064488d1eb7d0cb1fb2eb3ae90cf6e45
+      size: 128126572
+    - path: reports/download/2020-09.json
+      hash: md5
+      md5: bb3cd60c3f8590e4d55d22737bde78f9
+      size: 113
+  ingest_validate@2020-09:
+    cmd: python -m elo.data.spark_ingest --month 2020-09
+    deps:
+    - path: data/raw/2020-09.pgn
+      hash: md5
+      md5: 064488d1eb7d0cb1fb2eb3ae90cf6e45
+      size: 128126572
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-09.parquet
+      hash: md5
+      md5: 9bb5db2d37c7a7b101d192039f32e0b9.dir
+      size: 26287902
+      nfiles: 18
+    - path: reports/validation/2020-09.json
+      hash: md5
+      md5: 1f69c342da35a6f07657e819b641a7f3
+      size: 446
+  sample@2020-09:
+    cmd: python -m elo.data.spark_sample --month 2020-09
+    deps:
+    - path: data/interim/games/2020-09.parquet
+      hash: md5
+      md5: 9bb5db2d37c7a7b101d192039f32e0b9.dir
+      size: 26287902
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-09.parquet
+      hash: md5
+      md5: 52027e7979947fd60d4c17a70150c907.dir
+      size: 6885468
+      nfiles: 4
+    - path: reports/sample/2020-09.json
+      hash: md5
+      md5: 915e56bd747ddc628fdd21c0d4db9131
+      size: 56
+  analyze@2020-09:
+    cmd: python -m elo.data.ray_analyze --month 2020-09
+    deps:
+    - path: data/interim/sample/2020-09.parquet
+      hash: md5
+      md5: 52027e7979947fd60d4c17a70150c907.dir
+      size: 6885468
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-09.parquet
+      hash: md5
+      md5: 4371056c4a10e57635da4e2d40118cb6
+      size: 36892366
+    - path: reports/throughput/analyze_2020-09.json
+      hash: md5
+      md5: 2a25c865002435014a1c38ebd2182dae
+      size: 244
+  download@2020-10:
+    cmd: python -m elo.data.download --month 2020-10
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-10.pgn
+      hash: md5
+      md5: 64b676568b303874b9b12dcec010e656
+      size: 126864245
+    - path: reports/download/2020-10.json
+      hash: md5
+      md5: 02802148ac6b96c7ffbe85ffcdacc136
+      size: 114
+  ingest_validate@2020-10:
+    cmd: python -m elo.data.spark_ingest --month 2020-10
+    deps:
+    - path: data/raw/2020-10.pgn
+      hash: md5
+      md5: 64b676568b303874b9b12dcec010e656
+      size: 126864245
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-10.parquet
+      hash: md5
+      md5: 895deb99086e798a5d06b7577813784c.dir
+      size: 25197509
+      nfiles: 18
+    - path: reports/validation/2020-10.json
+      hash: md5
+      md5: 538ebeb873390bfa2f683ee817c27c90
+      size: 445
+  sample@2020-10:
+    cmd: python -m elo.data.spark_sample --month 2020-10
+    deps:
+    - path: data/interim/games/2020-10.parquet
+      hash: md5
+      md5: 895deb99086e798a5d06b7577813784c.dir
+      size: 25197509
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-10.parquet
+      hash: md5
+      md5: 50a4b654aefc0397a5f5d839755791eb.dir
+      size: 6808615
+      nfiles: 4
+    - path: reports/sample/2020-10.json
+      hash: md5
+      md5: 726384cbe753d423e5188f43af448206
+      size: 57
+  analyze@2020-10:
+    cmd: python -m elo.data.ray_analyze --month 2020-10
+    deps:
+    - path: data/interim/sample/2020-10.parquet
+      hash: md5
+      md5: 50a4b654aefc0397a5f5d839755791eb.dir
+      size: 6808615
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-10.parquet
+      hash: md5
+      md5: ea0ce3fd432d3e745f1a4302b657956c
+      size: 36663165
+    - path: reports/throughput/analyze_2020-10.json
+      hash: md5
+      md5: aba92e40400cd6310455ca197f452d33
+      size: 245
+  download@2020-11:
+    cmd: python -m elo.data.download --month 2020-11
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-11.pgn
+      hash: md5
+      md5: 30c6af5a988233e9a84e8d74500a473d
+      size: 128112511
+    - path: reports/download/2020-11.json
+      hash: md5
+      md5: df59e3782f9387930ee8d70b2991262c
+      size: 114
+  ingest_validate@2020-11:
+    cmd: python -m elo.data.spark_ingest --month 2020-11
+    deps:
+    - path: data/raw/2020-11.pgn
+      hash: md5
+      md5: 30c6af5a988233e9a84e8d74500a473d
+      size: 128112511
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-11.parquet
+      hash: md5
+      md5: fc0de2f4923b38114d94d51897f417c8.dir
+      size: 25528282
+      nfiles: 18
+    - path: reports/validation/2020-11.json
+      hash: md5
+      md5: 47e62748468e69cf8235d259e180255b
+      size: 445
+  sample@2020-11:
+    cmd: python -m elo.data.spark_sample --month 2020-11
+    deps:
+    - path: data/interim/games/2020-11.parquet
+      hash: md5
+      md5: fc0de2f4923b38114d94d51897f417c8.dir
+      size: 25528282
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-11.parquet
+      hash: md5
+      md5: 6c130590e61c4a323e684a9b90b2eb10.dir
+      size: 6839666
+      nfiles: 4
+    - path: reports/sample/2020-11.json
+      hash: md5
+      md5: 6b15f8b513d88607c480b7f34e6af7ee
+      size: 57
+  analyze@2020-11:
+    cmd: python -m elo.data.ray_analyze --month 2020-11
+    deps:
+    - path: data/interim/sample/2020-11.parquet
+      hash: md5
+      md5: 6c130590e61c4a323e684a9b90b2eb10.dir
+      size: 6839666
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-11.parquet
+      hash: md5
+      md5: cc0da2af83743cb89786a7e44c8095c3
+      size: 36732412
+    - path: reports/throughput/analyze_2020-11.json
+      hash: md5
+      md5: 3566ba10ada50580c258d8dfda9d733c
+      size: 245
+  download@2020-12:
+    cmd: python -m elo.data.download --month 2020-12
+    deps:
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/download.py
+      hash: md5
+      md5: 791927db6e487d9fa15394a0424f375e
+      size: 3106
+    params:
+      params.yaml:
+        data.base_url: https://database.lichess.org/standard
+        data.max_games_per_month: 60000
+    outs:
+    - path: data/raw/2020-12.pgn
+      hash: md5
+      md5: 393b0220cc01f15542d9fb875ba19da5
+      size: 126957306
+    - path: reports/download/2020-12.json
+      hash: md5
+      md5: 53b3b7853a1291d2acc32658209e920b
+      size: 114
+  ingest_validate@2020-12:
+    cmd: python -m elo.data.spark_ingest --month 2020-12
+    deps:
+    - path: data/raw/2020-12.pgn
+      hash: md5
+      md5: 393b0220cc01f15542d9fb875ba19da5
+      size: 126957306
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/games/2020-12.parquet
+      hash: md5
+      md5: 32e373941d957dd6d5632ac21b1cd5dd.dir
+      size: 25987914
+      nfiles: 18
+    - path: reports/validation/2020-12.json
+      hash: md5
+      md5: 9f8c0f1fb6fc9b6ebe8a88ba199a5961
+      size: 446
+  sample@2020-12:
+    cmd: python -m elo.data.spark_sample --month 2020-12
+    deps:
+    - path: data/interim/games/2020-12.parquet
+      hash: md5
+      md5: 32e373941d957dd6d5632ac21b1cd5dd.dir
+      size: 25987914
+      nfiles: 18
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/spark_ingest.py
+      hash: md5
+      md5: b337facdc93691210e5800275e06b32a
+      size: 8317
+    - path: src/elo/data/spark_sample.py
+      hash: md5
+      md5: 6fc07ecc72d348fdd006a6b266aac1b3
+      size: 1842
+    params:
+      params.yaml:
+        data.train_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        - 2019-12
+        sample.replay_per_month: 10000
+        sample.train_per_month: 20000
+        seed: 42
+        spark.driver_memory: 4g
+        spark.shuffle_partitions: 8
+    outs:
+    - path: data/interim/sample/2020-12.parquet
+      hash: md5
+      md5: e08ac2b3d2736d6f894ec83ec76483ac.dir
+      size: 6919366
+      nfiles: 4
+    - path: reports/sample/2020-12.json
+      hash: md5
+      md5: 778f3f52f14811b9ff6ab22c73317b2b
+      size: 57
+  analyze@2020-12:
+    cmd: python -m elo.data.ray_analyze --month 2020-12
+    deps:
+    - path: data/interim/sample/2020-12.parquet
+      hash: md5
+      md5: e08ac2b3d2736d6f894ec83ec76483ac.dir
+      size: 6919366
+      nfiles: 4
+    - path: src/elo/common
+      hash: md5
+      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
+      size: 10803
+      nfiles: 10
+    - path: src/elo/data/ray_analyze.py
+      hash: md5
+      md5: ef90b667d3f201acc8f7c55ee5cc746b
+      size: 5568
+    - path: src/elo/engine
+      hash: md5
+      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
+      size: 8705
+      nfiles: 2
+    - path: src/elo/features
+      hash: md5
+      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
+      size: 8379
+      nfiles: 4
+    - path: src/elo/pgn
+      hash: md5
+      md5: bcca1482223a7503ba29e607a6986ae1.dir
+      size: 7284
+      nfiles: 2
+    - path: tools/stockfish/stockfish
+      hash: md5
+      md5: 8279083ca25acb913289040e128a0f7e
+      size: 78768416
+      isexec: true
+    params:
+      params.yaml:
+        engine:
+          nodes: 5000
+          hash_mb: 16
+          path: tools/stockfish/stockfish
+          game_timeout_s: 120
+        ray:
+          num_workers: 10
+          batch_size: 16
+    outs:
+    - path: data/features/moves/2020-12.parquet
+      hash: md5
+      md5: 492660f7f16483e345b08c3cca3eb8f4
+      size: 36552557
+    - path: reports/throughput/analyze_2020-12.json
+      hash: md5
+      md5: 73dd42abc397468ad7d8769d9f93bac2
+      size: 245

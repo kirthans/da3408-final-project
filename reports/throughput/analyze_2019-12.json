@@ -1,0 +1,11 @@
+{
+  "games": 20000,
+  "plies": 1394325,
+  "failed_games": 0,
+  "seconds": 1826.1634831740012,
+  "games_per_second": 10.951921985231348,
+  "plies_per_second": 763.526931102885,
+  "num_workers": 10,
+  "nodes": 5000,
+  "pgn_eval_fraction": 0.04925
+}

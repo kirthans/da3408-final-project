@@ -1,0 +1,29 @@
+python: "3.12"
+build_dependencies:
+  - pip==26.2.2
+  - setuptools==84.2.1
+  - wheel==0.48.0
+dependencies:
+  - pyspark==4.2.0
+  - ray[data,default]==2.58.0
+  - mlflow==3.18.0
+  - dvc[ssh]==3.67.1
+  - xgboost==3.4.1
+  - scikit-learn==1.9.1
+  - pandas==3.1.1
+  - pyarrow==26.0.1
+  - numpy==2.5.4
+  - chess==1.11.2
+  - zstandard==0.25.0
+  - requests==2.34.2
+  - fastapi==0.163.1
+  - uvicorn==0.54.0
+  - pydantic==2.14.3
+  - prometheus-client==0.26.0
+  - pyyaml==6.0.3
+  - pytest==9.2.0
+  - pytest-cov==7.1.0
+  - httpx==0.28.1
+  - ruff==0.17.5
+  - black==26.10.1
+  - -e .

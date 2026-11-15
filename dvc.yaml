@@ -1,0 +1,75 @@
+stages:
+  analyze:
+    foreach: ${data.months}
+    do:
+      cmd: python -m elo.data.ray_analyze --month ${item}
+      deps:
+        - src/elo/data/ray_analyze.py
+        - src/elo/pgn
+        - src/elo/engine
+        - src/elo/features
+        - src/elo/common
+        - tools/stockfish/stockfish
+        - data/interim/sample/${item}.parquet
+      params:
+        - engine
+        - ray
+      outs:
+        - data/features/moves/${item}.parquet
+      metrics:
+        - reports/throughput/analyze_${item}.json:
+            cache: false
+  download:
+    foreach: ${data.months}
+    do:
+      cmd: python -m elo.data.download --month ${item}
+      deps:
+        - src/elo/data/download.py
+        - src/elo/common
+      params:
+        - data.max_games_per_month
+        - data.base_url
+      outs:
+        - data/raw/${item}.pgn
+      metrics:
+        - reports/download/${item}.json:
+            cache: false
+  ingest_validate:
+    foreach: ${data.months}
+    do:
+      cmd: python -m elo.data.spark_ingest --month ${item}
+      deps:
+        - src/elo/data/spark_ingest.py
+        - src/elo/common
+        - data/raw/${item}.pgn
+      params:
+        - data.train_months
+        - seed
+        - spark.driver_memory
+        - spark.shuffle_partitions
+      outs:
+        - data/interim/games/${item}.parquet
+      metrics:
+        - reports/validation/${item}.json:
+            cache: false
+  sample:
+    foreach: ${data.months}
+    do:
+      cmd: python -m elo.data.spark_sample --month ${item}
+      deps:
+        - src/elo/data/spark_sample.py
+        - src/elo/data/spark_ingest.py
+        - src/elo/common
+        - data/interim/games/${item}.parquet
+      params:
+        - data.train_months
+        - sample.train_per_month
+        - sample.replay_per_month
+        - seed
+        - spark.driver_memory
+        - spark.shuffle_partitions
+      outs:
+        - data/interim/sample/${item}.parquet
+      metrics:
+        - reports/sample/${item}.json:
+            cache: false

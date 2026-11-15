@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+mlruns/
+mlartifacts/
+.env
+.env.*
+!.env.example
+.dvc/config.local
+certs/
+*.pem
+*.key
+*.crt
+*.log
+# Downloaded engine release.
+tools/stockfish/

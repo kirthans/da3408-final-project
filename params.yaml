@@ -1,0 +1,35 @@
+data:
+  months: ["2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12"]
+  base_url: https://database.lichess.org/standard
+  train_months: ["2019-09", "2019-10", "2019-11", "2019-12"]
+  replay_months:
+    - "2020-01"
+    - "2020-02"
+    - "2020-03"
+    - "2020-04"
+    - "2020-05"
+    - "2020-06"
+    - "2020-07"
+    - "2020-08"
+    - "2020-09"
+    - "2020-10"
+    - "2020-11"
+    - "2020-12"
+  max_games_per_month: 60000
+sample:
+  train_per_month: 20000
+  replay_per_month: 10000
+spark:
+  driver_memory: 4g
+  shuffle_partitions: 8
+engine:
+  nodes: 5000
+  hash_mb: 16
+  path: tools/stockfish/stockfish
+  game_timeout_s: 120
+ray:
+  num_workers: 10
+  batch_size: 16
+seed: 42
+train: {}
+drift: {}

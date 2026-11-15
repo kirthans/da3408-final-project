@@ -1,0 +1,23 @@
+{
+  "raw_games": 60000,
+  "removed_by_filter": {
+    "rated": 0,
+    "standard": 0,
+    "clock": 317,
+    "time_control": 20523,
+    "plies": 1686,
+    "elo": 0,
+    "not_aborted": 1
+  },
+  "duplicates": 0,
+  "kept": 37473,
+  "elo_mean": 1673.018706802231,
+  "elo_std": 334.7419238025689,
+  "tc_class": {
+    "classical": 450,
+    "blitz": 30220,
+    "rapid": 6803
+  },
+  "seconds": 9.481148983999447,
+  "games_per_second": 6328.34692306355
+}

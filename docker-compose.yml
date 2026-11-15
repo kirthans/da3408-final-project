@@ -1,0 +1,44 @@
+name: elo
+
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: services/mlflow/Dockerfile
+    command:
+      - mlflow
+      - server
+      - --backend-store-uri
+      - sqlite:////mlflow/mlflow.db
+      - --artifacts-destination
+      - /mlflow/artifacts
+      - --serve-artifacts
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --expose-prometheus
+      - /mlflow/metrics
+      - --allowed-hosts
+      - ${MLFLOW_ALLOWED_HOSTS:?Set MLFLOW_ALLOWED_HOSTS in .env}
+      - --cors-allowed-origins
+      - ${MLFLOW_CORS_ALLOWED_ORIGINS:?Set MLFLOW_CORS_ALLOWED_ORIGINS in .env}
+    environment:
+      MLFLOW_DISABLE_TELEMETRY: "true"
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-data:/mlflow
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=5)"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  mlflow-data:

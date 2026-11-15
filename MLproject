@@ -1,0 +1,5 @@
+name: guess-the-elo
+python_env: python_env.yaml
+entry_points:
+  smoke:
+    command: "python -m elo.common.smoke"
