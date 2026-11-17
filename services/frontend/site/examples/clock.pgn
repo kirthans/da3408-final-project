@@ -1,0 +1,12 @@
+[Event "Clock and eval example"]
+[White "Alice"]
+[Black "Bob"]
+[WhiteElo "1500"]
+[BlackElo "1600"]
+[WhiteRatingDiff "+5"]
+[BlackTitle "GM"]
+[TimeControl "300+2"]
+[Result "*"]
+
+1. e4 { [%clk 0:04:58] [%eval 0.20] } e5 { [%clk 0:04:59] [%eval 0.00] }
+2. Nf3 { [%clk 0:04:55] [%eval -2.00] } Nc6 { [%clk 0:04:56] [%eval 0.00] } *

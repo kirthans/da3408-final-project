@@ -31,5 +31,26 @@ ray:
   num_workers: 10
   batch_size: 16
 seed: 42
-train: {}
+train:
+  fit_months: ["2019-09", "2019-10", "2019-11"]
+  holdout_month: "2019-12"
+  clock_dropout: 0.2
+  conformal_alpha: 0.2
+  experiment: elo
+  xgb:
+    grid: {max_depth: [4, 6, 8], learning_rate: [0.05, 0.1]}
+    n_estimators: 3000
+    early_stopping_rounds: 100
+    n_jobs_per_trial: 2
 drift: {}
+
+monitor:
+  interval_s: 900
+  eval_interval_s: 30
+  mae_ratio: 1.04
+  psi_warn: 0.05
+  drift_injection: {enabled: false, month: "2020-06", cpl_scale: 1.4}
+retrain:
+  min_improvement: 1.0
+  cooldown_s: 600
+  coverage_band: [0.75, 0.85]

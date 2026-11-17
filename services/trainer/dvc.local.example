@@ -1,0 +1,6 @@
+# Read-only overlay; the host's config.local remains untouched.
+[core]
+    site_cache_dir = /tmp/dvc-site
+['remote "storage"']
+    url = ssh://host.docker.internal/home/<user>/dvc-storage/guess-the-elo
+    user = <user>

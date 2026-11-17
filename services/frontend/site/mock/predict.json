@@ -1,0 +1,363 @@
+{
+  "request_id": "demo-opera-illustration",
+  "game": {
+    "index": 0,
+    "white": "Paul Morphy",
+    "black": "Duke Karl / Count Isouard",
+    "date": "1858.??.??",
+    "event": "Opera game",
+    "time_control": null,
+    "tc_class": "classical",
+    "plies": 33,
+    "has_clock": false,
+    "result": "1-0"
+  },
+  "white": {
+    "elo": 2350,
+    "lo": 2010,
+    "hi": 2690
+  },
+  "black": {
+    "elo": 1720,
+    "lo": 1380,
+    "hi": 2060
+  },
+  "interval_level": 0.8,
+  "pgn_ratings": {
+    "white": null,
+    "black": null
+  },
+  "moves": [
+    {
+      "ply": 1,
+      "side": "w",
+      "san": "e4",
+      "uci": "e2e4",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 2,
+      "side": "b",
+      "san": "e5",
+      "uci": "e7e5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 3,
+      "side": "w",
+      "san": "Nf3",
+      "uci": "g1f3",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 4,
+      "side": "b",
+      "san": "d6",
+      "uci": "d7d6",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 5,
+      "side": "w",
+      "san": "d4",
+      "uci": "d2d4",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 6,
+      "side": "b",
+      "san": "Bg4",
+      "uci": "c8g4",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 7,
+      "side": "w",
+      "san": "dxe5",
+      "uci": "d4e5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 8,
+      "side": "b",
+      "san": "Bxf3",
+      "uci": "g4f3",
+      "cpl": 12,
+      "move_class": "inaccuracy",
+      "clock_s": null
+    },
+    {
+      "ply": 9,
+      "side": "w",
+      "san": "Qxf3",
+      "uci": "d1f3",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 10,
+      "side": "b",
+      "san": "dxe5",
+      "uci": "d6e5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 11,
+      "side": "w",
+      "san": "Bc4",
+      "uci": "f1c4",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 12,
+      "side": "b",
+      "san": "Nf6",
+      "uci": "g8f6",
+      "cpl": 12,
+      "move_class": "mistake",
+      "clock_s": null
+    },
+    {
+      "ply": 13,
+      "side": "w",
+      "san": "Qb3",
+      "uci": "f3b3",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 14,
+      "side": "b",
+      "san": "Qe7",
+      "uci": "d8e7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 15,
+      "side": "w",
+      "san": "Nc3",
+      "uci": "b1c3",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 16,
+      "side": "b",
+      "san": "c6",
+      "uci": "c7c6",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 17,
+      "side": "w",
+      "san": "Bg5",
+      "uci": "c1g5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 18,
+      "side": "b",
+      "san": "b5",
+      "uci": "b7b5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 19,
+      "side": "w",
+      "san": "Nxb5",
+      "uci": "c3b5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 20,
+      "side": "b",
+      "san": "cxb5",
+      "uci": "c6b5",
+      "cpl": 195,
+      "move_class": "blunder",
+      "clock_s": null
+    },
+    {
+      "ply": 21,
+      "side": "w",
+      "san": "Bxb5+",
+      "uci": "c4b5",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 22,
+      "side": "b",
+      "san": "Nbd7",
+      "uci": "b8d7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 23,
+      "side": "w",
+      "san": "O-O-O",
+      "uci": "e1c1",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 24,
+      "side": "b",
+      "san": "Rd8",
+      "uci": "a8d8",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 25,
+      "side": "w",
+      "san": "Rxd7",
+      "uci": "d1d7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 26,
+      "side": "b",
+      "san": "Rxd7",
+      "uci": "d8d7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 27,
+      "side": "w",
+      "san": "Rd1",
+      "uci": "h1d1",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 28,
+      "side": "b",
+      "san": "Qe6",
+      "uci": "e7e6",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 29,
+      "side": "w",
+      "san": "Bxd7+",
+      "uci": "b5d7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 30,
+      "side": "b",
+      "san": "Nxd7",
+      "uci": "f6d7",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 31,
+      "side": "w",
+      "san": "Qb8+",
+      "uci": "b3b8",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 32,
+      "side": "b",
+      "san": "Nxb8",
+      "uci": "d7b8",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    },
+    {
+      "ply": 33,
+      "side": "w",
+      "san": "Rd8#",
+      "uci": "d1d8",
+      "cpl": 12,
+      "move_class": "good",
+      "clock_s": null
+    }
+  ],
+  "influential_moves": [
+    {
+      "ply": 19,
+      "side": "w",
+      "san": "Nxb5",
+      "delta_elo": 38
+    },
+    {
+      "ply": 20,
+      "side": "b",
+      "san": "cxb5",
+      "delta_elo": -52
+    },
+    {
+      "ply": 33,
+      "side": "w",
+      "san": "Rd8#",
+      "delta_elo": 64
+    }
+  ],
+  "analysis": {
+    "source": "stockfish",
+    "nodes": 5000,
+    "seconds": 2.7
+  },
+  "model": {
+    "name": "elo-estimator",
+    "version": "demo",
+    "run_id": "illustrative-only"
+  },
+  "warnings": [
+    "Demo data: these numbers and move annotations are illustrative, not model predictions.",
+    "No time control in file; this demo assumes Classical."
+  ]
+}

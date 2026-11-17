@@ -3,3 +3,11 @@ python_env: python_env.yaml
 entry_points:
   smoke:
     command: "python -m elo.common.smoke"
+  train_baselines:
+    command: "python -m elo.training.pipeline train_baselines"
+  train_xgb:
+    command: "python -m elo.training.pipeline train_xgb"
+  evaluate:
+    command: "python -m elo.training.pipeline evaluate"
+  register:
+    command: "python -m elo.training.registry register"

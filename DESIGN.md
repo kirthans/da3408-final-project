@@ -566,3 +566,11 @@ That makes the fair-use "Comprehension" rule important: the journal and the deci
 - **Measured:** about 40 plies/s per worker at 20k nodes on an i5-12450HX (4 performance + 4 efficiency cores, 12 threads). At that rate the full sample would take about 14 h.
 - At 5k nodes the expected time is about 3.5–4 h, which leaves room for one overnight re-run.
 - The sample sizes (20k/10k, D21) are unchanged.
+
+## 23. Drift trigger calibration (D30, user, 2026-11-16): overrides the §8 thresholds
+
+- `ModelMAEDegraded` fires when `batch_mae > 1.04 × reference MAE` (the champion's test MAE). This is calibrated from the per-month MAE standard error (about 1.5 Elo at n = 20k rows).
+- `FeatureDriftHigh` warns when `max(psi) > 0.05`. PSI is computed against `reference_stats.json`, which is built on pre-dropout train rows (ISSUE-009).
+- Booleans (`has_clock`, `is_white`) must be binned as categories in the PSI code. The current reference format puts 0 and 1 in one numeric bin; this is handled in M7.
+- The monitor has a disclosed `drift_injection` parameter (off by default) that perturbs one replay month for live demos. When it is on, it is exported as a metric and shown on the dashboard.
+- **Evidence from M4:** real 2020 data is expected to trigger in 2020-04 (MAE 1.06×). Retraining with the revealed months lowered next-month MAE by 5–7 Elo in an offline check.

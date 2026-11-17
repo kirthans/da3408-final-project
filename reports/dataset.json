@@ -1,0 +1,29 @@
+{
+  "clock_dropped_games": 12000,
+  "splits": {
+    "train": {
+      "rows": 120000,
+      "games": 60000,
+      "label_mean": 1596.0121583333334,
+      "label_std": 321.0394594593672
+    },
+    "val": {
+      "rows": 13182,
+      "games": 6591,
+      "label_mean": 1622.5409649522076,
+      "label_std": 332.68410042089
+    },
+    "cal": {
+      "rows": 13432,
+      "games": 6716,
+      "label_mean": 1622.584276354973,
+      "label_std": 332.4950802317476
+    },
+    "test": {
+      "rows": 13386,
+      "games": 6693,
+      "label_mean": 1635.5425818018825,
+      "label_std": 326.26516761475335
+    }
+  }
+}

@@ -5,9 +5,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -30,9 +30,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -59,9 +59,9 @@ stages:
       size: 126653299
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -95,9 +95,9 @@ stages:
       size: 127512787
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -132,9 +132,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -175,9 +175,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -218,28 +218,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -269,9 +269,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -298,9 +298,9 @@ stages:
       size: 126627170
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -335,9 +335,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -378,28 +378,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -429,9 +429,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -458,9 +458,9 @@ stages:
       size: 126513787
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -495,9 +495,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -538,28 +538,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -589,9 +589,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -618,9 +618,9 @@ stages:
       size: 126823441
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -655,9 +655,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -698,28 +698,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -749,9 +749,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -778,9 +778,9 @@ stages:
       size: 126037564
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -815,9 +815,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -858,28 +858,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -909,9 +909,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -938,9 +938,9 @@ stages:
       size: 126625511
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -975,9 +975,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1018,28 +1018,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1074,28 +1074,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1125,9 +1125,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1154,9 +1154,9 @@ stages:
       size: 130485087
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1191,9 +1191,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1234,28 +1234,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1285,9 +1285,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1314,9 +1314,9 @@ stages:
       size: 130318583
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1351,9 +1351,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1394,28 +1394,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1445,9 +1445,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1474,9 +1474,9 @@ stages:
       size: 130321446
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1511,9 +1511,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1554,28 +1554,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1605,9 +1605,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1634,9 +1634,9 @@ stages:
       size: 129049283
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1671,9 +1671,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1714,28 +1714,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1765,9 +1765,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1794,9 +1794,9 @@ stages:
       size: 129332265
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1831,9 +1831,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1874,28 +1874,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -1925,9 +1925,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -1954,9 +1954,9 @@ stages:
       size: 128126572
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -1991,9 +1991,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2034,28 +2034,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -2085,9 +2085,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -2114,9 +2114,9 @@ stages:
       size: 126864245
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2151,9 +2151,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2194,28 +2194,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -2245,9 +2245,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -2274,9 +2274,9 @@ stages:
       size: 128112511
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2311,9 +2311,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2354,28 +2354,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -2405,9 +2405,9 @@ stages:
     deps:
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/download.py
       hash: md5
       md5: 791927db6e487d9fa15394a0424f375e
@@ -2434,9 +2434,9 @@ stages:
       size: 126957306
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2471,9 +2471,9 @@ stages:
       nfiles: 18
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/spark_ingest.py
       hash: md5
       md5: b337facdc93691210e5800275e06b32a
@@ -2514,28 +2514,28 @@ stages:
       nfiles: 4
     - path: src/elo/common
       hash: md5
-      md5: 2bb6791815c9b4f32b5595eae18f1645.dir
-      size: 10803
-      nfiles: 10
+      md5: 86d37d953cfd1b38c83dc243ce846086.dir
+      size: 3688
+      nfiles: 5
     - path: src/elo/data/ray_analyze.py
       hash: md5
       md5: ef90b667d3f201acc8f7c55ee5cc746b
       size: 5568
     - path: src/elo/engine
       hash: md5
-      md5: 633bc5efd55d59b7f4558d3e7dd334ef.dir
-      size: 8705
-      nfiles: 2
+      md5: 068b38ed0fdb73a29cab9174e05e23eb.dir
+      size: 3182
+      nfiles: 1
     - path: src/elo/features
       hash: md5
-      md5: a458866bc341ee8ec481e4c9cfac18ff.dir
-      size: 8379
-      nfiles: 4
+      md5: e62888bf057e368c426e8f59dedb05d4.dir
+      size: 3313
+      nfiles: 2
     - path: src/elo/pgn
       hash: md5
-      md5: bcca1482223a7503ba29e607a6986ae1.dir
-      size: 7284
-      nfiles: 2
+      md5: 618c63e91e91d1ede85fac1ccda628b3.dir
+      size: 2813
+      nfiles: 1
     - path: tools/stockfish/stockfish
       hash: md5
       md5: 8279083ca25acb913289040e128a0f7e
@@ -2560,3 +2560,896 @@ stages:
       hash: md5
       md5: 73dd42abc397468ad7d8769d9f93bac2
       size: 245
+  aggregate@2019-09:
+    cmd: python -m elo.training.dataset --month 2019-09
+    deps:
+    - path: data/features/moves/2019-09.parquet
+      hash: md5
+      md5: 0f3148d22219ea94241ac2c26f571de8
+      size: 72754174
+    - path: data/interim/sample/2019-09.parquet
+      hash: md5
+      md5: 9c76abe1ffe5a9c084419e5eb6e7b289.dir
+      size: 13350307
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2019-09.parquet
+      hash: md5
+      md5: ea61d0bdf2606e78fa8bd95fc4805eb3
+      size: 5672419
+  aggregate@2019-10:
+    cmd: python -m elo.training.dataset --month 2019-10
+    deps:
+    - path: data/features/moves/2019-10.parquet
+      hash: md5
+      md5: fd5a08f6ca2f99c1611db8e90237762f
+      size: 72805266
+    - path: data/interim/sample/2019-10.parquet
+      hash: md5
+      md5: 8869c834e5152dcd96fe3111209e160a.dir
+      size: 13396620
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2019-10.parquet
+      hash: md5
+      md5: ac9d5d86f8cc39fb8ef652d33e96cb4d
+      size: 5676436
+  aggregate@2019-11:
+    cmd: python -m elo.training.dataset --month 2019-11
+    deps:
+    - path: data/features/moves/2019-11.parquet
+      hash: md5
+      md5: cb5c9cd28bca2b9599cb1737dfbdb840
+      size: 72543039
+    - path: data/interim/sample/2019-11.parquet
+      hash: md5
+      md5: 910fc3fec97a297c2a3fc79959b5e199.dir
+      size: 13311856
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2019-11.parquet
+      hash: md5
+      md5: e62ca43fef53d26746fd831222d34b83
+      size: 5660824
+  aggregate@2019-12:
+    cmd: python -m elo.training.dataset --month 2019-12
+    deps:
+    - path: data/features/moves/2019-12.parquet
+      hash: md5
+      md5: b11f7acb677505fd5936c3350f6a3300
+      size: 72918273
+    - path: data/interim/sample/2019-12.parquet
+      hash: md5
+      md5: e7d8c69a7538a5f000e7068ae1bed50b.dir
+      size: 13378217
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2019-12.parquet
+      hash: md5
+      md5: a6ec5ba517eb54021ffcf1f645f595f1
+      size: 5674331
+  aggregate@2020-01:
+    cmd: python -m elo.training.dataset --month 2020-01
+    deps:
+    - path: data/features/moves/2020-01.parquet
+      hash: md5
+      md5: ca6f1dd1b14c4a5363ce55f71ba18778
+      size: 36146872
+    - path: data/interim/sample/2020-01.parquet
+      hash: md5
+      md5: 4e5ac35722ca714f0017f209e0832237.dir
+      size: 6739563
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-01.parquet
+      hash: md5
+      md5: fabbe9b7b7440f97d7c19508003b8ae0
+      size: 2989467
+  aggregate@2020-02:
+    cmd: python -m elo.training.dataset --month 2020-02
+    deps:
+    - path: data/features/moves/2020-02.parquet
+      hash: md5
+      md5: 0c54a85c55387260328d9fe30e14a0aa
+      size: 36420915
+    - path: data/interim/sample/2020-02.parquet
+      hash: md5
+      md5: c7b2b135d7290c9576f9b378e51e3fb8.dir
+      size: 6736684
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-02.parquet
+      hash: md5
+      md5: 48fe92163f2962ab727b1a5f5d9b1dce
+      size: 2991541
+  aggregate@2020-03:
+    cmd: python -m elo.training.dataset --month 2020-03
+    deps:
+    - path: data/features/moves/2020-03.parquet
+      hash: md5
+      md5: 0ec6726b48d659ac9478a5525bcd9998
+      size: 36638394
+    - path: data/interim/sample/2020-03.parquet
+      hash: md5
+      md5: 32fe3a8ffc97c478e328e8574f41a318.dir
+      size: 6782466
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-03.parquet
+      hash: md5
+      md5: a702d6db1533f9feb7788dece8e02b3a
+      size: 2997505
+  aggregate@2020-04:
+    cmd: python -m elo.training.dataset --month 2020-04
+    deps:
+    - path: data/features/moves/2020-04.parquet
+      hash: md5
+      md5: 9333dcc206de7fe1ade72421c0c6b6e5
+      size: 37266538
+    - path: data/interim/sample/2020-04.parquet
+      hash: md5
+      md5: 85d099a2b7b5a54717611704849fa8ac.dir
+      size: 6967742
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-04.parquet
+      hash: md5
+      md5: 846179c61f1f4e294498c0d67fed5a6e
+      size: 3007378
+  aggregate@2020-05:
+    cmd: python -m elo.training.dataset --month 2020-05
+    deps:
+    - path: data/features/moves/2020-05.parquet
+      hash: md5
+      md5: 6d04285c0926d0ea622f62e2c0d2c6d5
+      size: 36958810
+    - path: data/interim/sample/2020-05.parquet
+      hash: md5
+      md5: 73cc244463d2ea0373df199e7eb2768c.dir
+      size: 6933739
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-05.parquet
+      hash: md5
+      md5: 03cee25e045600e702e0222950d91605
+      size: 3005378
+  aggregate@2020-06:
+    cmd: python -m elo.training.dataset --month 2020-06
+    deps:
+    - path: data/features/moves/2020-06.parquet
+      hash: md5
+      md5: c95c16f2f2c19222206a148619f1ecb0
+      size: 37373730
+    - path: data/interim/sample/2020-06.parquet
+      hash: md5
+      md5: 5eb0356119f404422ce17b922469b30d.dir
+      size: 6933198
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-06.parquet
+      hash: md5
+      md5: 2fa55b2f593168e2f6096bb75c26d878
+      size: 3015860
+  aggregate@2020-07:
+    cmd: python -m elo.training.dataset --month 2020-07
+    deps:
+    - path: data/features/moves/2020-07.parquet
+      hash: md5
+      md5: 0f4feaae31b9ffc03461d673e97175ce
+      size: 37366494
+    - path: data/interim/sample/2020-07.parquet
+      hash: md5
+      md5: 11b46fc363ab49bfef7aea2fd7a0a854.dir
+      size: 6962399
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-07.parquet
+      hash: md5
+      md5: f8dd22d82f01aa9758f391ed4219beb2
+      size: 3023734
+  aggregate@2020-08:
+    cmd: python -m elo.training.dataset --month 2020-08
+    deps:
+    - path: data/features/moves/2020-08.parquet
+      hash: md5
+      md5: a91aade057e545fa8f52b6858215a27f
+      size: 36941703
+    - path: data/interim/sample/2020-08.parquet
+      hash: md5
+      md5: 66d87f3e3fef8b2cd081367918e848e3.dir
+      size: 6825171
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-08.parquet
+      hash: md5
+      md5: 9c731495550068fb169288fda91d80ef
+      size: 3050555
+  aggregate@2020-09:
+    cmd: python -m elo.training.dataset --month 2020-09
+    deps:
+    - path: data/features/moves/2020-09.parquet
+      hash: md5
+      md5: 4371056c4a10e57635da4e2d40118cb6
+      size: 36892366
+    - path: data/interim/sample/2020-09.parquet
+      hash: md5
+      md5: 52027e7979947fd60d4c17a70150c907.dir
+      size: 6885468
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-09.parquet
+      hash: md5
+      md5: 16a68c7170e4f4f2e04cbcd77b972a7a
+      size: 3016888
+  aggregate@2020-10:
+    cmd: python -m elo.training.dataset --month 2020-10
+    deps:
+    - path: data/features/moves/2020-10.parquet
+      hash: md5
+      md5: ea0ce3fd432d3e745f1a4302b657956c
+      size: 36663165
+    - path: data/interim/sample/2020-10.parquet
+      hash: md5
+      md5: 50a4b654aefc0397a5f5d839755791eb.dir
+      size: 6808615
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-10.parquet
+      hash: md5
+      md5: d122c17c1ae666bf12d33e1069883bb9
+      size: 3015580
+  aggregate@2020-11:
+    cmd: python -m elo.training.dataset --month 2020-11
+    deps:
+    - path: data/features/moves/2020-11.parquet
+      hash: md5
+      md5: cc0da2af83743cb89786a7e44c8095c3
+      size: 36732412
+    - path: data/interim/sample/2020-11.parquet
+      hash: md5
+      md5: 6c130590e61c4a323e684a9b90b2eb10.dir
+      size: 6839666
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-11.parquet
+      hash: md5
+      md5: f9d1e982ca3ad67e18b71ca13fd47266
+      size: 3009179
+  aggregate@2020-12:
+    cmd: python -m elo.training.dataset --month 2020-12
+    deps:
+    - path: data/features/moves/2020-12.parquet
+      hash: md5
+      md5: 492660f7f16483e345b08c3cca3eb8f4
+      size: 36552557
+    - path: data/interim/sample/2020-12.parquet
+      hash: md5
+      md5: e08ac2b3d2736d6f894ec83ec76483ac.dir
+      size: 6919366
+      nfiles: 4
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    outs:
+    - path: data/features/games/2020-12.parquet
+      hash: md5
+      md5: 97be18c19316d30b1e36c96465cb76cc
+      size: 3014823
+  build_dataset:
+    cmd: python -m elo.training.dataset
+    deps:
+    - path: data/features/games
+      hash: md5
+      md5: 5a5c963f6ff7b55cee3ff9c3aa51e218.dir
+      size: 58821898
+      nfiles: 16
+    - path: data/features/moves
+      hash: md5
+      md5: bdc3368731e2c66b3dc91a8b17cd7397.dir
+      size: 732974980
+      nfiles: 17
+    - path: data/interim/sample
+      hash: md5
+      md5: f893f3be8e67a01867abbca33ffbf002.dir
+      size: 135771349
+      nfiles: 65
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    params:
+      params.yaml:
+        seed: 42
+        train.clock_dropout: 0.2
+        train.fit_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+        train.holdout_month: 2019-12
+    outs:
+    - path: data/datasets
+      hash: md5
+      md5: bc9580dbaa80111b192c8ea4807b3315.dir
+      size: 21450016
+      nfiles: 5
+    - path: reports/dataset.json
+      hash: md5
+      md5: 67666093b43ce78494cd6b58b355c0fc
+      size: 612
+  train_baselines:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e train_baselines 
+      --env-manager=local --experiment-name elo
+    deps:
+    - path: MLproject
+      hash: md5
+      md5: ff7bc8b0b6b474d07a6f12b594568b51
+      size: 401
+    - path: data/datasets
+      hash: md5
+      md5: bc9580dbaa80111b192c8ea4807b3315.dir
+      size: 21450016
+      nfiles: 5
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/errors.py
+      hash: md5
+      md5: cb3c57b74eb5001ad058ead6d90653a1
+      size: 1226
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/models/conformal.py
+      hash: md5
+      md5: d2573fa9b754b7e959f2d4d45dc37805
+      size: 1169
+    - path: src/elo/models/scoring.py
+      hash: md5
+      md5: fe020bac6db1e78b913f6ab211d4bab3
+      size: 294
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    - path: src/elo/training/pipeline.py
+      hash: md5
+      md5: 7d2436b295491fa615629a27c404ba28
+      size: 14156
+    params:
+      params.yaml:
+        train.experiment: elo
+    outs:
+    - path: reports/baselines.json
+      hash: md5
+      md5: 38fb8576e46384932e1df40b0ea2fd45
+      size: 405
+  train_xgb:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e train_xgb --env-manager=local
+      --experiment-name elo
+    deps:
+    - path: MLproject
+      hash: md5
+      md5: ff7bc8b0b6b474d07a6f12b594568b51
+      size: 401
+    - path: data/datasets/cal.parquet
+      hash: md5
+      md5: db2f83cf376863987d152b742bf30978
+      size: 2080859
+    - path: data/datasets/reference_stats.json
+      hash: md5
+      md5: b66826b37a047ad26fa3aad8d41ccefd
+      size: 22230
+    - path: data/datasets/train.parquet
+      hash: md5
+      md5: 744ffb1aad84d8ff7b3ffc5a55b2ce45
+      size: 15234629
+    - path: data/datasets/val.parquet
+      hash: md5
+      md5: d164be33a66467639b41d88009ab99a7
+      size: 2036991
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/errors.py
+      hash: md5
+      md5: cb3c57b74eb5001ad058ead6d90653a1
+      size: 1226
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/models/conformal.py
+      hash: md5
+      md5: d2573fa9b754b7e959f2d4d45dc37805
+      size: 1169
+    - path: src/elo/models/scoring.py
+      hash: md5
+      md5: fe020bac6db1e78b913f6ab211d4bab3
+      size: 294
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    - path: src/elo/training/pipeline.py
+      hash: md5
+      md5: 7d2436b295491fa615629a27c404ba28
+      size: 14156
+    params:
+      params.yaml:
+        seed: 42
+        train.conformal_alpha: 0.2
+        train.experiment: elo
+        train.xgb:
+          grid:
+            max_depth:
+            - 4
+            - 6
+            - 8
+            learning_rate:
+            - 0.05
+            - 0.1
+          n_estimators: 3000
+          early_stopping_rounds: 100
+          n_jobs_per_trial: 2
+    outs:
+    - path: models/xgb
+      hash: md5
+      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
+      size: 4524064
+      nfiles: 6
+    - path: reports/train_xgb.json
+      hash: md5
+      md5: 51847df234b4e96afe6f6b3e1940447c
+      size: 211
+  evaluate:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e evaluate --env-manager=local 
+      --experiment-name elo
+    deps:
+    - path: MLproject
+      hash: md5
+      md5: ff7bc8b0b6b474d07a6f12b594568b51
+      size: 401
+    - path: data/datasets/test.parquet
+      hash: md5
+      md5: c5fcfb0272263bfbb4bfb864f8f9563f
+      size: 2075307
+    - path: data/features/games
+      hash: md5
+      md5: 5a5c963f6ff7b55cee3ff9c3aa51e218.dir
+      size: 58821898
+      nfiles: 16
+    - path: models/xgb
+      hash: md5
+      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
+      size: 4524064
+      nfiles: 6
+    - path: reports/baselines.json
+      hash: md5
+      md5: 38fb8576e46384932e1df40b0ea2fd45
+      size: 405
+    - path: reports/dataset.json
+      hash: md5
+      md5: 67666093b43ce78494cd6b58b355c0fc
+      size: 612
+    - path: reports/throughput
+      hash: md5
+      md5: 35fc807e5d4a8f94fc2c008b3a08cb90.dir
+      size: 3924
+      nfiles: 16
+    - path: reports/train_xgb.json
+      hash: md5
+      md5: 51847df234b4e96afe6f6b3e1940447c
+      size: 211
+    - path: src/elo/common/config.py
+      hash: md5
+      md5: 6d9e18b3b579ce6b01a2d133556329f4
+      size: 815
+    - path: src/elo/common/errors.py
+      hash: md5
+      md5: cb3c57b74eb5001ad058ead6d90653a1
+      size: 1226
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/models/conformal.py
+      hash: md5
+      md5: d2573fa9b754b7e959f2d4d45dc37805
+      size: 1169
+    - path: src/elo/models/scoring.py
+      hash: md5
+      md5: fe020bac6db1e78b913f6ab211d4bab3
+      size: 294
+    - path: src/elo/training/dataset.py
+      hash: md5
+      md5: 381f44be5720bb5a3fc17fee0eb87d12
+      size: 5468
+    - path: src/elo/training/pipeline.py
+      hash: md5
+      md5: 7d2436b295491fa615629a27c404ba28
+      size: 14156
+    params:
+      params.yaml:
+        data.replay_months:
+        - 2020-01
+        - 2020-02
+        - 2020-03
+        - 2020-04
+        - 2020-05
+        - 2020-06
+        - 2020-07
+        - 2020-08
+        - 2020-09
+        - 2020-10
+        - 2020-11
+        - 2020-12
+        train.experiment: elo
+        train.fit_months:
+        - 2019-09
+        - 2019-10
+        - 2019-11
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: d6872aafaae4d4646b56d02ce7e2c745
+      size: 887
+    - path: reports/plots/confusion.png
+      hash: md5
+      md5: 2bce56bc944de4b5f6f679a4ddd5d18c
+      size: 21559
+    - path: reports/plots/coverage.png
+      hash: md5
+      md5: c4c52bda779fca0816c041341e3ba713
+      size: 12609
+    - path: reports/plots/predicted.png
+      hash: md5
+      md5: 410abaaa8bdc0f40b26810986d7b84a4
+      size: 144874
+    - path: reports/plots/residual.png
+      hash: md5
+      md5: 96f3b5b0ce0d95c0f7f15382a546b472
+      size: 139824
+    - path: reports/replay_eval.json
+      hash: md5
+      md5: 118b1a3b8c523706b050e00de44025aa
+      size: 1085
+  tests:
+    cmd: python -m elo.training.checks tests
+    deps:
+    - path: src
+      hash: md5
+      md5: 56635c162dd525d0c944cedd5229d64d.dir
+      size: 119852
+      nfiles: 38
+    - path: tests
+      hash: md5
+      md5: 3ead1c6014cefe13d0a5aa18c279cd3b.dir
+      size: 58812
+      nfiles: 19
+    outs:
+    - path: reports/tests.json
+      hash: md5
+      md5: 975f5e2a7d8769cdc99191facb113f81
+      size: 65
+    - path: reports/tests.xml
+      hash: md5
+      md5: 1eb8aa28d7ee3699a8080cdaaf2a1671
+      size: 11112
+  register:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e register --env-manager=local 
+      --experiment-name elo
+    deps:
+    - path: MLproject
+      hash: md5
+      md5: ff7bc8b0b6b474d07a6f12b594568b51
+      size: 401
+    - path: models/xgb
+      hash: md5
+      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
+      size: 4524064
+      nfiles: 6
+    - path: reports/metrics.json
+      hash: md5
+      md5: d6872aafaae4d4646b56d02ce7e2c745
+      size: 887
+    - path: src/elo/common/logging.py
+      hash: md5
+      md5: eeffa9ee53316e91cf3795ffddd4d0cd
+      size: 1030
+    - path: src/elo/models/aggregate.py
+      hash: md5
+      md5: 4295a62de54c3e2de1215f3f8ee92f3d
+      size: 5561
+    - path: src/elo/models/pyfunc.py
+      hash: md5
+      md5: 544e9e70e6fb02e96e4b737a95e13af6
+      size: 2922
+    - path: src/elo/training/registry.py
+      hash: md5
+      md5: 8de174f2f0d90d016cb432c492f19401
+      size: 5363
+    outs:
+    - path: reports/register.json
+      hash: md5
+      md5: e1ebd02a2b7316114a04499f39c9d1f7
+      size: 85

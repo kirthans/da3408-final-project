@@ -40,5 +40,193 @@ services:
       retries: 12
       start_period: 30s
 
+  model-server:
+    build:
+      context: .
+      dockerfile: services/model_server/Dockerfile
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_DISABLE_TELEMETRY: "true"
+      ALIAS_POLL_S: ${ALIAS_POLL_S:-60}
+      METRICS_PORT: "18003"
+    expose: ["18003"]
+    ports:
+      - "5001:5001"
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/ping', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    environment:
+      MODEL_SERVER_URL: http://model-server:5001
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      TRAINER_URL: http://trainer:8001
+      API_KEY: ${API_KEY:?Set API_KEY in .env}
+      FRONTEND_ORIGINS: ${FRONTEND_ORIGINS:-http://localhost:8080,https://localhost:8443}
+      ENGINE_POOL: ${ENGINE_POOL:-2}
+      MAX_PGN_BYTES: ${MAX_PGN_BYTES:-1048576}
+      METRICS_PORT: "18000"
+      GIT_COMMIT: ${GIT_COMMIT:-unknown}
+    expose: ["18000"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      model-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: services/frontend/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      API_BASE_URL: ${API_BASE_URL:-/api}
+      API_UPSTREAM: ${API_UPSTREAM:-http://api:8000/}
+      MLFLOW_PORT: ${MLFLOW_PORT:-5000}
+      GRAFANA_PORT: ${GRAFANA_PORT:-3000}
+      PROMETHEUS_PORT: ${PROMETHEUS_PORT:-9090}
+    volumes:
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      api:
+        condition: service_started
+    restart: unless-stopped
+
+  monitor:
+    build:
+      context: .
+      dockerfile: services/monitor/Dockerfile
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      API_KEY: ${API_KEY:?Set API_KEY in .env}
+      TRAINER_URL: http://trainer:8001
+      REPLAY_INTERVAL_S: ${REPLAY_INTERVAL_S:-900}
+      DRIFT_INJECTION: ${DRIFT_INJECTION:-0}
+    ports: ["127.0.0.1:8002:8002", "127.0.0.1:18001:18001"]
+    volumes:
+      - monitor-state:/state
+      - ./data/features/games:/app/data/features/games:ro
+      - ./params.yaml:/app/params.yaml:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health', timeout=5)"]
+      interval: 10s
+      retries: 12
+    mem_limit: 1g
+    restart: unless-stopped
+
+  trainer:
+    build:
+      context: .
+      dockerfile: services/trainer/Dockerfile
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    environment:
+      USER: trainer
+      LOGNAME: trainer
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      API_KEY: ${API_KEY:?Set API_KEY in .env}
+      MONITOR_URL: http://monitor:8002
+      BASELINE_VERSION: ${BASELINE_VERSION:-}
+      ELO_DISABLE_PUSH: ${ELO_DISABLE_PUSH:-0}
+      ELO_RAY_CPUS: ${ELO_RAY_CPUS:-4}
+    ports: ["127.0.0.1:8001:8001", "127.0.0.1:18002:18002"]
+    volumes:
+      - .:/repo
+      - ./.git:/repo/.git:ro
+      - ./services/trainer/stage.env:/repo/.env:ro
+      - ./services/trainer/dvc.local:/repo/.dvc/config.local:ro
+      - trainer-state:/state
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    shm_size: 1g
+    mem_limit: 6g
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=5)"]
+      interval: 10s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=15d"]
+    ports: ["127.0.0.1:9090:9090"]
+    volumes:
+      - ./infra/prometheus:/etc/prometheus:ro
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9090/-/ready"]
+      interval: 15s
+    mem_limit: 512m
+    restart: unless-stopped
+
+  alertmanager:
+    image: prom/alertmanager:v0.35.0
+    command: ["--config.file=/etc/alertmanager/alertmanager.yml"]
+    ports: ["127.0.0.1:9093:9093"]
+    volumes: ["./infra/alertmanager:/etc/alertmanager:ro"]
+    # Compose materializes API_KEY from .env as a file, never in committed config.
+    secrets: [trainer_api_key]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9093/-/ready"]
+      interval: 15s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:13.3.1
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-change-me}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3000/api/health"]
+      interval: 15s
+      start_period: 30s
+    mem_limit: 512m
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    command: ["--path.procfs=/host/proc", "--path.sysfs=/host/sys", "--path.rootfs=/rootfs"]
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro,rslave
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9100/metrics"]
+      interval: 15s
+    restart: unless-stopped
+
 volumes:
   mlflow-data:
+  monitor-state:
+  trainer-state:
+  prometheus-data:
+  grafana-data:
+
+secrets:
+  trainer_api_key:
+    environment: API_KEY

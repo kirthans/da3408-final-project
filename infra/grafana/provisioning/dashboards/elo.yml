@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: elo
+    folder: Guess the Elo
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

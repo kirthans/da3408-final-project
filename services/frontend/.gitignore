@@ -1,0 +1,3 @@
+# Root dist/ ignore must not hide vendored browser distributions.
+!site/vendor/**/dist/
+!site/vendor/**/dist/**

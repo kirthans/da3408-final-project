@@ -73,3 +73,149 @@ stages:
       metrics:
         - reports/sample/${item}.json:
             cache: false
+  aggregate:
+    foreach: ${data.months}
+    do:
+      cmd: python -m elo.training.dataset --month ${item}
+      deps:
+      - src/elo/models/aggregate.py
+      - src/elo/training/dataset.py
+      - src/elo/common/config.py
+      - src/elo/common/logging.py
+      - data/features/moves/${item}.parquet
+      - data/interim/sample/${item}.parquet
+      outs:
+      - data/features/games/${item}.parquet
+  build_dataset:
+    cmd: python -m elo.training.dataset
+    deps:
+    - src/elo/models/aggregate.py
+    - src/elo/training/dataset.py
+    - src/elo/common/config.py
+    - src/elo/common/logging.py
+    - data/features/games
+    - data/features/moves
+    - data/interim/sample
+    params:
+    - train.fit_months
+    - train.holdout_month
+    - train.clock_dropout
+    - seed
+    outs:
+    - data/datasets
+    metrics:
+    - reports/dataset.json:
+        cache: false
+  train_baselines:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e train_baselines --env-manager=local
+      --experiment-name ${train.experiment}
+    deps:
+    - src/elo/models/aggregate.py
+    - src/elo/training/dataset.py
+    - src/elo/common/config.py
+    - src/elo/common/logging.py
+    - src/elo/models/conformal.py
+    - src/elo/models/scoring.py
+    - src/elo/training/pipeline.py
+    - src/elo/common/errors.py
+    # MLproject entry-point additions do not change this stage's behavior.
+    - MLproject
+    - data/datasets
+    params:
+    - train.experiment
+    metrics:
+    - reports/baselines.json:
+        cache: false
+  train_xgb:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e train_xgb --env-manager=local --experiment-name
+      ${train.experiment}
+    deps:
+    - src/elo/models/aggregate.py
+    - src/elo/training/dataset.py
+    - src/elo/common/config.py
+    - src/elo/common/logging.py
+    - src/elo/models/conformal.py
+    - src/elo/models/scoring.py
+    - src/elo/training/pipeline.py
+    - src/elo/common/errors.py
+    # MLproject entry-point additions do not change this stage's behavior.
+    - MLproject
+    - data/datasets/train.parquet
+    - data/datasets/val.parquet
+    - data/datasets/cal.parquet
+    - data/datasets/reference_stats.json
+    params:
+    - train.experiment
+    - train.xgb
+    - train.conformal_alpha
+    - seed
+    outs:
+    - models/xgb
+    metrics:
+    - reports/train_xgb.json:
+        cache: false
+  evaluate:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e evaluate --env-manager=local --experiment-name
+      ${train.experiment}
+    deps:
+    - src/elo/models/aggregate.py
+    - src/elo/training/dataset.py
+    - src/elo/common/config.py
+    - src/elo/common/logging.py
+    - src/elo/models/conformal.py
+    - src/elo/models/scoring.py
+    - src/elo/training/pipeline.py
+    - src/elo/common/errors.py
+    # MLproject entry-point additions do not change this stage's behavior.
+    - MLproject
+    - models/xgb
+    - data/datasets/test.parquet
+    - reports/baselines.json
+    - reports/train_xgb.json
+    - reports/dataset.json
+    - data/features/games
+    - reports/throughput
+    params:
+    - train.experiment
+    - train.fit_months
+    - data.replay_months
+    metrics:
+    - reports/metrics.json:
+        cache: false
+    - reports/replay_eval.json:
+        cache: false
+    plots:
+    - reports/plots/coverage.png:
+        cache: false
+    outs:
+    - reports/plots/residual.png:
+        cache: false
+    - reports/plots/predicted.png:
+        cache: false
+    - reports/plots/confusion.png:
+        cache: false
+  tests:
+    cmd: python -m elo.training.checks tests
+    deps:
+    - src
+    - tests
+    metrics:
+    - reports/tests.json:
+        cache: false
+    outs:
+    - reports/tests.xml:
+        cache: false
+  register:
+    cmd: set -a; . ./.env; set +a; mlflow run . -e register --env-manager=local --experiment-name elo
+    deps:
+    - src/elo/models/aggregate.py
+    - src/elo/models/pyfunc.py
+    - src/elo/training/registry.py
+    - src/elo/common/logging.py
+    # MLproject entry-point additions do not change this stage's behavior.
+    - MLproject
+    - models/xgb
+    - reports/metrics.json
+    outs:
+    - reports/register.json:
+        cache: false

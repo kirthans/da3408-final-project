@@ -21,3 +21,6 @@ certs/
 *.log
 # Downloaded engine release.
 tools/stockfish/
+
+# Generated trainer overlay contains host-specific remote details.
+services/trainer/dvc.local

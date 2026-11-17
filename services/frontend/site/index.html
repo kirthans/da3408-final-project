@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guess the Elo · A game, a little perspective</title>
+  <link rel="stylesheet" href="vendor/chrisoakman-chessboardjs/dist/chessboard-1.0.0.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
+  <script src="vendor/jquery/dist/jquery.min.js" defer></script>
+  <script src="vendor/chrisoakman-chessboardjs/dist/chessboard-1.0.0.min.js" defer></script>
+  <script src="app.js" type="module"></script>
+</head>
+<body>
+<header><a class="brand" href="index.html">♞ Guess the Elo</a><a href="help.html">How it works ↗</a></header>
+<main>
+  <nav class="tabs" aria-label="Main views"><button id="estimate-tab" aria-current="page">Estimate</button><button id="pipeline-tab">Pipeline</button></nav>
+  <section id="estimate-view" aria-labelledby="title">
+    <p class="eyebrow">A game, a little perspective</p><h1 id="title">What does your play say?</h1>
+    <p class="intro">Bring a chess game. Get a Lichess-equivalent rating estimate for each player, explore the moves, and see how much uncertainty remains.</p>
+    <p id="demo" class="notice" hidden><strong>Demo data.</strong> These illustrative results are bundled for UI review; no game has been analysed.</p>
+    <section class="panel" aria-label="Game input">
+      <div class="section-heading"><h2>Start with a game</h2><span>PGN · up to 1 MB</span></div>
+      <div id="drop-zone"><label for="pgn">Paste your PGN, or drop a .pgn file here</label><textarea id="pgn" rows="6" spellcheck="false" placeholder='[White "You"]&#10;[Black "Opponent"]&#10;&#10;1. e4 e5 2. Nf3 Nc6 …'></textarea>
+      <div class="file-picker"><input id="file" class="visually-hidden" type="file" accept=".pgn" aria-describedby="file-name"><label class="file-label" for="file">Choose a PGN file</label><span id="file-name" class="small" aria-live="polite">No file chosen</span></div></div>
+      <div class="examples"><span>Try an example:</span><button data-example="clock">Online game · clocks</button><button data-example="opera">Morphy’s Opera game · no clocks</button></div>
+      <button id="parse" class="primary">Read game</button>
+      <div id="selection" hidden>
+        <label for="game">Game to analyse</label><select id="game"></select>
+        <div id="time-control" hidden><label for="tc">Time control</label><select id="tc"><option value="classical">Classical</option><option value="rapid">Rapid</option><option value="blitz">Blitz</option></select><p class="small">This game has no time control in its file. Choose one so we compare it with the right rating scale. Classical is the default for over-the-board games.</p></div>
+        <button id="predict" class="primary">Estimate ratings</button>
+      </div>
+      <div class="status-row"><span id="spinner" class="spinner" hidden></span><p id="status" role="status" aria-live="polite"></p><button id="cancel" hidden>Cancel</button></div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+    <section id="results" hidden aria-label="Rating estimates">
+      <div class="section-heading"><h2>A reading of this game</h2><span id="result-context"></span></div>
+      <div id="warnings" class="notice" hidden></div><div id="ratings" class="rating-grid"></div>
+      <section class="panel replay"><div><h2>Follow the game</h2><div id="board" role="img" aria-label="Chess position" tabindex="0"></div>
+        <div class="board-controls" aria-label="Replay controls"><button id="first" aria-label="First position">|←</button><button id="prev" aria-label="Previous move">←</button><button id="next" aria-label="Next move">→</button><button id="last" aria-label="Last position">→|</button></div><p id="position" class="small" aria-live="polite"></p><p class="small">Focus the board and use ← / →. Move symbols: ?! inaccuracy · ? mistake · ?? blunder.</p></div>
+        <div><h3>Move by move</h3><div id="moves" class="move-list" aria-label="Clickable moves"></div><h3>Moves that shaped the estimate</h3><ul id="influence" class="influence"></ul></div>
+      </section>
+      <section class="panel caveat"><h2>An estimate, with room for doubt</h2><p id="caveat"></p><p>The 80% interval describes uncertainty: across comparable games, about 8 in 10 such intervals should contain the player’s rating. One game is noisy; this is neither an official rating nor a measure of potential.</p><p id="details" class="small"></p></section>
+    </section>
+  </section>
+  <section id="pipeline-view" hidden aria-labelledby="pipeline-title"><p class="eyebrow">Behind the estimate</p><h1 id="pipeline-title">The current model</h1><div class="panel"><p id="model-status" role="status" aria-live="polite">Loading model…</p><dl id="model"></dl><nav id="service-links" aria-label="Pipeline services"></nav><p class="small">The full pipeline console, including runs and retraining controls, comes later.</p></div></section>
+</main>
+<footer>Made for curiosity. Games are not stored. <a href="help.html">Read the guide</a></footer>
+</body></html>
