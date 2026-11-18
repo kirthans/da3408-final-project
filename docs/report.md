@@ -1,12 +1,14 @@
 # Guess the Elo: project report
 
-**DA3408 AIOps Lab, course project.** Submitted 2026-11-18. Repository: `REPO_URL` (commit `COMMIT`).
+**Kirthan S (DA24B009)** · DA3408 AIOps Lab, course project · submitted 2026-11-18
+
+Repository: <https://github.com/kirthans/da3408-final-project> (branch `main`)
 
 You give the app one chess game as a PGN. It estimates both players' **Lichess-equivalent ratings** with an **80% interval**, and shows the **moves that most influenced the estimate**. The rating headers in the file are never used.
 
 A pipeline built with Spark, Ray and Stockfish runs under DVC and trains an XGBoost model, which is tracked in MLflow. MLflow serves the model behind FastAPI, and a static web UI calls it. Prometheus and Grafana watch the model on a month-by-month **replay of 2020 Lichess games**. When the error drifts, an alert retrains the model by itself and promotes it only if it beats the current model on unseen data.
 
-This report covers the whole project. Chapters A–F at the end are the mandatory documents: architecture, HLD, LLD, test plan, test report and user manual.
+This report covers the whole project. Chapters A–F at the end are the mandatory documents: architecture, HLD, LLD, test plan, test report and user manual. Chapter G is the AI-use disclosure.
 
 ---
 
@@ -40,7 +42,7 @@ Every number above comes from a file the pipeline wrote: `reports/metrics.json`,
 | **Experiment tracking** (autolog and beyond; metrics, parameters, artifacts) | §6, with MLflow screenshots |
 | **Prometheus instrumentation, Grafana in near-real time** | §8; `infra/prometheus/`, `infra/grafana/`; metric catalogue in Chapter C §6 |
 | **Packaging**: MLflow serving, MLproject, FastAPI, Docker, Compose | §7; `MLproject`, `python_env.yaml`, `docker-compose.yml`, `services/*/Dockerfile` |
-| **AI-use disclosure** | `AI_DISCLOSURE.md` |
+| **AI-use disclosure** | **Chapter G** (`AI_DISCLOSURE.md`) |
 
 ## 3. Problem and data
 
@@ -253,3 +255,4 @@ The chapters that follow are the mandatory documents, included unchanged from `d
 - **D.** Test plan and test cases (`docs/test_plan.md`)
 - **E.** Test report (`docs/test_report.md`)
 - **F.** User manual (`docs/user_manual.md`)
+- **G.** AI-use disclosure (`AI_DISCLOSURE.md`)

@@ -1,7 +1,7 @@
 # Test report
 
-Generated: 2026-11-18T01:49:38.715924+00:00
-Git commit: `4551b15`
+Generated: 2026-11-18T15:18:20.591447+00:00
+Git commit: `58d05c8`
 
 Measurements reflect the report files at generation time; training may update metrics during the replay.
 
