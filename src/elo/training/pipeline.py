@@ -37,11 +37,20 @@ class TrainingError(EloError):
 
 
 def datasets(*names):
+    """Load the named prepared Parquet splits in the requested order."""
     return [pd.read_parquet(f"data/datasets/{name}.parquet") for name in names]
 
 
 def baseline_predictions(train, target):
-    """Fit all three baselines solely on training labels."""
+    """Fit three simple predictors using only training labels.
+
+    Args:
+        train: Labelled fit rows with time controls, scores and game lengths.
+        target: Rows to predict without using their labels for fitting.
+
+    Returns:
+        Predictions from the global mean (B0), time-control mean (B1) and
+        one-hot time-control/score/length linear regression (B2)."""
     means = train.groupby("tc_class", observed=True).elo.mean()
     linear = make_pipeline(
         ColumnTransformer(
@@ -60,6 +69,7 @@ def baseline_predictions(train, target):
 
 
 def train_baselines():
+    """Log three train-fitted baselines and held-out errors in nested MLflow runs."""
     train, val, test = datasets("train", "val", "test")
     predictions = {
         name: baseline_predictions(train, frame) for name, frame in [("val", val), ("test", test)]
@@ -82,7 +92,20 @@ def train_baselines():
 
 @ray.remote
 def fit_trial(run_id, uri, train, val, settings, grid_params, seed):
-    """A Ray task owns one child run and only its allocated XGBoost threads."""
+    """Fit one Ray trial inside its child MLflow run (DESIGN D4).
+
+    Args:
+        run_id: Pre-created child run under the sweep parent.
+        uri: Tracking URI propagated to the worker.
+        train: Labelled training perspective rows.
+        val: Untouched validation rows used for early stopping and selection.
+        settings: Estimator count, stopping patience and allocated threads.
+        grid_params: Hyperparameters defining this trial.
+        seed: Reproducible XGBoost seed.
+
+    Returns:
+        The child run ID and raw UBJ booster bytes. Autolog and explicit
+        iteration history are retained together (DESIGN §24 F5)."""
     import time
 
     mlflow.set_tracking_uri(uri)
@@ -132,6 +155,13 @@ def fit_trial(run_id, uri, train, val, settings, grid_params, seed):
 
 
 def train_xgb():
+    """Sweep XGBoost trials with bounded Ray resources and calibrate the winner.
+
+    Validation selects the trial and tree count; untouched calibration rows set
+    Mondrian radii (DESIGN D4, D7). Artifacts and provenance go to the parent run.
+
+    Raises:
+        TrainingError: Per-trial threads fall outside the supported 1..12 budget."""
     p = load_params()
     cfg = p["train"]
     settings = cfg["xgb"]
@@ -227,6 +257,7 @@ def train_xgb():
 
 
 def plotting():
+    """Load pyplot with the noninteractive Agg backend for headless report generation."""
     import matplotlib
 
     matplotlib.use("Agg")
@@ -236,6 +267,7 @@ def plotting():
 
 
 def flatten(mapping, prefix=""):
+    """Flatten nested configuration mappings into dot-separated MLflow parameter names."""
     return {
         key: value
         for k, v in mapping.items()
@@ -246,6 +278,7 @@ def flatten(mapping, prefix=""):
 
 
 def evaluate():
+    """Publish held-out acceptance metrics, replay comparisons and plots with MLflow lineage."""
     p = load_params()
     report = json.loads(Path("reports/train_xgb.json").read_text())
     model = xgb.Booster()

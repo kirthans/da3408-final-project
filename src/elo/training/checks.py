@@ -15,6 +15,7 @@ def sanitize_junit(path, repository_root=None):
     prefix = str(repository_root)
 
     def relative(value):
+        """Replace the repository prefix with portable relative paths in XML text."""
         return value.replace(prefix + "/", "").replace(prefix, ".")
 
     tree = ET.parse(path)

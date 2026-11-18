@@ -40,17 +40,29 @@ NAME = "elo-estimator"
 
 
 class ApiError(EloError):
+    """Carry a public error code and HTTP status through the domain handler (DESIGN §9)."""
+
     def __init__(self, code, message, status=422):
+        """Initialize the message, stable code and HTTP status.
+
+        Args:
+            code: Machine-readable public error code.
+            message: User-facing explanation.
+            status: HTTP response status, defaulting to validation failure."""
         super().__init__(message)
         self.code, self.http_status = code, status
 
 
 class PgnBody(BaseModel):
+    """Validate a strictly typed PGN request body (DESIGN §9)."""
+
     model_config = ConfigDict(strict=True)
     pgn: str
 
 
 class PredictBody(PgnBody):
+    """Validate game selection, influence count and optional time-control fallback."""
+
     game_index: int = Field(default=0, ge=0)
     top_k: int = Field(default=5, ge=1, le=50)
     tc_class: Literal["blitz", "rapid", "classical"] | None = None
@@ -68,6 +80,16 @@ def tc_class(base, inc=0):
 
 
 def time_control(header):
+    """Decode a PGN time control into base seconds, increment and class.
+
+    Args:
+        header: TimeControl value; missing or unknown values have no class.
+
+    Returns:
+        A tuple of base seconds, increment seconds and time-control class.
+
+    Raises:
+        ApiError: The header has malformed or negative numeric fields."""
     if not header or header == "?":
         return None, 0, None
     if header == "-":
@@ -83,6 +105,7 @@ def time_control(header):
 
 
 def game_entry(game, index):
+    """Build display metadata for a parsed game without passing identities to the model."""
     h, moves = game["headers"], game["moves"]
     return dict(
         index=index,
@@ -99,7 +122,21 @@ def game_entry(game, index):
 
 
 def remote(url, *, payload=None, retry=False, code="model_unavailable", headers=None):
-    """Only network failures and 5xx are retried; every call has a finite timeout."""
+    """Call an upstream with finite timeouts and optional retries (DESIGN §9).
+
+    Args:
+        url: Full upstream endpoint.
+        payload: JSON body for POST; None selects GET.
+        retry: Allow up to three attempts for network errors and 5xx only.
+        code: Public error code for upstream unavailability.
+        headers: Optional authentication headers to forward.
+
+    Returns:
+        The successful requests response.
+
+    Raises:
+        ApiError: The upstream rejects the call or exhausts attempts. Trainer
+            401 and 409 retain their public statuses (DESIGN §24 F1)."""
     model_call = url.startswith(os.getenv("MODEL_SERVER_URL", "http://localhost:5001") + "/")
     for attempt in range(3 if retry else 1):
         try:
@@ -112,6 +149,7 @@ def remote(url, *, payload=None, retry=False, code="model_unavailable", headers=
             )
             if response.status_code < 500:
                 if not response.ok:
+                    # Preserve actionable auth/conflict errors rather than hiding them as 503 (F1).
                     if code == "trainer_unavailable" and response.status_code in {401, 409}:
                         raise ApiError(
                             "unauthorized" if response.status_code == 401 else "run_in_progress",
@@ -128,6 +166,7 @@ def remote(url, *, payload=None, retry=False, code="model_unavailable", headers=
                 return response
         except requests.RequestException:
             pass
+        # Retry network failures/5xx only, with 0.1s then 0.2s backoff (DESIGN §9).
         if retry and attempt < 2:
             time.sleep(0.1 * 2**attempt)
     if model_call:
@@ -136,6 +175,7 @@ def remote(url, *, payload=None, retry=False, code="model_unavailable", headers=
 
 
 def model_metadata():
+    """Resolve champion metadata and metric tags through MLflow REST (DESIGN D11)."""
     uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000").rstrip("/")
     response = remote(f"{uri}/api/2.0/mlflow/registered-models/alias?name={NAME}&alias=champion")
     version = response.json()["model_version"]
@@ -152,6 +192,13 @@ def model_metadata():
 
 @asynccontextmanager
 async def lifespan(app):
+    """Own the bounded serving engine pool and metrics exporter (DESIGN D16).
+
+    Args:
+        app: FastAPI application receiving the engine queue.
+
+    Raises:
+        RuntimeError: Serving and training node budgets would differ."""
     metrics.start_metrics_server()
     pool = queue.Queue()
     engines = []
@@ -183,6 +230,7 @@ app.add_middleware(
 
 
 def error_response(request, code, message, status):
+    """Build the public error envelope with its correlation ID (DESIGN §9)."""
     if 400 <= status < 500:
         metrics.PARSE_ERRORS.labels(reason=code).inc()
     return JSONResponse(
@@ -194,6 +242,7 @@ def error_response(request, code, message, status):
 
 @app.middleware("http")
 async def request_context(request, call_next):
+    """Bound streamed bodies, propagate request IDs and record request metrics (DESIGN D20)."""
     rid = request.headers.get("X-Request-ID") or str(uuid.uuid4())
     request.state.request_id = rid
     token = request_id.set(rid)
@@ -230,17 +279,20 @@ async def request_context(request, call_next):
 
 @app.exception_handler(EloError)
 def domain_error(request, exc):
+    """Translate domain codes and statuses into the public error envelope (DESIGN §9)."""
     return error_response(request, exc.code, str(exc), exc.http_status)
 
 
 @app.exception_handler(RequestValidationError)
 @app.exception_handler(ValidationError)
 def validation_error(request, exc):
+    """Hide validation internals behind a stable 422 response (DESIGN §9)."""
     return error_response(request, "validation_error", "Invalid request fields", 422)
 
 
 @app.exception_handler(HTTPException)
 def http_error(request, exc):
+    """Map routing errors to distinct public codes and preserve headers (DESIGN §24 F2)."""
     code, message = {
         404: ("not_found", "No such endpoint"),
         405: ("method_not_allowed", "Method not allowed"),
@@ -253,17 +305,30 @@ def http_error(request, exc):
 
 @app.exception_handler(Exception)
 def internal_error(request, exc):
+    """Log unexpected failures and return a generic 500 error with a request ID."""
     LOG.exception("Unhandled request failure")
     return error_response(request, "internal_error", "Internal server error", 500)
 
 
 @app.get("/health")
 def health():
+    """Return process liveness without contacting dependencies."""
     return {"status": "ok"}
 
 
 @app.get("/ready")
 def ready(request: Request):
+    """Check that an engine is available and the model server responds (DESIGN D18).
+
+    Args:
+        request: Request carrying the application engine queue.
+
+    Returns:
+        Readiness flags for the model server and engine.
+
+    Raises:
+        EngineError: The engine queue is unavailable or empty.
+        ApiError: The model server cannot be reached."""
     if not hasattr(request.app.state, "engines") or request.app.state.engines.empty():
         raise EngineError("No engine is available")
     remote(os.getenv("MODEL_SERVER_URL", "http://localhost:5001") + "/ping")
@@ -272,6 +337,17 @@ def ready(request: Request):
 
 @app.post("/v1/games/parse")
 def parse_games(request: Request):
+    """Parse UTF-8 multipart or JSON PGN into selectable game summaries (DESIGN §9).
+
+    Args:
+        request: Request with the size-bounded body cached by middleware.
+
+    Returns:
+        A games list with display metadata and time controls.
+
+    Raises:
+        ApiError: The multipart file or time-control fields are invalid.
+        InvalidPgnError: The upload is not UTF-8 or contains invalid chess moves."""
     content_type = request.headers.get("content-type", "")
     if content_type.startswith("multipart/form-data"):
         message = BytesParser(policy=default).parsebytes(
@@ -296,6 +372,7 @@ def parse_games(request: Request):
 
 @app.get("/v1/model")
 def model():
+    """Expose champion metadata, mapping malformed upstream data to model unavailability."""
     try:
         return model_metadata()
     except (KeyError, ValueError, requests.RequestException) as exc:
@@ -304,6 +381,24 @@ def model():
 
 @app.post("/v1/predict")
 def predict(body: PredictBody, request: Request):
+    """Analyze a selected game and request ratings, intervals and move influence.
+
+    The model server owns aggregation, conformal calibration and occlusion
+    (DESIGN D9, D10); rating headers are used only for display after prediction.
+
+    Args:
+        body: Validated PGN, game index, top-k and fallback time-control class.
+        request: Request carrying its correlation ID and pooled engines.
+
+    Returns:
+        Ratings for both sides, move details, influence and model provenance.
+
+    Raises:
+        PayloadTooLargeError: PGN bytes exceed the configured cap.
+        ApiError: Selection, game length, time control or upstream calls fail.
+        InvalidPgnError: The PGN cannot be parsed legally.
+        EngineError: No engine is available or analysis fails.
+        ModelUnavailableError: The model response is incomplete or malformed."""
     metrics.PGN_BYTES.observe(len(body.pgn.encode()))
     if len(body.pgn.encode()) > int(os.getenv("MAX_PGN_BYTES", "1048576")):
         raise PayloadTooLargeError("PGN exceeds upload limit")
@@ -375,6 +470,7 @@ def predict(body: PredictBody, request: Request):
         metrics.INTERVAL.observe(result["hi"] - result["lo"])
 
     def rating(key):
+        """Read a display-only PGN rating, returning None for absent or invalid labels."""
         try:
             return int((labels or {})[key])
         except (KeyError, ValueError):
@@ -402,6 +498,7 @@ def predict(body: PredictBody, request: Request):
 
 
 def trainer(path, payload=None, headers=None):
+    """Proxy a trainer request and decode its JSON response (DESIGN D9)."""
     return remote(
         os.getenv("TRAINER_URL", "http://trainer:8001") + path,
         payload=payload,
@@ -412,11 +509,13 @@ def trainer(path, payload=None, headers=None):
 
 @app.get("/v1/pipeline/dag")
 def dag():
+    """Return the trainer-provided Mermaid pipeline DAG (DESIGN §9)."""
     return trainer("/dag")
 
 
 @app.get("/v1/pipeline/runs")
 def runs(limit: int = 100):
+    """Return trainer history with a bounded requested row count (DESIGN §9)."""
     return trainer(f"/runs?limit={max(1, min(limit, 1000))}")
 
 
@@ -461,6 +560,17 @@ def replay():
 
 @app.post("/v1/pipeline/retrain", status_code=202)
 def retrain(request: Request):
+    """Authenticate and forward a manual retrain request (DESIGN D20, §24 F1).
+
+    Args:
+        request: Request with an X-API-Key and optional JSON reason.
+
+    Returns:
+        The trainer run identifier on acceptance.
+
+    Raises:
+        ApiError: Authentication, JSON decoding or upstream submission fails,
+            including the trainer's 409 when another run is active."""
     import hmac
 
     expected = os.getenv("API_KEY", "")

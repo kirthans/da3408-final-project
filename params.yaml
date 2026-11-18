@@ -1,3 +1,4 @@
+# Monthly source partitions and bounded downloads; train/replay lists define the replay boundary.
 data:
   months: ["2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12"]
   base_url: https://database.lichess.org/standard
@@ -16,21 +17,27 @@ data:
     - "2020-11"
     - "2020-12"
   max_games_per_month: 60000
+# Target sampled games per month, stratified by time-control class.
 sample:
   train_per_month: 20000
   replay_per_month: 10000
+# Local Spark memory and shuffle parallelism for ingestion and sampling (DESIGN D3).
 spark:
   driver_memory: 4g
   shuffle_partitions: 8
+# Shared batch/serving search budget and per-game deadline; nodes follows DESIGN D28.
 engine:
   nodes: 5000
   hash_mb: 16
   path: tools/stockfish/stockfish
   game_timeout_s: 120
+# Persistent analysis actor count and games per Arrow batch (DESIGN D2).
 ray:
   num_workers: 10
   batch_size: 16
+# Shared deterministic sampling, dropout, partitioning and model seed.
 seed: 42
+# Fit/holdout months, clock robustness and validation-selected XGBoost sweep settings.
 train:
   fit_months: ["2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03"]
   holdout_month: "2020-04"
@@ -42,14 +49,17 @@ train:
     n_estimators: 3000
     early_stopping_rounds: 100
     n_jobs_per_trial: 2
+# Reserved drift settings; active thresholds and optional injection live under monitor.
 drift: {}
 
+# Replay/evaluation clock seconds and calibrated quality/drift thresholds (DESIGN D30).
 monitor:
   interval_s: 900
   eval_interval_s: 30
   mae_ratio: 1.04
   psi_warn: 0.05
   drift_injection: {enabled: false, month: "2020-06", cpl_scale: 1.4}
+# Promotion MAE improvement in Elo, alert cooldown seconds and accepted coverage band.
 retrain:
   min_improvement: 1.0
   cooldown_s: 600

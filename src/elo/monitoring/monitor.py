@@ -38,6 +38,7 @@ PSI = Gauge("elo_feature_psi", "Population stability", ["feature"])
 
 
 def authorize(request: Request):
+    """Require the replay-control Bearer key or raise HTTP 401 (DESIGN D20, §24 A8)."""
     key = os.getenv("API_KEY", "")
     if not key or not hmac.compare_digest(
         request.headers.get("Authorization", ""), "Bearer " + key
@@ -46,7 +47,10 @@ def authorize(request: Request):
 
 
 class Monitor:
+    """Own durable replay state and current-month model comparisons (DESIGN §24 A7-A9)."""
+
     def __init__(self):
+        """Restore replay state and initialize synchronization, injection and metric state."""
         self.params = load_params()
         self.cfg = self.params["monitor"]
         self.path = Path(os.getenv("MONITOR_STATE", "/state/monitor.json"))
@@ -68,6 +72,7 @@ class Monitor:
         self.clock_metrics()
 
     def clear_quality(self):
+        """Clear labelled quality series and mark unmeasured scalar metrics as NaN."""
         MAE.clear()
         COVER.clear()
         PSI.clear()
@@ -76,14 +81,17 @@ class Monitor:
         G["drift_detected"].set(0)
 
     def clock_metrics(self):
+        """Publish YYYYMM and reveal count without a growing month label (DESIGN §24 A7)."""
         months = self.state["revealed"]
         G["replay_month"].set(int(months[-1].replace("-", "")) if months else 0)
         G["replay_months_revealed"].set(len(months))
 
     def interval(self):
+        """Return reveal spacing in seconds, allowing an environment override for demos."""
         return float(os.getenv("REPLAY_INTERVAL_S", self.cfg["interval_s"]))
 
     def status(self):
+        """Return a locked snapshot of clock state, model versions and latest quality metrics."""
         with self.lock:
             return dict(
                 **self.state,
@@ -98,6 +106,13 @@ class Monitor:
             )
 
     def clock(self, action):
+        """Apply a replay control and atomically persist the resulting state (DESIGN §24 A8).
+
+        Args:
+            action: Validated reset, advance, play or pause control.
+
+        Returns:
+            A status snapshot after the control; advance reveals at most one month."""
         with self.lock:
             if action == "reset":
                 self.state = dict(revealed=[], playing=False, last_reveal=0)
@@ -114,6 +129,7 @@ class Monitor:
                     self.state["last_reveal"] = time.time()
             else:
                 self.state["playing"] = action == "play"
+            # Replace atomically so a process restart cannot read half a replay-clock update.
             temp = self.path.with_suffix(".tmp")
             temp.write_text(json.dumps(self.state))
             temp.replace(self.path)
@@ -122,6 +138,7 @@ class Monitor:
         return self.status()
 
     def evaluate(self):
+        """Compare current aliases on the newest revealed month and publish PSI and quality."""
         with self.lock:
             month = (self.state["revealed"] or [None])[-1]
             champion = load_bundle("champion")
@@ -182,6 +199,7 @@ class Monitor:
             )
 
     def loop(self):
+        """Advance a playing replay only while the trainer is idle, then refresh quality."""
         while not self.stop.is_set():
             try:
                 if (
@@ -192,6 +210,7 @@ class Monitor:
                         os.getenv("TRAINER_URL", "http://trainer:8001") + "/status", timeout=5
                     )
                     status.raise_for_status()
+                    # Freeze reveals during training so the next month stays unseen by its gate.
                     if not status.json()["in_progress"]:
                         self.clock("advance")
             except Exception:
@@ -206,6 +225,7 @@ class Monitor:
 
 @asynccontextmanager
 async def lifespan(app):
+    """Start the replay worker and separate metrics exporter, waking it on shutdown (DESIGN D16)."""
     app.state.monitor = Monitor()
     start_http_server(int(os.getenv("METRICS_PORT", "18001")))
     thread = threading.Thread(target=app.state.monitor.loop, daemon=True)
@@ -221,16 +241,28 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/health")
 def health():
+    """Return monitor process liveness."""
     return {"status": "ok"}
 
 
 @app.get("/status")
 def status():
+    """Expose the current replay and evaluation snapshot (DESIGN §24 A8)."""
     return app.state.monitor.status()
 
 
 @app.post("/clock/{action}", dependencies=[Depends(authorize)])
 def clock(action: str):
+    """Validate and apply an authenticated replay control (DESIGN §24 A8).
+
+    Args:
+        action: One of advance, play, pause or reset.
+
+    Returns:
+        Updated monitor status.
+
+    Raises:
+        HTTPException: The action is unknown (404)."""
     if action not in {"advance", "play", "pause", "reset"}:
         raise HTTPException(404)
     return app.state.monitor.clock(action)

@@ -1,6 +1,7 @@
 name: elo
 
 services:
+  # Track runs, registry aliases and proxied artifacts (DESIGN D9-D11).
   mlflow:
     build:
       context: .
@@ -40,6 +41,7 @@ services:
       retries: 12
       start_period: 30s
 
+  # Serve the champion pyfunc and restart it when the alias changes (DESIGN D9).
   model-server:
     build:
       context: .
@@ -63,6 +65,7 @@ services:
       start_period: 60s
     restart: unless-stopped
 
+  # Validate uploads and coordinate shared engine/features with MLflow REST (DESIGN D9).
   api:
     build:
       context: .
@@ -91,6 +94,7 @@ services:
       start_period: 20s
     restart: unless-stopped
 
+  # Serve the static UI and proxy its configurable API base (DESIGN §3).
   frontend:
     build:
       context: .
@@ -111,6 +115,7 @@ services:
         condition: service_started
     restart: unless-stopped
 
+  # Persist the replay clock and compare model quality on revealed months (DESIGN §24 A7-A8).
   monitor:
     build:
       context: .
@@ -133,6 +138,7 @@ services:
     mem_limit: 1g
     restart: unless-stopped
 
+  # Serialize cached-upstream retrains and gate champion promotion (DESIGN §24 A2-A3).
   trainer:
     build:
       context: .
@@ -164,6 +170,7 @@ services:
       start_period: 30s
     restart: unless-stopped
 
+  # Scrape service exporters and evaluate the drift and health alert rules.
   prometheus:
     image: prom/prometheus:v3.16.0
     command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=15d"]
@@ -177,6 +184,7 @@ services:
     mem_limit: 512m
     restart: unless-stopped
 
+  # Route quality alerts to the trainer and inhibit related warning noise.
   alertmanager:
     image: prom/alertmanager:v0.35.0
     command: ["--config.file=/etc/alertmanager/alertmanager.yml"]
@@ -189,6 +197,7 @@ services:
       interval: 15s
     restart: unless-stopped
 
+  # Provision dashboards over the Prometheus service and model metrics.
   grafana:
     image: grafana/grafana:13.3.1
     ports: ["127.0.0.1:3000:3000"]
@@ -207,6 +216,7 @@ services:
     mem_limit: 512m
     restart: unless-stopped
 
+  # Expose host resource metrics from read-only proc, sys and root mounts.
   node-exporter:
     image: prom/node-exporter:v1.12.1
     command: ["--path.procfs=/host/proc", "--path.sysfs=/host/sys", "--path.rootfs=/rootfs"]

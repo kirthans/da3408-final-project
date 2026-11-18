@@ -1,13 +1,19 @@
+# MLflow project entry points preserve Git/run provenance across DVC stages (DESIGN D13).
 name: guess-the-elo
 python_env: python_env.yaml
 entry_points:
+  # Verify tracking connectivity with a small parameter/metric/artifact run.
   smoke:
     command: "python -m elo.common.smoke"
+  # Log the train-fitted reference predictors.
   train_baselines:
     command: "python -m elo.training.pipeline train_baselines"
+  # Run the bounded Ray sweep and conformal calibration.
   train_xgb:
     command: "python -m elo.training.pipeline train_xgb"
+  # Record held-out acceptance metrics and plots.
   evaluate:
     command: "python -m elo.training.pipeline evaluate"
+  # Package model artifacts and register a champion or challenger.
   register:
     command: "python -m elo.training.registry register"

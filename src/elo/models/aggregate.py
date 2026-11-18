@@ -53,7 +53,15 @@ FEATURE_COLUMNS = [
 
 
 def side_features(moves: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate arbitrary ply subsets; tc_base may be joined onto moves by the caller."""
+    """Aggregate each game/side, supporting arbitrary occluded ply subsets (DESIGN D8).
+
+    Args:
+        moves: Per-ply features; optional tc_base and has_clock metadata preserve
+            clock semantics when supplied by the caller.
+
+    Returns:
+        Side aggregates indexed by game_id and side, with ordered SIDE_COLUMNS.
+        Missing clocks remain missing rather than implying zero time usage."""
     m = moves.sort_values(["game_id", "side", "ply"]).copy()
     # Lichess per-move accuracy from win-probability loss in percentage points.
     m["accuracy"] = (103.1668 * np.exp(-0.04354 * m.wp_loss) - 3.1669).clip(0, 100)
@@ -98,7 +106,15 @@ def side_features(moves: pd.DataFrame) -> pd.DataFrame:
 
 
 def perspective_rows(side_feats: pd.DataFrame, games: pd.DataFrame) -> pd.DataFrame:
-    """Return two symmetric rows per game, with fixed categorical encodings and no labels."""
+    """Build two symmetric, label-free rows per game (DESIGN D6).
+
+    Args:
+        side_feats: Aggregates indexed by game_id and side.
+        games: Metadata containing GAME_META_COLUMNS; duplicates are collapsed.
+
+    Returns:
+        Own/opponent feature rows for White and Black with fixed categories.
+        Unavailable clock features are masked consistently for both sides."""
     parts = []
     meta = games[GAME_META_COLUMNS].drop_duplicates("game_id").set_index("game_id")
     for side, opponent in [("w", "b"), ("b", "w")]:
@@ -128,7 +144,16 @@ def perspective_rows(side_feats: pd.DataFrame, games: pd.DataFrame) -> pd.DataFr
 
 
 def drop_clocks(moves: pd.DataFrame, games: pd.DataFrame, frac: float, seed: int):
-    """Drop clocks for an exact rounded fraction of sorted game IDs without mutating inputs."""
+    """Mask clocks for a reproducible fraction of games without mutating inputs.
+
+    Args:
+        moves: Per-ply feature dataframe to copy.
+        games: Game metadata dataframe to copy.
+        frac: Fraction of sorted unique game IDs to select, rounded to a count.
+        seed: Random seed for selecting games without replacement.
+
+    Returns:
+        Copied moves and metadata with selected clocks and has_clock masked."""
     ids = np.sort(games.game_id.unique())
     chosen = np.random.default_rng(seed).choice(ids, size=round(len(ids) * frac), replace=False)
     m, g = moves.copy(), games.copy()

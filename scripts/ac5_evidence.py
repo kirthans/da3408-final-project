@@ -18,13 +18,22 @@ QUERIES = {
 
 
 def points(series):
+    """Sort finite timestamp/value range samples, excluding missing or nonfinite values."""
     return sorted(
         (float(t), float(v)) for t, v in series.get("values", []) if math.isfinite(float(v))
     )
 
 
 def reconstruct(series, runs):
-    """Join only identical range timestamps, preventing cross-month lookahead."""
+    """Join identical range timestamps to avoid cross-month lookahead (DESIGN §24 A7).
+
+    Args:
+        series: Prometheus month, model MAE and champion-version range results.
+        runs: Trainer history with promotion versions and replay generations.
+
+    Returns:
+        Last aligned samples per month and next-month verdicts for every drift
+        promotion in the current replay generation. Incomplete pairs stay pending."""
     generation = max(
         (
             r.get("replay_generation", 0)
@@ -66,6 +75,7 @@ def reconstruct(series, runs):
             continue
         key = f"{month // 100:04}-{month % 100:02}"
         index = bisect.bisect_right(times, stamp) - 1
+        # Prefer the aligned version sample; fallback uses only promotions at or before this time.
         version = versions.get(stamp) or (timeline[index][1] if index >= 0 else None)
         # Keep the last clock sample, even if its quality samples are missing.
         months[key] = dict(
@@ -88,6 +98,7 @@ def reconstruct(series, runs):
             "pending",
             "Next-month paired MAE and matching champion version not available",
         )
+        # AC5 needs a paired next-month sample of the promoted version, never the gate month.
         if new is not None and old is not None and evidence.get("champion_version") == expected:
             verdict = "PASS" if new < old else "FAIL"
             detail = "New champion MAE compared with previous champion on the next replay month"
@@ -123,6 +134,7 @@ def reconstruct(series, runs):
 
 
 def main():
+    """Fetch read-only replay evidence and write an AC5 report, marking missing evidence pending."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--since", type=float, default=12, help="Lookback hours (default: 12)")
     parser.add_argument("--step", type=int, default=15)

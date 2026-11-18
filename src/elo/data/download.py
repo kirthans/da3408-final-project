@@ -19,7 +19,16 @@ LOG = get_logger(__name__)
 
 
 def copy_games(source: BinaryIO, destination: BinaryIO, maximum: int) -> tuple[int, int]:
-    """Stop at the next Event header, retaining the final selected game in full."""
+    """Stream a bounded number of complete games from a compressed dump.
+
+    Args:
+        source: Binary Zstandard-compressed input stream.
+        destination: Binary destination receiving decompressed UTF-8 PGN.
+        maximum: Maximum number of Event-delimited games to copy.
+
+    Returns:
+        Counts of games and decompressed bytes written. The next Event header
+        stops copying so the last selected game remains complete."""
     games = size = 0
     with zstandard.ZstdDecompressor().stream_reader(source) as reader:
         with io.TextIOWrapper(reader, encoding="utf-8") as lines:
@@ -36,7 +45,22 @@ def copy_games(source: BinaryIO, destination: BinaryIO, maximum: int) -> tuple[i
 
 
 def download(month: str, maximum: int, base_url: str) -> dict:
-    """Retry a failed stream from scratch and atomically publish complete output."""
+    """Retry a bounded monthly download and atomically publish complete output.
+
+    Args:
+        month: Lichess partition name in YYYY-MM format.
+        maximum: Positive cap on the number of complete games.
+        base_url: Root URL of the monthly Lichess dumps.
+
+    Returns:
+        Game/byte counts, elapsed seconds and decompressed throughput.
+
+    Raises:
+        ValueError: The game cap is not positive.
+        DataValidationError: The downloaded stream contains no games.
+        requests.RequestException: HTTP attempts are exhausted.
+        OSError: Stream or filesystem attempts are exhausted.
+        zstandard.ZstdError: Decompression attempts are exhausted."""
     if maximum < 1:
         raise ValueError("maximum must be positive")
     output = Path(f"data/raw/{month}.pgn")

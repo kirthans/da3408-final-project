@@ -70,11 +70,22 @@ def tc_class(estimate):
 
 
 def parse_records(records: DataFrame, month: str, params: dict) -> DataFrame:
-    """Extract headers separately so identities and rating headers cannot enter movetext."""
+    """Extract distributed PGN fields while isolating headers from movetext (DESIGN D1).
+
+    Args:
+        records: Spark text records split at Event boundaries.
+        month: Source partition in YYYY-MM format.
+        params: Shared seed and training-month configuration.
+
+    Returns:
+        Parsed columns, including separate labels and seeded identity hashes.
+        Validation later selects the safe contract so raw headers cannot leak."""
 
     def header(name):
+        """Extract one quoted PGN header as a Spark column without a Python UDF."""
         return F.regexp_extract("headers", rf'(?m)^\[{name} "([^"\r\n]*)"\]\s*$', 1)
 
+    # Hadoop consumes the next Event prefix as a delimiter; restore it except on the first game.
     frame = records.select(F.regexp_replace("value", r"^(?!\[Event )", "[Event ").alias("pgn"))
     frame = frame.withColumn("headers", F.regexp_extract("pgn", r"(?s)^(.*?)\r?\n\r?\n", 1))
     frame = frame.withColumn("movetext", F.regexp_replace("pgn", r"(?s)^.*?\r?\n\r?\n", ""))
@@ -127,8 +138,20 @@ def parse_records(records: DataFrame, month: str, params: dict) -> DataFrame:
 
 
 def validate(frame: DataFrame) -> tuple[DataFrame, dict]:
-    """Count removals sequentially; aggregate only bounded summaries on the driver."""
+    """Filter and deduplicate games, counting each removal sequentially (DESIGN D1).
+
+    Args:
+        frame: Parsed game columns produced by parse_records.
+
+    Returns:
+        A cached dataframe of safe contract columns and a bounded validation
+        summary. The caller must unpersist the returned dataframe.
+
+    Raises:
+        DataValidationError: No games survive, or required fields are missing."""
     raw = frame.count()
+    # Restrict the training population before deduplication (DESIGN D1, §24 A5).
+    # Twenty total plies is the batch counterpart of the upload minimum per side.
     filters = {
         "rated": F.col("event").rlike(r"(?i)^rated\b"),
         "standard": F.col("variant").isin("", "Standard"),
@@ -192,8 +215,20 @@ def write_report(path: str, report: dict) -> None:
 
 
 def ingest(spark: SparkSession, month: str, params: dict) -> dict:
-    """Read records with Hadoop's delimiter and persist only the safe contract."""
+    """Validate a monthly dump and persist its safe Parquet contract (DESIGN D1).
+
+    Args:
+        spark: Local Spark session with the custom game record delimiter.
+        month: Source partition in YYYY-MM format.
+        params: Shared parsing and training-month configuration.
+
+    Returns:
+        Validation counts, elapsed seconds and game throughput.
+
+    Raises:
+        DataValidationError: Parsed data violates the required contract."""
     started = time.monotonic()
+    # Split on game boundaries, not blank header/movetext separators (DESIGN D1).
     records = spark.read.option("lineSep", "\n\n[Event ").text(f"data/raw/{month}.pgn")
     parsed = parse_records(records, month, params)
     if LOG.isEnabledFor(logging.DEBUG):

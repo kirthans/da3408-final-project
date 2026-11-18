@@ -19,11 +19,13 @@ CHILD_UP = Gauge("elo_model_server_child_up", "Serving child is running")
 
 
 def main():
+    """Poll champion and restart the MLflow child when its version changes (DESIGN D9, D11)."""
     start_http_server(int(os.getenv("METRICS_PORT", "18003")))
     client = MlflowClient()
     child = None
 
     def stop(*_):
+        """Terminate the child gracefully, then kill it if the ten-second deadline expires."""
         CHILD_UP.set(0)
         if child is not None and child.poll() is None:
             child.terminate()
@@ -34,6 +36,7 @@ def main():
                 child.wait()
 
     def shutdown(*_):
+        """Stop the serving child and exit cleanly on a termination signal."""
         stop()
         raise SystemExit(0)
 
@@ -49,9 +52,11 @@ def main():
             except Exception:
                 if child is None:
                     raise
+                # A tracking-server outage must not discard an already serving model (DESIGN D9).
                 LOG.exception("Alias polling failed; retaining current server")
                 time.sleep(float(os.getenv("ALIAS_POLL_S", "60")))
                 continue
+            # MLflow resolves the alias at startup; a new version needs a fresh child (DESIGN D11).
             if version != current:
                 if current is not None:
                     RELOADS.inc()

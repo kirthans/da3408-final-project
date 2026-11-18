@@ -15,7 +15,14 @@ def score_cp(score) -> int:
 
 
 def sanitize_headers(headers: Mapping[str, str]) -> tuple[dict, dict | None]:
-    """Separate rating labels and discard player identity and rating hints."""
+    """Separate labels and remove identity and rating hints before feature building.
+
+    Args:
+        headers: Parsed PGN headers, including any player or rating fields.
+
+    Returns:
+        Clean headers and a separate rating-label mapping, or None if absent."""
+    # Ratings stay separate from features; identity, title and rating-diff hints are stripped.
     labels = {key: headers[key] for key in ("WhiteElo", "BlackElo") if key in headers}
     clean = {
         key: value
@@ -31,7 +38,16 @@ class PgnParser:
     """Parse legal mainlines with clocks and white-perspective evaluations."""
 
     def parse(self, text: str) -> list[dict]:
-        """Return game records containing headers, starting FEN and move dictionaries."""
+        """Parse legal mainlines with optional clocks and White-relative evaluations.
+
+        Args:
+            text: One or more PGN games, including optional annotation comments.
+
+        Returns:
+            Records with headers, starting FEN and ordered move dictionaries.
+
+        Raises:
+            InvalidPgnError: No games/moves exist, or a position or mainline is illegal."""
         stream, records = io.StringIO(text), []
         try:
             while (game := chess.pgn.read_game(stream)) is not None:
@@ -64,7 +80,16 @@ class PgnParser:
         return records
 
     def parse_movetext(self, text: str) -> list[dict]:
-        """Parse one standard-start movetext, rejecting multi-game input."""
+        """Parse exactly one standard-start game from movetext.
+
+        Args:
+            text: Movetext to wrap in the shared PGN parser.
+
+        Returns:
+            The game's ordered move dictionaries.
+
+        Raises:
+            InvalidPgnError: Input is invalid or contains more than one game."""
         games = self.parse(text)
         if len(games) != 1:
             raise InvalidPgnError("Expected one movetext")

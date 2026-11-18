@@ -21,6 +21,17 @@ class EngineAnalyzer:
         hash_mb=16,
         game_timeout_s=120,
     ):
+        """Start a reusable engine with bounded resources (DESIGN D2).
+
+        Args:
+            path: UCI engine executable.
+            nodes: Search nodes per position; callers supply the shared budget.
+            threads: Engine worker threads.
+            hash_mb: Engine hash-table size in MiB.
+            game_timeout_s: Wall-clock budget for a whole game.
+
+        Raises:
+            EngineError: The UCI process cannot start or be configured."""
         self.path, self.nodes = path, nodes
         self.threads, self.hash_mb = threads, hash_mb
         self.game_timeout_s = game_timeout_s
@@ -28,6 +39,7 @@ class EngineAnalyzer:
         self._start()
 
     def _start(self):
+        """Start and configure UCI, closing partial state before raising EngineError."""
         try:
             self.engine = chess.engine.SimpleEngine.popen_uci(
                 self.path, timeout=self.game_timeout_s
@@ -44,17 +56,30 @@ class EngineAnalyzer:
             self.engine = None
 
     def __enter__(self):
+        """Return this analyzer for deterministic context-manager cleanup."""
         return self
 
     def __exit__(self, *_):
+        """Close the engine when leaving a context, including on exceptions."""
         self.close()
 
     def analyse_game(self, board_start: chess.Board, moves: list[dict]) -> dict:
-        """Return N+1 evaluations and best moves, all scores from White's POV.
+        """Evaluate all N+1 positions from White's perspective with one game deadline.
 
-        PGN comments describe positions after moves; the unannotated initial
-        position uses a neutral 0 cp baseline when all comments are available.
-        """
+        Complete PGN evaluation comments bypass Stockfish; the unannotated initial
+        position uses a neutral 0 cp baseline in that path. An engine failure or
+        timeout restarts the process before the domain error is raised.
+
+        Args:
+            board_start: Legal initial position; copied before applying moves.
+            moves: Ordered plies with UCI notation and optional PGN evaluations.
+
+        Returns:
+            Evaluations, best moves and the pgn_eval or stockfish analysis source.
+
+        Raises:
+            EngineTimeoutError: The per-game wall-clock budget is exhausted.
+            EngineError: The engine fails or cannot restart."""
         board = board_start.copy()
         if moves and all(move.get("pgn_eval_cp") is not None for move in moves):
             return dict(

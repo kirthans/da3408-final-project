@@ -14,12 +14,14 @@ from elo.models.scoring import predict
 
 
 def load_bundle(alias):
+    """Resolve a live alias to an immutable, cached model bundle (DESIGN D11)."""
     version = MlflowClient().get_model_version_by_alias("elo-estimator", alias)
     return _load(str(version.version), version.tags.get("test_mae"))
 
 
 @lru_cache(maxsize=4)
 def _load(version, test_mae):
+    """Download and cache artifacts by version and test MAE, rather than mutable alias."""
     root = Path(
         mlflow.artifacts.download_artifacts(artifact_uri=f"models:/elo-estimator/{version}")
     )
@@ -27,6 +29,7 @@ def _load(version, test_mae):
     artifacts = config["flavors"]["python_function"]["artifacts"]
 
     def read(name):
+        """Decode one JSON artifact using its path recorded in the MLmodel manifest."""
         return json.loads((root / artifacts[name]["path"]).read_text())
 
     booster = xgb.Booster(params={"nthread": 2})
@@ -42,4 +45,5 @@ def _load(version, test_mae):
 
 
 def score(bundle, frame):
+    """Return predictions and per-row conformal radii using the bundle feature order."""
     return predict(bundle.booster, frame, bundle.columns), radii(frame, bundle.conformal)

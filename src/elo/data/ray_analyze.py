@@ -39,11 +39,20 @@ class AnalyzerActor:
     """Construct one persistent Stockfish process per Ray actor."""
 
     def __init__(self, engine: dict, log_every: int = 10):
+        """Create the engine and parser once for all batches handled by this actor (DESIGN D2)."""
         self.analyzer = EngineAnalyzer(**engine)
         self.parser = PgnParser()
         self.batches, self.log_every = 0, log_every
 
     def __call__(self, batch: pa.Table) -> pa.Table:
+        """Analyze games independently and retain failure markers for throughput accounting.
+
+        Args:
+            batch: Arrow table of sampled game metadata and movetext.
+
+        Returns:
+            Typed move rows with one source marker per successful game, or a
+            failure marker for each game that could not be analyzed."""
         rows = []
         for game in batch.to_pylist():
             try:
@@ -63,12 +72,21 @@ class AnalyzerActor:
         return pa.Table.from_pylist(rows, schema=BATCH_SCHEMA)
 
     def __del__(self):
+        """Close the actor-owned engine when the actor instance is released."""
         if hasattr(self, "analyzer"):
             self.analyzer.close()
 
 
 def run(month: str, params_path: str = "params.yaml") -> dict:
-    """Analyze a month and report measured end-to-end throughput including startup."""
+    """Analyze one month with persistent actors and report total throughput (DESIGN D2).
+
+    Args:
+        month: Sample partition in YYYY-MM format.
+        params_path: Shared engine and Ray configuration file.
+
+    Returns:
+        Counts, source reuse, elapsed time and throughput including Ray startup.
+        Move Parquet and a JSON throughput report are written for the month."""
     params = load_params(params_path)
     workers = params["ray"]["num_workers"]
     start = time.monotonic()
@@ -86,6 +104,7 @@ def run(month: str, params_path: str = "params.yaml") -> dict:
             .repartition(workers * 4)
             .materialize()
         )
+        # A callable class selects a persistent actor pool: one UCI process per CPU (DESIGN D2).
         analyzed = dataset.map_batches(
             AnalyzerActor,
             fn_constructor_kwargs={"engine": params["engine"]},

@@ -31,12 +31,23 @@ logger = get_logger(__name__)
 
 
 def write_json(path, value):
+    """Create parent directories and write readable JSON, rejecting nonfinite numbers."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
 def aggregate_month(month, dropout=0, seed=42):
+    """Build labelled perspective rows from one sampled and analyzed month (DESIGN D6).
+
+    Args:
+        month: Monthly partition name in YYYY-MM format.
+        dropout: Fraction of games whose clock features are masked for training.
+        seed: Seed for reproducible clock dropout.
+
+    Returns:
+        A labelled perspective dataframe and the rounded count of masked games.
+        Labels are joined only after feature aggregation."""
     games = pd.read_parquet(
         f"data/interim/sample/{month}.parquet",
         columns=[
@@ -63,7 +74,15 @@ def aggregate_month(month, dropout=0, seed=42):
 
 
 def split_holdout(rows, seed):
-    """Seeded stable hash partitions games; perspective rows never separate."""
+    """Split games into deterministic disjoint holdout thirds (DESIGN §24 A4).
+
+    Args:
+        rows: Labelled perspective rows from the holdout month.
+        seed: Salt for the stable SHA-256 game partition.
+
+    Returns:
+        Validation, calibration and test frames. Both perspectives of a game
+        share one bucket, preventing leakage across the three splits."""
     bucket = rows.game_id.map(
         lambda gid: int.from_bytes(hashlib.sha256(f"{seed}:{gid}".encode()).digest()[:8], "big") % 3
     )
@@ -71,6 +90,13 @@ def split_holdout(rows, seed):
 
 
 def reference_stats(frame):
+    """Build fixed numeric deciles and categorical proportions for PSI (DESIGN D17).
+
+    Args:
+        frame: Fit-month feature rows before synthetic clock dropout.
+
+    Returns:
+        Distribution entries with missing bins and deduplicated numeric edges."""
     result = {}
     for name in FEATURE_COLUMNS:
         col = frame[name]
@@ -102,6 +128,7 @@ def reference_stats(frame):
 
 
 def build_dataset():
+    """Write fit rows, disjoint holdout thirds and pre-dropout references (DESIGN §24 A3-A4)."""
     p = load_params()
     train = p["train"]
     chunks, dropped = [], 0

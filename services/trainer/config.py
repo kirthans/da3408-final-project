@@ -6,6 +6,14 @@ from urllib.parse import urlsplit, urlunsplit
 
 
 def generate(source=Path(".dvc/config.local"), target=Path("services/trainer/dvc.local")):
+    """Write a container DVC overlay targeting the host SSH remote (DESIGN §24 A11).
+
+    Args:
+        source: Host-local DVC configuration to read without changing it.
+        target: Ignored overlay file to write for the trainer container.
+
+    Raises:
+        SystemExit: The source lacks a valid SSH storage URL or user."""
     config = configparser.ConfigParser(interpolation=None)
     if not source.is_file():
         raise SystemExit(f"Missing {source}: configure the host DVC SSH remote first.")

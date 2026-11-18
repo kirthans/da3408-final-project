@@ -17,6 +17,7 @@ import requests
 
 
 def percentile(values, quantile):
+    """Interpolate a quantile between sorted samples, returning None for an empty input."""
     ordered = sorted(values)
     if not ordered:
         return None
@@ -26,12 +27,24 @@ def percentile(values, quantile):
 
 
 def measure(base_url, games, concurrency, duration):
+    """Measure closed-loop prediction latency at a fixed client concurrency.
+
+    Args:
+        base_url: Public API root.
+        games: Nonempty collection of PGN fixture strings, rotated across clients.
+        concurrency: Number of synchronous clients.
+        duration: Seconds during which new requests may start.
+
+    Returns:
+        Latency percentiles, throughput, status counts and the AC3 verdict.
+        Requests started before the deadline are allowed to finish afterward."""
     samples, codes = [], Counter()
     lock, sequence = threading.Lock(), itertools.count()
     started = time.monotonic()
     deadline = started + duration
 
     def client():
+        """Send one request at a time per session, recording network errors as failed samples."""
         with requests.Session() as session:
             while time.monotonic() < deadline:
                 with lock:
@@ -72,6 +85,7 @@ def measure(base_url, games, concurrency, duration):
 
 
 def main():
+    """Load serving fixtures, run requested concurrency levels and write the load-test report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--concurrency", default="1,2,4")
     parser.add_argument("--duration", type=float, default=60)

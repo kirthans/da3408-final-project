@@ -12,7 +12,16 @@ LOG = get_logger(__name__)
 
 
 def sample_games(frame: DataFrame, target: int, seed: int) -> DataFrame:
-    """Use stable input ordering so sampling survives different Parquet file layouts."""
+    """Take a seeded time-control sample with stable input ordering.
+
+    Args:
+        frame: Nonempty validated monthly game dataframe.
+        target: Maximum output games; a 5% oversample reduces short strata draws.
+        seed: Shared sampling seed.
+
+    Returns:
+        Safe contract columns from a stratified draw capped at target. Stable
+        game ordering makes the draw insensitive to Parquet file layout."""
     counts = {
         row.tc_class: row["count"] for row in frame.groupBy("tc_class").count().toLocalIterator()
     }

@@ -20,6 +20,7 @@ NAME = "elo-estimator"
 
 
 def register():
+    """Register a pyfunc with a signature as challenger or initial champion (DESIGN D10-D11)."""
     run_id = json.loads(Path("reports/train_xgb.json").read_text())["run_id"]
     metrics = json.loads(Path("reports/metrics.json").read_text())
     artifacts = {
@@ -77,7 +78,12 @@ def register():
 
 
 def promote(version):
-    """Move champion to an existing version, retaining the prior rollback target."""
+    """Move champion to an existing version and retain its predecessor (DESIGN D11).
+
+    Args:
+        version: Registry version to serve; validated before any alias changes.
+
+    Repeating the current promotion preserves the previous rollback target."""
     client = MlflowClient()
     version = str(version)
     # Validate before changing either alias; repeating a promotion keeps rollback useful.
@@ -88,6 +94,7 @@ def promote(version):
     if current == version:
         print(f"Version {version} is already champion.")
         return
+    # Preserve the old serving target before switching champion for reload/rollback (DESIGN D11).
     if current is not None:
         client.set_registered_model_alias(NAME, "previous_champion", current)
     client.set_registered_model_alias(NAME, "champion", version)
@@ -95,7 +102,10 @@ def promote(version):
 
 
 def reject(version):
-    """Remove the rejected challenger without touching the serving aliases."""
+    """Tag a rejected version and remove its challenger alias if present (DESIGN D11).
+
+    Args:
+        version: Rejected registry version; serving aliases are left intact."""
     client = MlflowClient()
     if client.get_registered_model(NAME).aliases.get("challenger") == str(version):
         client.delete_registered_model_alias(NAME, "challenger")
@@ -103,7 +113,10 @@ def reject(version):
 
 
 def reset(version):
-    """Restore a baseline without retaining models trained on replay months."""
+    """Restore the baseline and clear aliases learned from replay months (DESIGN D11).
+
+    Args:
+        version: Baseline registry version to make champion."""
     promote(version)
     client = MlflowClient()
     for alias in ("previous_champion", "challenger"):
@@ -112,6 +125,7 @@ def reset(version):
 
 
 def rollback():
+    """Point champion at previous_champion when available, preserving other aliases (DESIGN D11)."""
     client = MlflowClient()
     previous = client.get_registered_model(NAME).aliases.get("previous_champion")
     if previous is None:

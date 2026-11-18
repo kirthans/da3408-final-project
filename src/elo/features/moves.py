@@ -8,6 +8,7 @@ VALUES = {chess.PAWN: 1, chess.KNIGHT: 3, chess.BISHOP: 3, chess.ROOK: 5, chess.
 
 
 def _material(board, color, pawns=True):
+    """Sum one side's piece values, optionally excluding pawns for phase detection."""
     return sum(
         value * len(board.pieces(piece, color))
         for piece, value in VALUES.items()
@@ -17,11 +18,20 @@ def _material(board, color, pawns=True):
 
 def _wp(cp):
     # Lichess winning chance in percentage points, not a 0..1 probability.
+    """Convert a centipawn score to Lichess winning-chance percentage points."""
     return 100 / (1 + math.exp(-0.00368208 * cp))
 
 
 def build_move_rows(game_meta: dict, moves: list[dict], analysis: dict) -> list[dict]:
-    """Compute mover-relative losses and clocks; never copy metadata or labels."""
+    """Compute mover-relative losses and clocks without copying labels or identity.
+
+    Args:
+        game_meta: Safe game ID, starting FEN and time-control fields.
+        moves: Ordered legal plies with optional post-move clocks.
+        analysis: N+1 White-relative evaluations and optional best moves.
+
+    Returns:
+        Per-ply feature dictionaries shared by batch and serving (DESIGN D19)."""
     board = chess.Board(game_meta.get("fen", chess.STARTING_FEN))
     base, inc = game_meta.get("tc_base"), game_meta.get("tc_inc", 0) or 0
     previous = {chess.WHITE: base, chess.BLACK: base}
@@ -29,6 +39,8 @@ def build_move_rows(game_meta: dict, moves: list[dict], analysis: dict) -> list[
     for index, move in enumerate(moves):
         color = board.turn
         sign = 1 if color else -1
+        # Bound mate/extreme scores before the logistic transform; Black reverses the loss sign.
+        # CPL below is nonnegative and capped so one lost position cannot dominate a game.
         before, after = [max(-1000, min(1000, x)) for x in analysis["evals"][index : index + 2]]
         loss = max(0, sign * (_wp(before) - _wp(after)))
         material = _material(board, color) - _material(board, not color)

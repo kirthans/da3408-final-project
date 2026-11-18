@@ -45,10 +45,12 @@ def parse_junit(path):
 
 
 def load(path):
+    """Read an existing JSON report, returning None when the file is absent."""
     return json.loads(path.read_text()) if path.exists() else None
 
 
 def test_verdict(files, prefix):
+    """Summarize selected test files; incomplete or empty results remain unavailable."""
     selected = [r for name, r in files.items() if name.startswith(prefix)]
     if not selected or not sum(r["total"] for r in selected):
         return "not available", "not available"
@@ -62,6 +64,7 @@ def test_verdict(files, prefix):
 
 
 def generate(root=Path(".")):
+    """Render acceptance evidence from existing reports without rerunning tests or training."""
     reports = root / "reports"
     junit_path = reports / "tests.xml"
     junit = parse_junit(junit_path) if junit_path.exists() else None
@@ -112,6 +115,7 @@ def generate(root=Path(".")):
     unit_value, unit_status = test_verdict((junit or {}).get("files", {}), "tests/unit/")
 
     def verdict(value, condition):
+        """Return unavailable for missing evidence, otherwise PASS or FAIL from the condition."""
         return "not available" if value is None else "PASS" if condition else "FAIL"
 
     rows = [
