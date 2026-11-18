@@ -1,15 +1,15 @@
 # Test report
 
-Generated: 2026-11-17T04:57:41.535376+00:00
-Git commit: `551c7ba`
+Generated: 2026-11-18T01:49:38.715924+00:00
+Git commit: `4551b15`
 
 Measurements reflect the report files at generation time; training may update metrics during the replay.
 
 ## Test results
 
-JUnit suite timestamp: 2026-11-17T10:26:16.797544+05:30 (may predate this generation).
+JUnit suite timestamp: 2026-11-18T07:19:14.210139+05:30 (may predate this generation).
 
-115 total, 114 passed, 0 failed, 1 skipped, 0 errors
+118 total, 117 passed, 0 failed, 1 skipped, 0 errors
 
 | File | Total | Passed | Failed | Skipped | Errors |
 |---|---:|---:|---:|---:|---:|
@@ -24,7 +24,7 @@ JUnit suite timestamp: 2026-11-17T10:26:16.797544+05:30 (may predate this genera
 | tests/unit/test_models.py | 7 | 7 | 0 | 0 | 0 |
 | tests/unit/test_monitoring.py | 22 | 22 | 0 | 0 | 0 |
 | tests/unit/test_pgn.py | 4 | 4 | 0 | 0 | 0 |
-| tests/unit/test_pyfunc.py | 1 | 1 | 0 | 0 | 0 |
+| tests/unit/test_pyfunc.py | 4 | 4 | 0 | 0 | 0 |
 | tests/unit/test_ray_analyze.py | 1 | 1 | 0 | 0 | 0 |
 | tests/unit/test_registry.py | 5 | 5 | 0 | 0 | 0 |
 | tests/unit/test_reporting.py | 8 | 8 | 0 | 0 | 0 |
@@ -42,4 +42,4 @@ Last aligned sample per replay month; pending until every drift promotion has a 
 | AC3 | Prediction p95 ≤ 5 s at concurrency 1; no request errors | p95=0.6330596023537509 s; errors=0 | PASS | reports/load_test.json |
 | AC4 | All invalid-input contract tests pass | 32 total, 32 passed, 0 failed, 0 skipped, 0 errors | PASS | reports/tests.xml |
 | AC5 | Drift promotion improves next-month MAE | PASS | PASS | reports/ac5.json |
-| AC6 | All unit tests pass | 82 total, 82 passed, 0 failed, 0 skipped, 0 errors | PASS | reports/tests.xml |
+| AC6 | All unit tests pass | 85 total, 85 passed, 0 failed, 0 skipped, 0 errors | PASS | reports/tests.xml |

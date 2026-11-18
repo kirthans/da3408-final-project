@@ -23,13 +23,13 @@ class EloPyfunc(mlflow.pyfunc.PythonModel):
         moves = model_input.copy()
         variants, removed = [moves], {}
         for gid, game in moves.groupby("game_id", sort=False):
-            for index, move in game.iterrows():
+            for index, move in game[game.phase.ne("opening")].iterrows():
                 key = f"{gid}#{move.ply}"
                 variant = game.drop(index).copy()
                 variant["game_id"] = key
                 variants.append(variant)
                 removed[key] = (gid, move)
-        # Full games and every leave-one-move-out variant share a single prediction.
+        # Keep opening moves in full games, but only occlude moves outside the opening.
         batch = pd.concat(variants, ignore_index=True)
         features = perspective_rows(side_features(batch), batch[GAME_META_COLUMNS])
         predictions = self.booster.predict(

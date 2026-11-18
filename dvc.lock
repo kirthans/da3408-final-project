@@ -3188,15 +3188,15 @@ stages:
       size: 5468
     - path: src/elo/training/pipeline.py
       hash: md5
-      md5: 7d2436b295491fa615629a27c404ba28
-      size: 14156
+      md5: 9ea218b47db7e6abe2cf2e6d87471bb8
+      size: 14559
     params:
       params.yaml:
         train.experiment: elo
     outs:
     - path: reports/baselines.json
       hash: md5
-      md5: 3321e6c4eb250844bdac456735fb3b3d
+      md5: c304097c548ce0f510c0346524f16f39
       size: 405
   train_xgb:
     cmd: set -a; . ./.env; set +a; mlflow run . -e train_xgb --env-manager=local
@@ -3252,8 +3252,8 @@ stages:
       size: 5468
     - path: src/elo/training/pipeline.py
       hash: md5
-      md5: 7d2436b295491fa615629a27c404ba28
-      size: 14156
+      md5: 9ea218b47db7e6abe2cf2e6d87471bb8
+      size: 14559
     params:
       params.yaml:
         seed: 42
@@ -3279,7 +3279,7 @@ stages:
       nfiles: 6
     - path: reports/train_xgb.json
       hash: md5
-      md5: e9e315face714ae86bd19cdcfc3a4134
+      md5: 5c1bde56627cfd5d5cc1bd979375b73f
       size: 210
   evaluate:
     cmd: set -a; . ./.env; set +a; mlflow run . -e evaluate --env-manager=local 
@@ -3305,7 +3305,7 @@ stages:
       nfiles: 6
     - path: reports/baselines.json
       hash: md5
-      md5: 3321e6c4eb250844bdac456735fb3b3d
+      md5: c304097c548ce0f510c0346524f16f39
       size: 405
     - path: reports/dataset.json
       hash: md5
@@ -3318,7 +3318,7 @@ stages:
       nfiles: 16
     - path: reports/train_xgb.json
       hash: md5
-      md5: e9e315face714ae86bd19cdcfc3a4134
+      md5: 5c1bde56627cfd5d5cc1bd979375b73f
       size: 210
     - path: src/elo/common/config.py
       hash: md5
@@ -3350,8 +3350,8 @@ stages:
       size: 5468
     - path: src/elo/training/pipeline.py
       hash: md5
-      md5: 7d2436b295491fa615629a27c404ba28
-      size: 14156
+      md5: 9ea218b47db7e6abe2cf2e6d87471bb8
+      size: 14559
     params:
       params.yaml:
         data.replay_months:
@@ -3406,23 +3406,23 @@ stages:
     deps:
     - path: src
       hash: md5
-      md5: 858c623f8a39d41ed1d5b1d8648d797a.dir
-      size: 123119
+      md5: 05ee482c605be7ca87cfaa833de61578.dir
+      size: 123551
       nfiles: 38
     - path: tests
       hash: md5
-      md5: 0b77a20332f3264829c8abcbcfa86c1f.dir
-      size: 71862
+      md5: 1c5f91d070988987c02a8ff78f826e78.dir
+      size: 74135
       nfiles: 22
     outs:
     - path: reports/tests.json
       hash: md5
-      md5: c655d0ac4147dcb981e89f67e02e768f
+      md5: 590a65b47ffbc0b11bfeaebfee32c103
       size: 67
     - path: reports/tests.xml
       hash: md5
-      md5: 60e943422e4226783eaeb45552e3265d
-      size: 13249
+      md5: afcd819d6130022991f0b7682d26a825
+      size: 13618
   register:
     cmd: set -a; . ./.env; set +a; mlflow run . -e register --env-manager=local 
       --experiment-name elo
@@ -3450,8 +3450,8 @@ stages:
       size: 5561
     - path: src/elo/models/pyfunc.py
       hash: md5
-      md5: 544e9e70e6fb02e96e4b737a95e13af6
-      size: 2922
+      md5: 9646cba48b4dd8647d4a2ec0459d59f7
+      size: 2951
     - path: src/elo/training/registry.py
       hash: md5
       md5: 8de174f2f0d90d016cb432c492f19401
@@ -3459,5 +3459,5 @@ stages:
     outs:
     - path: reports/register.json
       hash: md5
-      md5: 95b52d73895661564e572230ce986eb0
+      md5: 3c79622f7ca213c30c665a42d85ed1cf
       size: 86

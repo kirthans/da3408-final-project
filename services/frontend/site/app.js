@@ -131,7 +131,7 @@ function render(data) {
     const button = element('button', `${Math.ceil(move.ply / 2)}${move.side === 'w' ? '.' : '…'} ${move.san} — This move suggested ${delta > 0 ? 'stronger' : delta < 0 ? 'weaker' : 'similar'} play (${delta >= 0 ? '+' : '−'}${Math.abs(delta)} Elo to ${side}’s estimate).`);
     button.addEventListener('click', () => jump(move.ply)); const li = element('li', ''); li.append(button); $('influence').append(li);
   });
-  if (!data.influential_moves.length) $('influence').append(element('li', 'No influential moves were reported for this game.'));
+  if (!data.influential_moves.length) $('influence').append(element('li', 'No single move outside the opening stood out.'));
 }
 $('first').onclick = () => jump(0); $('prev').onclick = () => jump(current - 1); $('next').onclick = () => jump(current + 1); $('last').onclick = () => jump(positions.length - 1);
 $('board').addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key) && board) { e.preventDefault(); jump(e.key === 'Home' ? 0 : e.key === 'End' ? positions.length - 1 : current + (e.key === 'ArrowRight' ? 1 : -1)); } });

@@ -1,16 +1,16 @@
 {
   "B0": {
-    "run_id": "36031acbfcbe4feca9061d5e2d525d05",
+    "run_id": "25323cf3a90c42ecaae5a1c0e8792b12",
     "val_mae": 286.59293565580504,
     "test_mae": 297.41312424332506
   },
   "B1": {
-    "run_id": "1a5a62d9e06346a0bd5205a8acba7a95",
+    "run_id": "2afc7470b0314112b22a4b0e677b5139",
     "val_mae": 282.7252486154275,
     "test_mae": 293.5736221134997
   },
   "B2": {
-    "run_id": "6c251b61a77947b0bdbad8b8a8fd2fb9",
+    "run_id": "a5b6d8481cd04ab6a54412cb308f0c15",
     "val_mae": 278.15421158753395,
     "test_mae": 288.9402473531071
   }

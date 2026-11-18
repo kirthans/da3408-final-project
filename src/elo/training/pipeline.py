@@ -88,6 +88,13 @@ def fit_trial(run_id, uri, train, val, settings, grid_params, seed):
     mlflow.set_tracking_uri(uri)
     client = MlflowClient()
     with mlflow.start_run(run_id=run_id):
+        mlflow.xgboost.autolog(
+            log_models=False,
+            log_input_examples=False,
+            log_model_signatures=False,
+            importance_types=["weight"],
+            silent=True,
+        )
         model = xgb.XGBRegressor(
             objective="reg:absoluteerror",
             tree_method="hist",
@@ -106,7 +113,8 @@ def fit_trial(run_id, uri, train, val, settings, grid_params, seed):
             verbose=False,
         )
         history = model.evals_result()["validation_0"]["mae"]
-        # Batched explicit logging retains every iteration's step without thousands of HTTP calls.
+        # Autolog records validation_0-mae and feature importance; explicitly retain
+        # val_mae_iteration, val_mae and best_iteration for sweep selection and history.
         stamp = int(time.time() * 1000)
         for start in range(0, len(history), 500):
             client.log_batch(
@@ -117,7 +125,8 @@ def fit_trial(run_id, uri, train, val, settings, grid_params, seed):
                 ],
             )
         mae = mean_absolute_error(val.elo, model.predict(val[FEATURE_COLUMNS]))
-        mlflow.log_params(model.get_params())
+        logged_params = client.get_run(run_id).data.params
+        mlflow.log_params({k: v for k, v in model.get_params().items() if k not in logged_params})
         mlflow.log_metrics({"val_mae": mae, "best_iteration": model.best_iteration})
         return run_id, bytes(model.get_booster().save_raw(raw_format="ubj"))
 

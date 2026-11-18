@@ -45,7 +45,7 @@ A **PGN** is a short text file that records a chess game: the moves, and often t
 - `?` mistake;
 - `??` blunder.
 
-**Moves that shaped the estimate.** These are the moves that pushed the estimate up or down the most. "−87 Elo to Black's estimate" means the estimate for Black would be 87 points higher without that move. Click a move to see its position.
+**Moves that shaped the estimate.** These are the moves that pushed the estimate up or down the most. "−87 Elo to Black's estimate" means the estimate for Black would be 87 points higher without that move. Click a move to see its position. Opening moves are not listed: they are often memorised theory, so they say little about a player's own strength.
 
 ## 5. What the numbers can't tell you
 
