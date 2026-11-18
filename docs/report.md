@@ -36,7 +36,7 @@ Every number above comes from a file the pipeline wrote: `reports/metrics.json`,
 | **Architecture diagram**, **HLD diagram** | **Chapter A** (`docs/architecture.md`) §1 diagram and §2 block explanations; retraining and serving sequence diagrams in A §3–4; HLD in **Chapter B** |
 | **Loose coupling** of frontend and backend | Only configurable REST through `API_BASE_URL`, written into `config.js` at container start (`services/frontend/docker-entrypoint.d/40-elo-config.sh`) (Chapter A §5) |
 | **Coding style, logging, exceptions, inline docs** | `ruff` + `black` in `make lint`; JSON logs with `request_id` (`src/elo/common/logging.py`); exception classes mapped to HTTP codes (`src/elo/common/errors.py`); docstrings on every module, class and function |
-| **Unit tests**, test plan, test cases, test report, acceptance criteria | `tests/`; **Chapter D** (plan and case list); **Chapter E** (generated report with counts); §1 above |
+| **Unit tests**, test plan, test cases, test report, acceptance criteria | `tests/`; **Chapter D** (plan and case list); **Chapter E** (test report with counts); §1 above |
 | **Data engineering** with Spark or Ray, throughput | §4: Spark ingest and sampling, Ray actor pool with Stockfish; `reports/validation/`, `reports/throughput/` |
 | **CI with DVC**, DVC DAG, Git, LFS and DVC | §5; `dvc.yaml`, `dvc.lock`, `dvc dag`; `.gitattributes` (LFS) |
 | **Experiment tracking** (autolog and beyond; metrics, parameters, artifacts) | §6, with MLflow screenshots |
@@ -222,7 +222,7 @@ It refreshes every 10 s.
 | Pipeline | Data validation counts, the AC1/AC2 threshold check, and `tests` as a DVC stage | `dvc.yaml` |
 | End to end (AC5) | Full 2020 replay; evidence rebuilt from Prometheus and the trainer's run records | `scripts/ac5_evidence.py`, `make ac5` |
 
-The full plan and case list are in Chapter D, and the generated report with pass and fail counts is in Chapter E.
+The full plan and case list are in Chapter D, and the test report with pass and fail counts is in Chapter E.
 
 ## 11. Limitations and future work
 

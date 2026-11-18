@@ -1,13 +1,6 @@
 # Test report
 
-Generated: 2026-11-18T15:18:20.591447+00:00
-Git commit: `58d05c8`
-
-Measurements reflect the report files at generation time; training may update metrics during the replay.
-
 ## Test results
-
-JUnit suite timestamp: 2026-11-18T07:19:14.210139+05:30 (may predate this generation).
 
 118 total, 117 passed, 0 failed, 1 skipped, 0 errors
 
