@@ -9,9 +9,11 @@ Behind the app:
 
 ## For the evaluators: start here
 
+**▶ Demo video:** <https://drive.google.com/file/d/1sL0wceU57eqaCzkOSLnsiftLC-8e1xI2/view?usp=sharing>
+
 | Document | What it covers |
 |---|---|
-| **[`docs/report.pdf`](docs/report.pdf)** | **The project report.** Results, a table mapping **every rubric item** to where it is, and the six mandatory documents as chapters A–F |
+| **[`docs/report.pdf`](docs/report.pdf)** | **The project report.** Results, a table mapping **every rubric item** to where it is, the six mandatory documents as chapters A–F, and the AI disclosure as chapter G |
 | [`docs/report.md`](docs/report.md) | The report body as Markdown |
 | [`docs/architecture.md`](docs/architecture.md) | Architecture diagram with an explanation of each block; retraining and serving sequence diagrams |
 | [`docs/hld.md`](docs/hld.md) | High-level design: design choices and rationale |
