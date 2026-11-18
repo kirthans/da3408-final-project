@@ -82,7 +82,7 @@ Measured Stockfish throughput is about 10.3–11.2 games/s per month with 10 act
 
 **Uncertainty** (D7). Mondrian split conformal: absolute residuals on the `cal` split, grouped by tc class; the radius per class is the ⌈(n+1)(1−α)⌉-th smallest residual with α = 0.2; classes with fewer than 50 rows use the global quantile. The interval is `[pred − q, pred + q]`. Mean width on test is 592 Elo (`reports/metrics.json`).
 
-**Move influence** (D8). Occlusion: for each move, drop that ply, re-aggregate and re-predict. All N + 1 variants of the game are scored in one XGBoost batch. Influence = prediction(full game) − prediction(game without the move), for the mover's side.
+**Move influence** (D8). Occlusion: for each move outside the opening phase, drop that ply, re-aggregate and re-predict. Opening moves are not ranked, because they are often memorised theory (user decision, 2026-11-18). The full game and all its variants of the game are scored in one XGBoost batch. Influence = prediction(full game) − prediction(game without the move), for the mover's side.
 
 **Packaging** (D10). All three steps live in one MLflow pyfunc (`EloPyfunc`) whose input is per-move rows. The model artifact bundles the booster, `conformal.json`, `feature_columns.json` and `reference_stats.json`, and the `src/elo` code.
 
@@ -91,7 +91,8 @@ Measured Stockfish throughput is about 10.3–11.2 games/s per month with 10 act
 ## 5. Experiment tracking and registry
 
 - **MLflow Projects** (`MLproject`, `python_env.yaml`): DVC stages call `mlflow run . -e <entry> --env-manager=local --experiment-name elo`, so each run records the source git commit (D13).
-- **Logged manually** (no autolog is used): every XGBoost trial's `val_mae_iteration` per boosting step (batched `log_batch`), trial params, best params, all test metrics, the flattened `params.yaml`, tags `trigger`, `alert_name`, `train_months`, `parent_champion_version`, `dvc_data_md5` (from `dvc.lock`), and artifacts (plots, gain importance, dataset and metrics reports, `params.yaml`).
+- **Autolog:** `mlflow.xgboost.autolog(log_models=False)` inside each Ray sweep trial records `validation_0-mae` per boosting step, `stopped_iteration`, the XGBoost params and the feature-importance artifacts (`feature_importance_weight.json` and `.png`).
+- **Logged explicitly, in addition to autolog:** every XGBoost trial's `val_mae_iteration` per boosting step (batched `log_batch`), trial params, best params, all test metrics, the flattened `params.yaml`, tags `trigger`, `alert_name`, `train_months`, `parent_champion_version`, `dvc_data_md5` (from `dvc.lock`), and artifacts (plots, gain importance, dataset and metrics reports, `params.yaml`).
 - **Registry** (D11): model `elo-estimator` with aliases `champion`, `challenger`, `previous_champion`. `register` sets `champion` if none exists, otherwise `challenger`. Version tags: `run_id`, `test_mae`, `coverage`, `trigger`, and after the gate `gate`, `gate_champion_mae`, `gate_challenger_mae`, `pending_commit`, `base_git_commit`, `git_dirty`, `dvc_lock_md5`.
 
 ## 6. Serving
