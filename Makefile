@@ -1,4 +1,4 @@
-PYTHON ?= /home/kirthan/miniforge3/envs/da3408-project/bin/python
+PYTHON ?= python
 # MLproject subprocesses must inherit the same interpreter's bin directory.
 export PATH := $(dir $(PYTHON)):$(PATH)
 # Keep course tooling local, including its usage reporting.
@@ -84,3 +84,13 @@ replay-play replay-pause replay-status:
 .PHONY: trainer-config
 trainer-config:
 	"$(PYTHON)" services/trainer/config.py
+
+.PHONY: loadtest test-report ac5
+loadtest:
+	"$(PYTHON)" tests/load/load_test.py
+
+test-report:
+	"$(PYTHON)" scripts/test_report.py
+
+ac5:
+	"$(PYTHON)" scripts/ac5_evidence.py

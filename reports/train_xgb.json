@@ -1,9 +1,9 @@
 {
-  "run_id": "1e611f6712804a3c9a78e73f1c6afb25",
-  "best_run_id": "bfd361dca294436a87e73947fc3c3ece",
+  "run_id": "6b073461dea64d8fa9108201941f56ff",
+  "best_run_id": "d4027f439b01468ab1455f2f087d23d1",
   "best_params": {
     "max_depth": "4",
-    "learning_rate": "0.05"
+    "learning_rate": "0.1"
   },
-  "val_mae": 182.51100158691406
+  "val_mae": 186.91461181640625
 }

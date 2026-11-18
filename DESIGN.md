@@ -574,3 +574,35 @@ That makes the fair-use "Comprehension" rule important: the journal and the deci
 - Booleans (`has_clock`, `is_white`) must be binned as categories in the PSI code. The current reference format puts 0 and 1 in one numeric bin; this is handled in M7.
 - The monitor has a disclosed `drift_injection` parameter (off by default) that perturbs one replay month for live demos. When it is on, it is exported as a metric and shown on the dashboard.
 - **Evidence from M4:** real 2020 data is expected to trigger in 2020-04 (MAE 1.06×). Retraining with the revealed months lowered next-month MAE by 5–7 Elo in an offline check.
+
+## 24. As-built reconciliation (ACCEPTED 2026-11-18: the user said "okay do whatever is needed" in reply to the Gate D report)
+
+Writing `docs/architecture.md`, `hld.md` and `lld.md` from the code turned up places where the build differs from the sections above. Most were routine implementation decisions made during M2–M7 and reviewed at Gates A–C, but they were not written back here. They are listed now so this file stays the current design. **Accepted:** A1–A11 are the design. F1–F4 are fixed (M9, M9_fix1, M9_fix4). F5 (autolog) is being done together with option (b) for the influential moves (opening-phase moves excluded), in one new model version.
+
+### Accept as built (the code becomes the design)
+
+| # | Section | Was | As built | Why it is acceptable |
+|---|---|---|---|---|
+| A1 | §3 retraining loop | MAE **or** PSI alert triggers a retrain | Only `ModelMAEDegraded` reaches the trainer. `FeatureDriftHigh` is a warning: dashboard only, and inhibited while MAE fires. | PSI without a label change is not proof the model got worse; retraining on the error signal avoids pointless retrains (D30). PSI stays visible and alerted. |
+| A2 | §3 block 6 | The trainer runs the whole `dvc repro` including Spark and Stockfish | The trainer runs `dvc repro register`: build_dataset → train → evaluate → register. A preflight refuses if Spark or Stockfish stages would need rebuilding. Its image has no Java or Stockfish. | The 2020 months are analysed once on the host and cached by DVC. A retrain only re-fits, which keeps the image small and a retrain under a minute. |
+| A3 | §3 step 3 | Append revealed months to `train.months` | `train.fit_months` = training months + revealed months except the newest; `train.holdout_month` = the newest revealed month | The gate needs a holdout that neither model trained on, and next month stays unseen for AC5. |
+| A4 | §2 splits | 2019-12 split into two halves for validation and calibration, plus a test holdout | The holdout month is split into three hash-based thirds: val, cal and test | Same purpose with disjoint thirds, deterministic per game. |
+| A5 | §2 filters | ≥ 10 plies per side | Spark keeps games with ≥ 20 plies in total; the api checks ≥ 10 per side for uploads | Equivalent in practice; noted in the data card. |
+| A6 | §6 | `mlflow.xgboost.autolog()` | Manual logging of params, per-iteration `val_mae_iteration`, metrics, artifacts and tags | The M4 brief allowed "autolog or explicit logging" and Codex chose explicit logging; no technical blocker is recorded. Explicit logging covers params, per-iteration metrics, artifacts and tags. **Option F5** (below) adds autolog to the sweep's child runs if you want the rubric's "autolog" ticked literally. |
+| A7 | §8 metric names | `batch_mae{month,tc}`, `interval_coverage{month}`, `last_retrain_timestamp` | `elo_batch_mae{model,tc}` (champion vs previous_champion) plus `elo_replay_month`; `elo_interval_coverage{tc}`; `elo_last_retrain_timestamp_seconds`; extra model-server and alert counters | Comparing models needs the `model` label. A month label would grow series without limit; the month is a separate gauge. |
+| A8 | §9 monitor and trainer | `/metrics` route; `POST /clock/advance` | Metrics on port 18001 (D16); `POST /clock/{advance,play,pause,reset}` with a Bearer key; trainer also has `/replay/reset`, `/dag`, `/health`; api has `GET /v1/pipeline/replay` (M9) | These were needed to run and demonstrate the replay. |
+| A9 | D19 names | `FeatureBuilder`, `DriftMonitor`, `RetrainController` | `build_move_rows` (a function), `Monitor`, `Controller` | Same split of responsibilities. The functional-for-transforms rule (D19) explains why feature building is a function. |
+| A10 | §7 | `make ci` runs `dvc metrics diff main` | `make ci` = lint + test + `dvc status` + the AC1/AC2 threshold check | One branch, no main-vs-branch diff to compare; the threshold check is the real gate. |
+| A11 | §3 | MinIO | SSH DVC remote and MLflow `--serve-artifacts` (already D27) | Recorded in §21; the docs now match. |
+
+### Fix in code (Gate D fix round)
+
+| # | Problem | Fix |
+|---|---|---|
+| F1 | `POST /v1/pipeline/retrain` returns 503 when the trainer says 409 (a run is in progress); §9 promises 409 | Pass through the trainer's 409 (and 401) as such; 503 only when unreachable or for a 5xx |
+| F2 | Unknown routes (404) and wrong methods (405) come back with error code `validation_error` | Map them to `not_found` and `method_not_allowed` |
+| F3 | Ports 8000 (api), 5000 (MLflow) and 5001 (model-server) are published on all interfaces | Bind them to 127.0.0.1, as for the monitoring ports. Only the frontend stays reachable. Done **after** the replay, because it recreates the mlflow and model-server containers. |
+| F5 (optional, your call) | `mlflow.xgboost.autolog()` is not used | Enable it in the sweep's child runs, with the explicit logging kept. It touches training code, so it runs **after** the replay and re-runs `train_xgb` (the same seed should give the same booster; verify the test MAE is unchanged). |
+| F4 | `site/mock/predict.json` uses `move_class: "good"`; the code emits `"ok"` | Align the mock |
+
+The trainer, monitor and model-server keep FastAPI's or MLflow's default error body (`{"detail": …}`). They are internal services; only the public api promises the standard error shape. Recorded in `lld.md`.

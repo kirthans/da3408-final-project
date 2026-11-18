@@ -1,3 +1,4 @@
+import { initPipeline, refreshPipeline } from './pipeline.js';
 import { Chess } from './vendor/chess.js/dist/esm/chess.js';
 const $ = id => document.getElementById(id);
 const demo = new URLSearchParams(location.search).get('mock') === '1';
@@ -13,6 +14,7 @@ const messages = {
   game_too_short: 'There are too few moves for a useful estimate. Try a longer game.',
   model_unavailable: 'The rating model is still warming up or unavailable. Please retry shortly.',
   engine_error: 'The chess engine could not analyse this game. Please retry or choose another game.',
+  monitor_unavailable: 'The replay service is unavailable. Please retry shortly.',
   trainer_unavailable: 'The training service is unavailable. Please retry shortly.',
   engine_timeout: 'Analysis took too long. Please retry or choose a shorter game.'
 };
@@ -134,24 +136,26 @@ function render(data) {
 $('first').onclick = () => jump(0); $('prev').onclick = () => jump(current - 1); $('next').onclick = () => jump(current + 1); $('last').onclick = () => jump(positions.length - 1);
 $('board').addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key) && board) { e.preventDefault(); jump(e.key === 'Home' ? 0 : e.key === 'End' ? positions.length - 1 : current + (e.key === 'ArrowRight' ? 1 : -1)); } });
 window.addEventListener('resize', () => board?.resize());
-async function tab(pipeline) {
+let pipelineTimer;
+function tab(pipeline) {
   $('estimate-view').hidden = pipeline; $('pipeline-view').hidden = !pipeline;
   for (const id of ['estimate-tab', 'pipeline-tab']) $(id).removeAttribute('aria-current');
   $(pipeline ? 'pipeline-tab' : 'estimate-tab').setAttribute('aria-current', 'page');
-  if (!pipeline) { board?.resize(); return; }
-  $('model').replaceChildren(); $('model-status').textContent = 'Loading current model…';
-  try {
-    const model = demo ? { ...result.model, metrics: { test_mae: 184, coverage: .81 } } : await api('/v1/model');
-    $('model-status').textContent = demo ? 'Demo model metadata — illustrative, not a live model.' : 'Current champion';
-    for (const [label, value] of [['Version', model.version], ['Test MAE', model.metrics?.test_mae == null ? 'Not available' : `${model.metrics.test_mae} Elo`], ['80% interval coverage', model.metrics?.coverage == null ? 'Not available' : `${(model.metrics.coverage * 100).toFixed(1)}%`]]) $('model').append(element('dt', label), element('dd', String(value)));
-  } catch (e) { $('model-status').textContent = errorText(e); }
+  if (!pipeline) board?.resize();
+  pipelineVisibility();
 }
 $('estimate-tab').onclick = () => tab(false); $('pipeline-tab').onclick = () => tab(true);
-for (const [label, key] of [['MLflow', 'MLFLOW_PORT'], ['Grafana', 'GRAFANA_PORT'], ['Prometheus', 'PROMETHEUS_PORT']]) {
-  const link = element('a', `${label} ↗`), url = new URL(location.origin); url.protocol = 'http:'; url.port = config[key]; link.href = url.href; link.target = '_blank'; link.rel = 'noopener'; $('service-links').append(link);
+function pipelineVisibility() {
+  clearInterval(pipelineTimer);
+  if (!$('pipeline-view').hidden && document.visibilityState === 'visible') {
+    refreshPipeline(); pipelineTimer = setInterval(refreshPipeline, 10000);
+  }
 }
+document.addEventListener('visibilitychange', pipelineVisibility);
 if (demo) {
   $('demo').hidden = false;
   try { const response = await fetch('mock/predict.json'); if (!response.ok) throw new Error(); render(await response.json()); }
   catch { sayError('Demo data could not be loaded. Please reload this page.'); }
 }
+
+initPipeline(config, api, errorText);

@@ -26,7 +26,7 @@ services:
     environment:
       MLFLOW_DISABLE_TELEMETRY: "true"
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     volumes:
       - mlflow-data:/mlflow
     healthcheck:
@@ -51,7 +51,7 @@ services:
       METRICS_PORT: "18003"
     expose: ["18003"]
     ports:
-      - "5001:5001"
+      - "127.0.0.1:5001:5001"
     depends_on:
       mlflow:
         condition: service_healthy
@@ -79,7 +79,7 @@ services:
       GIT_COMMIT: ${GIT_COMMIT:-unknown}
     expose: ["18000"]
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     depends_on:
       model-server:
         condition: service_healthy

@@ -112,6 +112,16 @@ def remote(url, *, payload=None, retry=False, code="model_unavailable", headers=
             )
             if response.status_code < 500:
                 if not response.ok:
+                    if code == "trainer_unavailable" and response.status_code in {401, 409}:
+                        raise ApiError(
+                            "unauthorized" if response.status_code == 401 else "run_in_progress",
+                            (
+                                "Invalid API key"
+                                if response.status_code == 401
+                                else "A run is already in progress"
+                            ),
+                            response.status_code,
+                        )
                     if model_call:
                         metrics.MODEL_ERRORS.inc()
                     raise ApiError(code, "Upstream rejected the request", 503)
@@ -231,7 +241,14 @@ def validation_error(request, exc):
 
 @app.exception_handler(HTTPException)
 def http_error(request, exc):
-    return error_response(request, "validation_error", str(exc.detail), exc.status_code)
+    code, message = {
+        404: ("not_found", "No such endpoint"),
+        405: ("method_not_allowed", "Method not allowed"),
+    }.get(exc.status_code, ("validation_error", str(exc.detail)))
+    response = error_response(request, code, message, exc.status_code)
+    if exc.headers:
+        response.headers.update(exc.headers)
+    return response
 
 
 @app.exception_handler(Exception)
@@ -399,8 +416,47 @@ def dag():
 
 
 @app.get("/v1/pipeline/runs")
-def runs():
-    return trainer("/runs")
+def runs(limit: int = 100):
+    return trainer(f"/runs?limit={max(1, min(limit, 1000))}")
+
+
+@app.get("/v1/pipeline/replay")
+def replay():
+    """Read-only, bounded monitor projection; never advances the replay clock."""
+    status = remote(
+        os.getenv("MONITOR_URL", "http://monitor:8002").rstrip("/") + "/status",
+        code="monitor_unavailable",
+    ).json()
+    quality = status.get("last_metrics", {})
+    mae, reference = quality.get("mae", {}), quality.get("reference_mae")
+    cfg = load_params()["monitor"]
+    champion = mae.get("champion", {}).get("all")
+    return dict(
+        current_month=status.get("current_month"),
+        months_revealed=len(status.get("revealed", [])),
+        total_months=12,
+        playing=status.get("playing", False),
+        seconds_to_next_reveal=status.get("seconds_to_next_reveal"),
+        champion_version=status.get("champion_version"),
+        previous_champion_version=status.get("previous_champion_version"),
+        metrics_month=quality.get("month"),
+        reference_mae=reference,
+        mae={key: value.get("all") for key, value in mae.items()},
+        mae_ratio={
+            key: value.get("all") / reference if reference else None for key, value in mae.items()
+        },
+        coverage=quality.get("coverage", {}).get("all"),
+        drift_detected=(
+            (
+                champion > cfg["mae_ratio"] * reference
+                or max(quality.get("psi", {}).values(), default=0) > cfg["psi_warn"]
+            )
+            if champion is not None and reference
+            else None
+        ),
+        drift_injection=status.get("drift_injection", {}).get("enabled", False),
+        psi_top5=status.get("psi_top5", [])[:5],
+    )
 
 
 @app.post("/v1/pipeline/retrain", status_code=202)

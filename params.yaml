@@ -32,8 +32,8 @@ ray:
   batch_size: 16
 seed: 42
 train:
-  fit_months: ["2019-09", "2019-10", "2019-11"]
-  holdout_month: "2019-12"
+  fit_months: ["2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03"]
+  holdout_month: "2020-04"
   clock_dropout: 0.2
   conformal_alpha: 0.2
   experiment: elo

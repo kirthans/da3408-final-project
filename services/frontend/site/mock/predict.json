@@ -34,7 +34,7 @@
       "san": "e4",
       "uci": "e2e4",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -43,7 +43,7 @@
       "san": "e5",
       "uci": "e7e5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -52,7 +52,7 @@
       "san": "Nf3",
       "uci": "g1f3",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -61,7 +61,7 @@
       "san": "d6",
       "uci": "d7d6",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -70,7 +70,7 @@
       "san": "d4",
       "uci": "d2d4",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -79,7 +79,7 @@
       "san": "Bg4",
       "uci": "c8g4",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -88,7 +88,7 @@
       "san": "dxe5",
       "uci": "d4e5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -106,7 +106,7 @@
       "san": "Qxf3",
       "uci": "d1f3",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -115,7 +115,7 @@
       "san": "dxe5",
       "uci": "d6e5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -124,7 +124,7 @@
       "san": "Bc4",
       "uci": "f1c4",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -142,7 +142,7 @@
       "san": "Qb3",
       "uci": "f3b3",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -151,7 +151,7 @@
       "san": "Qe7",
       "uci": "d8e7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -160,7 +160,7 @@
       "san": "Nc3",
       "uci": "b1c3",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -169,7 +169,7 @@
       "san": "c6",
       "uci": "c7c6",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -178,7 +178,7 @@
       "san": "Bg5",
       "uci": "c1g5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -187,7 +187,7 @@
       "san": "b5",
       "uci": "b7b5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -196,7 +196,7 @@
       "san": "Nxb5",
       "uci": "c3b5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -214,7 +214,7 @@
       "san": "Bxb5+",
       "uci": "c4b5",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -223,7 +223,7 @@
       "san": "Nbd7",
       "uci": "b8d7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -232,7 +232,7 @@
       "san": "O-O-O",
       "uci": "e1c1",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -241,7 +241,7 @@
       "san": "Rd8",
       "uci": "a8d8",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -250,7 +250,7 @@
       "san": "Rxd7",
       "uci": "d1d7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -259,7 +259,7 @@
       "san": "Rxd7",
       "uci": "d8d7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -268,7 +268,7 @@
       "san": "Rd1",
       "uci": "h1d1",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -277,7 +277,7 @@
       "san": "Qe6",
       "uci": "e7e6",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -286,7 +286,7 @@
       "san": "Bxd7+",
       "uci": "b5d7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -295,7 +295,7 @@
       "san": "Nxd7",
       "uci": "f6d7",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -304,7 +304,7 @@
       "san": "Qb8+",
       "uci": "b3b8",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -313,7 +313,7 @@
       "san": "Nxb8",
       "uci": "d7b8",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     },
     {
@@ -322,7 +322,7 @@
       "san": "Rd8#",
       "uci": "d1d8",
       "cpl": 12,
-      "move_class": "good",
+      "move_class": "ok",
       "clock_s": null
     }
   ],

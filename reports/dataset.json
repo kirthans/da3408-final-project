@@ -1,29 +1,29 @@
 {
-  "clock_dropped_games": 12000,
+  "clock_dropped_games": 22000,
   "splits": {
     "train": {
-      "rows": 120000,
-      "games": 60000,
-      "label_mean": 1596.0121583333334,
-      "label_std": 321.0394594593672
+      "rows": 220000,
+      "games": 110000,
+      "label_mean": 1613.0210318181819,
+      "label_std": 327.02065286595905
     },
     "val": {
-      "rows": 13182,
-      "games": 6591,
-      "label_mean": 1622.5409649522076,
-      "label_std": 332.68410042089
+      "rows": 6640,
+      "games": 3320,
+      "label_mean": 1704.3390060240963,
+      "label_std": 339.25534331041763
     },
     "cal": {
-      "rows": 13432,
-      "games": 6716,
-      "label_mean": 1622.584276354973,
-      "label_std": 332.4950802317476
+      "rows": 6632,
+      "games": 3316,
+      "label_mean": 1704.5541314837153,
+      "label_std": 345.18667140976925
     },
     "test": {
-      "rows": 13386,
-      "games": 6693,
-      "label_mean": 1635.5425818018825,
-      "label_std": 326.26516761475335
+      "rows": 6728,
+      "games": 3364,
+      "label_mean": 1705.0787752675387,
+      "label_std": 349.8691480107411
     }
   }
 }

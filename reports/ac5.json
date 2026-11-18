@@ -1,0 +1,108 @@
+{
+  "months": [
+    {
+      "month": "2020-01",
+      "sampled_at": 1794881707.854,
+      "champion_version": "4",
+      "champion": 186.46396280212403
+    },
+    {
+      "month": "2020-02",
+      "sampled_at": 1794882622.854,
+      "champion_version": "4",
+      "champion": 184.79005069274902
+    },
+    {
+      "month": "2020-03",
+      "sampled_at": 1794883537.854,
+      "champion_version": "4",
+      "champion": 187.9237404663086
+    },
+    {
+      "month": "2020-04",
+      "sampled_at": 1794884452.854,
+      "champion_version": "10",
+      "champion": 188.37123147277833,
+      "previous_champion": 193.6424963470459
+    },
+    {
+      "month": "2020-05",
+      "sampled_at": 1794885367.854,
+      "champion_version": "10",
+      "champion": 183.25492951049804,
+      "previous_champion": 186.8365419128418
+    },
+    {
+      "month": "2020-06",
+      "sampled_at": 1794886282.854,
+      "champion_version": "10",
+      "champion": 177.95344147338866,
+      "previous_champion": 181.7904419494629
+    },
+    {
+      "month": "2020-07",
+      "sampled_at": 1794887212.854,
+      "champion_version": "10",
+      "champion": 178.6288150024414,
+      "previous_champion": 181.77243750305175
+    },
+    {
+      "month": "2020-08",
+      "sampled_at": 1794888127.854,
+      "champion_version": "10",
+      "champion": 181.73295746459962,
+      "previous_champion": 185.54655234985353
+    },
+    {
+      "month": "2020-09",
+      "sampled_at": 1794889042.854,
+      "champion_version": "10",
+      "champion": 179.44378454589844,
+      "previous_champion": 182.9841474456787
+    },
+    {
+      "month": "2020-10",
+      "sampled_at": 1794889957.854,
+      "champion_version": "10",
+      "champion": 180.62824800415038,
+      "previous_champion": 183.85402590942383
+    },
+    {
+      "month": "2020-11",
+      "sampled_at": 1794890887.854,
+      "champion_version": "10",
+      "champion": 184.40569290161133,
+      "previous_champion": 187.98021463012697
+    },
+    {
+      "month": "2020-12",
+      "sampled_at": 1794891157.854,
+      "champion_version": "10",
+      "champion": 181.61612355651855,
+      "previous_champion": 185.69264596862794
+    }
+  ],
+  "promotions": [
+    {
+      "run_id": "00b1ece19ab048619e0b1435a6534ca6",
+      "replay_month": "2020-04",
+      "replay_generation": 4,
+      "registry_version": "10",
+      "next_month": "2020-05",
+      "gate_challenger_mae": 191.11011953274505,
+      "gate_champion_mae": 196.02146298366551,
+      "coverage": 0.7926575505350772,
+      "champion_mae": 183.25492951049804,
+      "previous_champion_mae": 186.8365419128418,
+      "verdict": "PASS",
+      "details": "New champion MAE compared with previous champion on the next replay month"
+    }
+  ],
+  "verdict": "PASS",
+  "details": "Last aligned sample per replay month; pending until every drift promotion has a next-month pair with its champion version. No promotion means pending.",
+  "generated_at": "2026-11-17T04:52:37.866934+00:00",
+  "since_hours": 12,
+  "step_s": 15,
+  "start": 1794847957.8539364,
+  "end": 1794891157.8539364
+}

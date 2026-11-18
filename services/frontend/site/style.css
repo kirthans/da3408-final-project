@@ -39,3 +39,18 @@ dl { display:grid; grid-template-columns:auto 1fr; gap:8px 24px; } dd { margin:0
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; scroll-behavior:auto !important; } }
 /* Let replay columns shrink before the board recalculates its square sizes. */
 .replay > div { min-width:0; }
+
+#pipeline-updated { margin-left:12px; } #pipeline-view input { display:block; width:100%; border:1px solid var(--line); padding:10px; margin-bottom:16px; }
+.table-scroll { overflow:auto; } table { width:100%; border-collapse:collapse; font-size:14px; } th,td { padding:12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; min-width:125px; } th { color:var(--muted); } td p { margin:4px 0; } details { margin:12px 0; } summary { cursor:pointer; color:var(--accent); } pre { overflow:auto; font-size:12px; max-height:400px; } .chip { display:inline-block; padding:2px 8px; border:1px solid; border-radius:4px; font-size:13px; } .chip.promoted,.chip.completed { color:#23634f; background:#edf5ec; } .chip.failed { color:#8a2e16; background:#fff0e8; } .chip.rejected,.chip.pending { color:#805500; background:#fff7d6; } .chip.running { color:#00649b; background:#e9f2f7; } #dag { overflow:auto; min-height:100px; } #dag svg { display:block; max-width:100%; height:auto; margin:auto; } .run-detail { max-width:420px; overflow-wrap:anywhere; }
+@media(max-width:640px) { #pipeline-view dl { grid-template-columns:1fr; gap:2px; } #pipeline-view dd { margin-bottom:12px; } #pipeline-updated { display:block; margin:8px 0; } }
+
+.chip.baseline { color:var(--muted); background:var(--paper); border-color:var(--line); } .gate-better { font-weight:700; } .dag-scroll { overflow-x:auto; } .phone-hint { display:none; }
+@media(max-width:640px) {
+  .phone-hint { display:block; } #dag { min-width:640px; } #dag svg { min-width:640px; }
+  .table-scroll { overflow:visible; } .table-scroll table,.table-scroll tbody { display:block; }
+  .table-scroll thead { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  #runs tr { display:block; border:1px solid var(--line); border-radius:6px; margin:16px 0; padding:12px; }
+  #runs td { display:block; min-width:0; border:0; padding:6px 0; overflow-wrap:anywhere; }
+  #runs td::before { content:attr(data-label); display:block; font-size:12px; font-weight:600; color:var(--muted); }
+  .run-detail { max-width:100%; }
+}

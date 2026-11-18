@@ -260,3 +260,80 @@ def test_retrain_forwards_validated_key_only_to_trainer(client, monkeypatch):
     upstream.assert_not_called()
     client.get("/v1/pipeline/runs")
     assert upstream.call_args.kwargs["headers"] is None
+
+
+def test_pipeline_replay_projection(client, monkeypatch):
+    def request(method, url, **kwargs):
+        assert method == "GET" and url == "http://monitor:8002/status"
+        return SimpleNamespace(
+            status_code=200,
+            ok=True,
+            json=lambda: dict(
+                current_month="2020-04",
+                revealed=["2020-01", "2020-02", "2020-03", "2020-04"],
+                playing=True,
+                seconds_to_next_reveal=42,
+                champion_version="5",
+                previous_champion_version="4",
+                drift_injection={"enabled": True},
+                last_metrics=dict(
+                    month="2020-04",
+                    mae={"champion": {"all": 190}, "previous_champion": {"all": 200}},
+                    reference_mae=180,
+                    coverage={"all": 0.8},
+                    psi={"private_feature": 0.1},
+                ),
+                psi_top5=[["private_feature", 0.1]],
+            ),
+        )
+
+    monkeypatch.setattr(api.requests, "request", request)
+    response = client.get("/v1/pipeline/replay")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["months_revealed"] == 4 and body["mae"]["champion"] == 190
+    assert body["mae_ratio"]["champion"] == pytest.approx(190 / 180)
+    assert body["drift_detected"] and body["drift_injection"]
+    assert "last_metrics" not in body and "psi" not in body
+
+
+def test_pipeline_replay_unavailable(client, monkeypatch):
+    monkeypatch.setattr(api.requests, "request", Mock(side_effect=api.requests.ConnectionError()))
+    response = client.get("/v1/pipeline/replay")
+    assert response.status_code == 503
+    assert response.json()["error"]["code"] == "monitor_unavailable"
+    assert response.json()["error"]["request_id"]
+
+
+def test_retrain_busy_is_preserved(client, monkeypatch):
+    monkeypatch.setattr(
+        api.requests, "request", Mock(return_value=SimpleNamespace(status_code=409, ok=False))
+    )
+    response = client.post(
+        "/v1/pipeline/retrain", json={"reason": "test"}, headers={"X-API-Key": "test-key"}
+    )
+    assert response.status_code == 409
+    assert response.json()["error"]["code"] == "run_in_progress"
+
+
+@pytest.mark.parametrize(
+    "method,path,status,code,message",
+    [
+        ("GET", "/v1/missing", 404, "not_found", "No such endpoint"),
+        ("GET", "/v1/predict", 405, "method_not_allowed", "Method not allowed"),
+    ],
+)
+@pytest.mark.parametrize("request_id", [None, "routing-contract-id"])
+def test_routing_errors(client, method, path, status, code, message, request_id):
+    response = client.request(
+        method, path, headers={"X-Request-ID": request_id} if request_id else {}
+    )
+    assert response.status_code == status
+    error = response.json()["error"]
+    assert set(error) == {"code", "message", "request_id"}
+    assert error["code"] == code and error["message"] == message
+    assert error["request_id"] and error["request_id"] == response.headers["X-Request-ID"]
+    if request_id:
+        assert error["request_id"] == request_id
+    if status == 405:
+        assert "POST" in response.headers["Allow"]

@@ -8,7 +8,9 @@
   <script src="config.js" defer></script>
   <script src="vendor/jquery/dist/jquery.min.js" defer></script>
   <script src="vendor/chrisoakman-chessboardjs/dist/chessboard-1.0.0.min.js" defer></script>
+  <script src="vendor/mermaid/mermaid.min.js" defer></script>
   <script src="app.js" type="module"></script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <header><a class="brand" href="index.html">♞ Guess the Elo</a><a href="help.html">How it works ↗</a></header>
@@ -42,7 +44,16 @@
       <section class="panel caveat"><h2>An estimate, with room for doubt</h2><p id="caveat"></p><p>The 80% interval describes uncertainty: across comparable games, about 8 in 10 such intervals should contain the player’s rating. One game is noisy; this is neither an official rating nor a measure of potential.</p><p id="details" class="small"></p></section>
     </section>
   </section>
-  <section id="pipeline-view" hidden aria-labelledby="pipeline-title"><p class="eyebrow">Behind the estimate</p><h1 id="pipeline-title">The current model</h1><div class="panel"><p id="model-status" role="status" aria-live="polite">Loading model…</p><dl id="model"></dl><nav id="service-links" aria-label="Pipeline services"></nav><p class="small">The full pipeline console, including runs and retraining controls, comes later.</p></div></section>
+  <section id="pipeline-view" hidden aria-labelledby="pipeline-title">
+    <p class="eyebrow">Behind the estimate</p><h1 id="pipeline-title">The pipeline, in view.</h1>
+    <p class="intro">Follow the replay, see how models compare, and explore each training decision. Refreshes every 10 seconds while this tab is visible.</p>
+    <button id="refresh-pipeline">Refresh now</button><span id="pipeline-updated" class="small" role="status"></span>
+    <section class="panel"><h2>Current model</h2><p id="model-status" role="status">Loading model…</p><dl id="model"></dl><nav id="service-links" aria-label="Pipeline services"></nav></section>
+    <section class="panel"><h2>2020 replay</h2><p id="replay-status" role="status">Loading replay…</p><p id="injection-badge" class="notice" hidden>Drift injection ON (demo)</p><dl id="replay-data"></dl><p class="small">MAE is the average rating error in Elo points; lower is better. Coverage is the share of true ratings inside the 80% intervals. A ratio above 1 means more error than the reference model.</p></section>
+    <section class="panel"><h2>Training steps</h2><p id="dag-status" role="status">Loading training diagram…</p><label for="run-selection">Highlight a run</label><select id="run-selection"><option value="">Most recent run</option></select><p class="small">Completed · restored/skipped (reused work) · failed. Repeated monthly stages are grouped together; the number is their count.</p><p id="dag-scroll-hint" class="small phone-hint">Scroll → to explore the training diagram</p><div class="dag-scroll" tabindex="0" role="region" aria-label="Training dependency diagram" aria-describedby="dag-scroll-hint"><div id="dag"></div></div><details><summary>Show full DAG text</summary><pre id="dag-text"></pre></details></section>
+    <section class="panel"><h2>Run history</h2><button id="show-all-runs" aria-pressed="false" aria-controls="runs">Show all runs (0)</button><p id="runs-status" role="status">Loading runs…</p><div class="table-scroll" tabindex="0" role="region" aria-label="Training run history"><table role="table"><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Started / trigger</th><th scope="col" role="columnheader">Fit → holdout</th><th scope="col" role="columnheader">Status</th><th scope="col" role="columnheader">Gate</th><th scope="col" role="columnheader">Registry / push</th><th scope="col" role="columnheader">Details</th></tr></thead><tbody id="runs" role="rowgroup"></tbody></table></div></section>
+    <section class="panel"><h2>Request a retrain</h2><p>A manual retrain uses the months revealed so far.</p><button id="open-retrain" aria-expanded="false">Manual retrain</button><form id="retrain-form" hidden><label for="retrain-reason">Reason</label><input id="retrain-reason" required maxlength="300" autocomplete="off"><label for="retrain-key">API key</label><input id="retrain-key" type="password" required autocomplete="off"><button class="primary" type="submit">Request retrain</button></form><p id="retrain-status" role="status" aria-live="polite"></p></section>
+  </section>
 </main>
 <footer>Made for curiosity. Games are not stored. <a href="help.html">Read the guide</a></footer>
 </body></html>

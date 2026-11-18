@@ -3130,17 +3130,21 @@ stages:
         - 2019-09
         - 2019-10
         - 2019-11
-        train.holdout_month: 2019-12
+        - 2019-12
+        - 2020-01
+        - 2020-02
+        - 2020-03
+        train.holdout_month: 2020-04
     outs:
     - path: data/datasets
       hash: md5
-      md5: bc9580dbaa80111b192c8ea4807b3315.dir
-      size: 21450016
+      md5: a329424021754fcaa4ba6396ba8dfcf3.dir
+      size: 29631912
       nfiles: 5
     - path: reports/dataset.json
       hash: md5
-      md5: 67666093b43ce78494cd6b58b355c0fc
-      size: 612
+      md5: b02be032dd967aa50f99c74d67996587
+      size: 615
   train_baselines:
     cmd: set -a; . ./.env; set +a; mlflow run . -e train_baselines 
       --env-manager=local --experiment-name elo
@@ -3151,8 +3155,8 @@ stages:
       size: 401
     - path: data/datasets
       hash: md5
-      md5: bc9580dbaa80111b192c8ea4807b3315.dir
-      size: 21450016
+      md5: a329424021754fcaa4ba6396ba8dfcf3.dir
+      size: 29631912
       nfiles: 5
     - path: src/elo/common/config.py
       hash: md5
@@ -3192,7 +3196,7 @@ stages:
     outs:
     - path: reports/baselines.json
       hash: md5
-      md5: 38fb8576e46384932e1df40b0ea2fd45
+      md5: 3321e6c4eb250844bdac456735fb3b3d
       size: 405
   train_xgb:
     cmd: set -a; . ./.env; set +a; mlflow run . -e train_xgb --env-manager=local
@@ -3204,20 +3208,20 @@ stages:
       size: 401
     - path: data/datasets/cal.parquet
       hash: md5
-      md5: db2f83cf376863987d152b742bf30978
-      size: 2080859
+      md5: 6594a5cb82a406ae6c1ec29949c51086
+      size: 1108045
     - path: data/datasets/reference_stats.json
       hash: md5
-      md5: b66826b37a047ad26fa3aad8d41ccefd
-      size: 22230
+      md5: ef34f27324aeea738a9bc9ff3743f45d
+      size: 23339
     - path: data/datasets/train.parquet
       hash: md5
-      md5: 744ffb1aad84d8ff7b3ffc5a55b2ce45
-      size: 15234629
+      md5: 9cde2832ff81dae354b74f46e8f4e24f
+      size: 26285200
     - path: data/datasets/val.parquet
       hash: md5
-      md5: d164be33a66467639b41d88009ab99a7
-      size: 2036991
+      md5: 16864b24950834c1e837da293af0c0f9
+      size: 1099772
     - path: src/elo/common/config.py
       hash: md5
       md5: 6d9e18b3b579ce6b01a2d133556329f4
@@ -3270,13 +3274,13 @@ stages:
     outs:
     - path: models/xgb
       hash: md5
-      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
-      size: 4524064
+      md5: d74efc00070492e7e92d7b93f44dc0bd.dir
+      size: 3260639
       nfiles: 6
     - path: reports/train_xgb.json
       hash: md5
-      md5: 51847df234b4e96afe6f6b3e1940447c
-      size: 211
+      md5: e9e315face714ae86bd19cdcfc3a4134
+      size: 210
   evaluate:
     cmd: set -a; . ./.env; set +a; mlflow run . -e evaluate --env-manager=local 
       --experiment-name elo
@@ -3287,8 +3291,8 @@ stages:
       size: 401
     - path: data/datasets/test.parquet
       hash: md5
-      md5: c5fcfb0272263bfbb4bfb864f8f9563f
-      size: 2075307
+      md5: 982194edccf9acfcdd847f59f7a35dfc
+      size: 1115556
     - path: data/features/games
       hash: md5
       md5: 5a5c963f6ff7b55cee3ff9c3aa51e218.dir
@@ -3296,17 +3300,17 @@ stages:
       nfiles: 16
     - path: models/xgb
       hash: md5
-      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
-      size: 4524064
+      md5: d74efc00070492e7e92d7b93f44dc0bd.dir
+      size: 3260639
       nfiles: 6
     - path: reports/baselines.json
       hash: md5
-      md5: 38fb8576e46384932e1df40b0ea2fd45
+      md5: 3321e6c4eb250844bdac456735fb3b3d
       size: 405
     - path: reports/dataset.json
       hash: md5
-      md5: 67666093b43ce78494cd6b58b355c0fc
-      size: 612
+      md5: b02be032dd967aa50f99c74d67996587
+      size: 615
     - path: reports/throughput
       hash: md5
       md5: 35fc807e5d4a8f94fc2c008b3a08cb90.dir
@@ -3314,8 +3318,8 @@ stages:
       nfiles: 16
     - path: reports/train_xgb.json
       hash: md5
-      md5: 51847df234b4e96afe6f6b3e1940447c
-      size: 211
+      md5: e9e315face714ae86bd19cdcfc3a4134
+      size: 210
     - path: src/elo/common/config.py
       hash: md5
       md5: 6d9e18b3b579ce6b01a2d133556329f4
@@ -3368,53 +3372,57 @@ stages:
         - 2019-09
         - 2019-10
         - 2019-11
+        - 2019-12
+        - 2020-01
+        - 2020-02
+        - 2020-03
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: d6872aafaae4d4646b56d02ce7e2c745
-      size: 887
+      md5: 523635e0e27152d056261da3444f4ab0
+      size: 888
     - path: reports/plots/confusion.png
       hash: md5
-      md5: 2bce56bc944de4b5f6f679a4ddd5d18c
-      size: 21559
+      md5: 4f6f6dff89b7d92c1caed6bc05b949e6
+      size: 22126
     - path: reports/plots/coverage.png
       hash: md5
-      md5: c4c52bda779fca0816c041341e3ba713
-      size: 12609
+      md5: 5d71685a7567ebd490c57d7df6a72181
+      size: 12577
     - path: reports/plots/predicted.png
       hash: md5
-      md5: 410abaaa8bdc0f40b26810986d7b84a4
-      size: 144874
+      md5: 78024afc04e48c7ba653bd367c88ad36
+      size: 110569
     - path: reports/plots/residual.png
       hash: md5
-      md5: 96f3b5b0ce0d95c0f7f15382a546b472
-      size: 139824
+      md5: d07b7a7a2e1cf802662272f487e1dad2
+      size: 112215
     - path: reports/replay_eval.json
       hash: md5
-      md5: 118b1a3b8c523706b050e00de44025aa
-      size: 1085
+      md5: dde52d79c6af7df08071dc7e51aa1377
+      size: 1084
   tests:
     cmd: python -m elo.training.checks tests
     deps:
     - path: src
       hash: md5
-      md5: 56635c162dd525d0c944cedd5229d64d.dir
-      size: 119852
+      md5: 858c623f8a39d41ed1d5b1d8648d797a.dir
+      size: 123119
       nfiles: 38
     - path: tests
       hash: md5
-      md5: 3ead1c6014cefe13d0a5aa18c279cd3b.dir
-      size: 58812
-      nfiles: 19
+      md5: 0b77a20332f3264829c8abcbcfa86c1f.dir
+      size: 71862
+      nfiles: 22
     outs:
     - path: reports/tests.json
       hash: md5
-      md5: 975f5e2a7d8769cdc99191facb113f81
-      size: 65
+      md5: c655d0ac4147dcb981e89f67e02e768f
+      size: 67
     - path: reports/tests.xml
       hash: md5
-      md5: 1eb8aa28d7ee3699a8080cdaaf2a1671
-      size: 11112
+      md5: 60e943422e4226783eaeb45552e3265d
+      size: 13249
   register:
     cmd: set -a; . ./.env; set +a; mlflow run . -e register --env-manager=local 
       --experiment-name elo
@@ -3425,13 +3433,13 @@ stages:
       size: 401
     - path: models/xgb
       hash: md5
-      md5: 9ab778e6d20e2e4f93b3c0ab4b72f3e4.dir
-      size: 4524064
+      md5: d74efc00070492e7e92d7b93f44dc0bd.dir
+      size: 3260639
       nfiles: 6
     - path: reports/metrics.json
       hash: md5
-      md5: d6872aafaae4d4646b56d02ce7e2c745
-      size: 887
+      md5: 523635e0e27152d056261da3444f4ab0
+      size: 888
     - path: src/elo/common/logging.py
       hash: md5
       md5: eeffa9ee53316e91cf3795ffddd4d0cd
@@ -3451,5 +3459,5 @@ stages:
     outs:
     - path: reports/register.json
       hash: md5
-      md5: e1ebd02a2b7316114a04499f39c9d1f7
-      size: 85
+      md5: 95b52d73895661564e572230ce986eb0
+      size: 86
